@@ -1,11 +1,12 @@
 {
-  "name": "hitster-v2",
-  "version": "2.0.0",
+  "name": "korvanuss-v4",
+  "version": "4.0.0",
   "private": true,
-  "description": "Realtime Hitster-style party game with variable players and Estonian/international music modes",
+  "description": "Kõrva(n)uss – realtime music timeline party game",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js"
   },
   "engines": {
     "node": ">=18"
