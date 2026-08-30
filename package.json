@@ -1,8 +1,8 @@
 {
-  "name": "hitster-4",
-  "version": "1.0.0",
+  "name": "hitster-v2",
+  "version": "2.0.0",
   "private": true,
-  "description": "4-player Hitster-style realtime party game",
+  "description": "Realtime Hitster-style party game with variable players and Estonian/international music modes",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
