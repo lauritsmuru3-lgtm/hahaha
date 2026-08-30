@@ -1,47 +1,104 @@
 <!doctype html>
 <html lang="et">
+
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0909">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#5b1425"
+>
 
 <title>kõrva(n)uss</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700;6..96,900&family=DM+Sans:wght@400;500;700&family=Shrikhand&display=swap"
+  rel="stylesheet"
+>
 
 <style>
-:root{
-  color-scheme:dark;
 
-  --black:#090808;
-  --panel:#151212;
-  --panel2:#211b1a;
-  --bone:#eee5d8;
-  --skin:#c69b84;
-  --blood:#7b1f26;
-  --red:#d13a45;
-  --acid:#d9ff52;
-  --muted:#a89d95;
-  --line:#4b3a35;
-  --green:#a8ff9c;
-  --wrong:#ff7171;
+:root{
+  color-scheme:light;
+
+  --wine:#65172a;
+  --wine-dark:#381019;
+  --red:#a6273d;
+
+  --pink:#f3a9ba;
+  --pink-light:#ffdbe3;
+
+  --cream:#f7ead8;
+  --paper:#f3dfc5;
+
+  --gold:#c99a3d;
+  --gold-light:#e2c077;
+
+  --green:#36714b;
+
+  --black:#1c1214;
+  --muted:#755e61;
+
+  --shadow:rgba(43,9,18,.23);
 }
+
+
+/* ========================================
+   BASIC
+======================================== */
 
 *{
   box-sizing:border-box;
 }
 
 html{
-  background:var(--black);
+  background:var(--wine-dark);
 }
 
 body{
   margin:0;
-  background:var(--black);
-  color:var(--bone);
-  font-family:"Space Mono",monospace;
+
+  color:var(--black);
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 20% 5%,
+      #c74d69 0,
+      transparent 27%
+    ),
+
+    radial-gradient(
+      circle at 88% 18%,
+      #f3a9ba 0,
+      transparent 23%
+    ),
+
+    linear-gradient(
+      180deg,
+      #71192e,
+      #3c0e18 75%
+    );
+
   min-height:100%;
 }
 
@@ -51,299 +108,657 @@ select{
   font:inherit;
 }
 
-button,
-a{
-  -webkit-tap-highlight-color:transparent;
-}
-
 button{
   cursor:pointer;
+}
+
+button,
+a{
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 .hidden{
   display:none!important;
 }
 
-/* ---------- BACKGROUND ---------- */
 
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    linear-gradient(rgba(6,5,5,.86),rgba(6,5,5,.96)),
-    url("/images/destudio-venus.jpg") center/cover;
-}
-
-.grain{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  opacity:.12;
-  background-image:
-    repeating-radial-gradient(
-      circle at 20% 30%,
-      #fff 0,
-      #fff 1px,
-      transparent 1px,
-      transparent 3px
-    );
-  background-size:7px 7px;
-  mix-blend-mode:soft-light;
-}
-
-.scanlines{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:999;
-  opacity:.045;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.35) 0,
-      rgba(255,255,255,.35) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-}
-
-/* ---------- LAYOUT ---------- */
+/* ========================================
+   MAIN
+======================================== */
 
 main{
   width:min(780px,100%);
+
   margin:auto;
+
   padding:
-    max(22px,env(safe-area-inset-top))
-    16px
+    max(20px,env(safe-area-inset-top))
+    14px
     60px;
 }
 
-.logo{
-  font-family:"Press Start 2P",monospace;
-  font-size:clamp(27px,8vw,58px);
-  line-height:1.25;
-  letter-spacing:-.07em;
-  margin:8px 0 7px;
-  color:var(--bone);
-  text-shadow:
-    3px 3px 0 var(--blood),
-    -1px -1px 0 rgba(255,255,255,.12);
+
+/* ========================================
+   ORNAMENT
+======================================== */
+
+.stars{
+  text-align:center;
+
+  color:var(--gold-light);
+
+  letter-spacing:.5em;
+
+  font-size:18px;
+
+  margin:
+    5px
+    0
+    8px;
 }
 
-.logo span{
-  color:var(--acid);
+.ornament{
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  color:var(--gold);
+
+  margin:
+    12px
+    0;
+}
+
+.ornament::before,
+.ornament::after{
+  content:"";
+
+  height:1px;
+
+  background:
+    currentColor;
+
+  flex:1;
+}
+
+.ornament span{
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-style:italic;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+header{
+  text-align:center;
+
+  color:var(--cream);
+
+  padding:
+    8px
+    6px
+    14px;
+}
+
+.logo{
+  font-family:
+    "Shrikhand",
+    serif;
+
+  font-size:
+    clamp(
+      42px,
+      12vw,
+      86px
+    );
+
+  line-height:.94;
+
+  letter-spacing:-.04em;
+
+  color:
+    var(--pink-light);
+
+  text-shadow:
+    3px 3px 0
+    var(--wine-dark),
+
+    5px 5px 0
+    var(--gold);
+}
+
+.logo .n{
+  color:
+    var(--gold-light);
+
+  font-size:.72em;
+
+  vertical-align:.08em;
 }
 
 .subtitle{
-  color:var(--muted);
-  margin:10px 0 24px;
-  line-height:1.5;
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-style:italic;
+
+  font-size:
+    clamp(
+      17px,
+      4vw,
+      24px
+    );
+
+  color:
+    var(--cream);
+
+  margin-top:8px;
 }
 
-.screen-label{
-  font-family:"Press Start 2P",monospace;
-  font-size:10px;
-  line-height:1.6;
-  color:var(--acid);
-  text-transform:uppercase;
-  margin-bottom:9px;
-}
 
-.panel{
-  background:rgba(20,16,16,.92);
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:17px;
-  margin:14px 0;
+/* ========================================
+   CARDS
+======================================== */
+
+.card{
   position:relative;
-  overflow:hidden;
+
+  margin:
+    14px
+    0;
+
+  padding:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.94),
+      rgba(247,234,216,.97)
+    );
+
+  border:
+    2px solid
+    var(--gold);
+
+  border-radius:18px;
+
+  box-shadow:
+    0 12px 30px
+    var(--shadow),
+
+    inset
+    0
+    0
+    0
+    4px
+    rgba(255,255,255,.45);
 }
 
-.panel::before{
-  content:"";
+.card::after{
+  content:"✦";
+
   position:absolute;
-  left:0;
-  top:0;
-  width:4px;
-  height:100%;
-  background:var(--blood);
+
+  top:8px;
+
+  right:11px;
+
+  color:
+    var(--gold);
 }
 
-.panel.acid::before{
-  background:var(--acid);
-}
+.card-title{
+  font-family:
+    "Bodoni Moda",
+    serif;
 
-.panel.clean::before{
-  display:none;
+  text-transform:
+    uppercase;
+
+  letter-spacing:.12em;
+
+  font-size:12px;
+
+  font-weight:900;
+
+  color:
+    var(--wine);
+
+  margin-bottom:10px;
 }
 
 .flex{
   display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-}
 
-.between{
-  justify-content:space-between;
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  align-items:center;
 }
 
 .grid{
   display:grid;
+
   gap:12px;
 }
 
 .grid2{
-  grid-template-columns:repeat(2,minmax(0,1fr));
-}
-
-.muted{
-  color:var(--muted);
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 }
 
 .small{
   font-size:13px;
-  line-height:1.5;
+
+  line-height:1.6;
 }
 
-.micro{
-  font-size:11px;
-  color:var(--muted);
+.muted{
+  color:
+    var(--muted);
 }
 
-/* ---------- INPUTS ---------- */
+
+/* ========================================
+   PHOTOS
+======================================== */
+
+.photo-frame{
+  background:
+    var(--cream);
+
+  border:
+    8px solid
+    var(--cream);
+
+  outline:
+    2px solid
+    var(--gold);
+
+  box-shadow:
+    0 12px 28px
+    var(--shadow);
+
+  margin:
+    18px
+    0;
+}
+
+.photo-frame img{
+  display:block;
+
+  width:100%;
+
+  height:auto;
+
+  object-fit:contain;
+}
+
+.photo-caption{
+  padding:
+    9px
+    7px
+    4px;
+
+  text-align:center;
+
+  color:
+    var(--wine);
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-style:italic;
+}
+
+
+/* ========================================
+   FORM
+======================================== */
+
+label{
+  display:block;
+
+  font-weight:700;
+
+  color:
+    var(--wine);
+}
 
 input,
 select{
   width:100%;
-  min-height:50px;
-  padding:12px 13px;
+
+  min-height:52px;
+
+  padding:
+    12px
+    14px;
+
   margin-top:7px;
 
-  border:1px solid var(--line);
-  border-radius:2px;
+  background:
+    #fffaf3;
 
-  background:#0d0b0b;
-  color:var(--bone);
+  color:
+    var(--black);
+
+  border:
+    2px solid
+    #bf8c93;
+
+  border-radius:12px;
+
   font-size:16px;
-
-  outline:none;
 }
 
 input:focus,
 select:focus{
-  border-color:var(--acid);
-  box-shadow:0 0 0 2px rgba(217,255,82,.15);
+  outline:
+    3px solid
+    rgba(201,154,61,.28);
+
+  border-color:
+    var(--gold);
 }
 
-/* ---------- BUTTONS ---------- */
+
+/* ========================================
+   BUTTONS
+======================================== */
 
 button,
 .button{
-  min-height:50px;
-  padding:12px 15px;
-  border:1px solid var(--line);
-  border-radius:2px;
+  min-height:52px;
 
-  background:#1b1616;
-  color:var(--bone);
+  padding:
+    12px
+    16px;
 
-  font-weight:700;
-  text-decoration:none;
+  border-radius:999px;
+
+  border:
+    2px solid
+    var(--wine);
+
+  background:
+    var(--cream);
+
+  color:
+    var(--wine);
+
+  font-weight:800;
 
   display:inline-flex;
-  align-items:center;
+
   justify-content:center;
 
+  align-items:center;
+
+  text-decoration:none;
+
+  box-shadow:
+    0 4px 0
+    var(--wine-dark);
+
   transition:
-    transform .1s ease,
-    background .1s ease;
+    transform .1s,
+    box-shadow .1s;
 }
 
 button:active,
 .button:active{
-  transform:translateY(2px);
+  transform:
+    translateY(3px);
+
+  box-shadow:
+    0 1px 0
+    var(--wine-dark);
 }
 
 .primary{
-  background:var(--acid);
-  border-color:var(--acid);
-  color:#090909;
+  background:
+    var(--pink);
+
+  color:
+    var(--wine-dark);
 }
 
-.danger{
-  background:var(--blood);
-  border-color:var(--blood);
-}
+.gold{
+  background:
+    var(--gold-light);
 
-button:disabled{
-  opacity:.38;
-  cursor:not-allowed;
+  color:
+    #462b12;
 }
 
 .full{
   width:100%;
 }
 
-/* ---------- HOME ---------- */
+button:disabled{
+  opacity:.45;
 
-.hero-photo{
-  height:230px;
-  margin:15px 0 18px;
+  cursor:not-allowed;
+}
+
+
+/* ========================================
+   HOME
+======================================== */
+
+.welcome{
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:21px;
+
+  text-align:center;
+
+  color:
+    var(--wine);
+}
+
+.home-actions{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:10px;
+}
+
+
+/* ========================================
+   INSTRUCTIONS
+======================================== */
+
+.rules{
+  line-height:1.65;
+}
+
+.rule{
+  display:grid;
+
+  grid-template-columns:
+    34px 1fr;
+
+  gap:9px;
+
+  align-items:start;
+
+  padding:
+    8px
+    0;
+
+  border-bottom:
+    1px dotted
+    #b78d83;
+}
+
+.rule:last-of-type{
+  border-bottom:0;
+}
+
+.rule-number{
+  width:30px;
+
+  height:30px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
 
   background:
-    linear-gradient(90deg,rgba(0,0,0,.25),rgba(0,0,0,.05)),
-    url("/images/sonavabadus.jpg") center/cover;
+    var(--pink);
 
-  border:1px solid #2d2522;
-  position:relative;
-  overflow:hidden;
+  color:
+    var(--wine);
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-weight:900;
 }
 
-.hero-photo::after{
-  content:"KUULA / ARVA / PAIGUTA";
-  position:absolute;
-  bottom:12px;
-  left:12px;
+.lynch-quote{
+  margin:
+    18px
+    0
+    2px;
 
-  font-family:"Press Start 2P",monospace;
-  font-size:9px;
+  padding:
+    14px
+    5px
+    4px;
 
-  padding:8px;
-  background:#050505;
-  color:var(--acid);
+  border:0;
+
+  text-align:center;
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:
+    clamp(
+      19px,
+      5vw,
+      25px
+    );
+
+  font-style:italic;
+
+  font-weight:700;
+
+  color:
+    var(--wine);
 }
 
-/* ---------- LOBBY ---------- */
+.lynch-quote cite{
+  display:block;
+
+  margin-top:9px;
+
+  font-family:
+    "DM Sans",
+    sans-serif;
+
+  font-size:11px;
+
+  font-style:normal;
+
+  letter-spacing:.12em;
+
+  text-transform:uppercase;
+
+  color:
+    var(--muted);
+}
+
+
+/* ========================================
+   LOBBY
+======================================== */
 
 .room-code{
-  font-family:"Press Start 2P",monospace;
-  color:var(--acid);
-  font-size:clamp(34px,12vw,66px);
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:
+    clamp(
+      50px,
+      15vw,
+      92px
+    );
+
+  font-weight:900;
+
   letter-spacing:.08em;
-  margin:10px 0 18px;
+
+  color:
+    var(--wine);
+
+  text-align:center;
+
+  line-height:1;
 }
 
 .join-layout{
   display:grid;
-  grid-template-columns:1fr 190px;
-  gap:16px;
+
+  grid-template-columns:
+    1fr 190px;
+
+  gap:18px;
+
   align-items:center;
 }
 
-.qr-frame{
-  background:white;
-  padding:8px;
-  width:184px;
-  height:184px;
+#qr{
+  width:182px;
+
+  min-height:182px;
+
+  padding:6px;
+
   margin:auto;
+
+  background:white;
+
+  border:
+    5px double
+    var(--gold);
 }
 
-#qr{
-  width:168px;
-  height:168px;
+#qr img,
+#qr canvas{
+  display:block!important;
+
+  max-width:100%!important;
+
+  height:auto!important;
 }
 
 .players{
@@ -352,10 +767,19 @@ button:disabled{
 
 .player{
   display:flex;
-  justify-content:space-between;
-  gap:14px;
-  padding:12px 2px;
-  border-bottom:1px dashed var(--line);
+
+  justify-content:
+    space-between;
+
+  gap:10px;
+
+  padding:
+    11px
+    2px;
+
+  border-bottom:
+    1px dotted
+    #b78d83;
 }
 
 .player:last-child{
@@ -363,342 +787,792 @@ button:disabled{
 }
 
 .online{
-  color:var(--green);
+  color:
+    var(--green);
+
+  font-weight:700;
 }
 
-/* ---------- GAME TOP ---------- */
+
+/* ========================================
+   GAME STATUS
+======================================== */
 
 .status-row{
   display:flex;
-  gap:7px;
+
   flex-wrap:wrap;
+
+  gap:8px;
+
+  justify-content:center;
 }
 
 .pill{
-  padding:7px 9px;
-  background:#171313;
-  border:1px solid var(--line);
-  font-size:11px;
+  padding:
+    7px
+    11px;
+
+  background:
+    var(--cream);
+
+  border:
+    2px solid
+    var(--gold);
+
+  border-radius:999px;
+
+  color:
+    var(--wine);
+
+  font-size:12px;
+
+  font-weight:800;
 }
 
 .turn-me{
-  background:var(--acid);
-  color:#080808;
-  border-color:var(--acid);
+  background:
+    var(--pink);
 }
 
-/* ---------- SCORE ---------- */
+
+/* ========================================
+   SCORE
+======================================== */
 
 .scoreboard{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(120px,1fr)
+    );
+
   gap:8px;
-  margin:13px 0;
+
+  margin-top:13px;
 }
 
 .score{
-  background:rgba(8,7,7,.82);
-  border:1px solid var(--line);
+  text-align:center;
+
+  background:
+    var(--cream);
+
+  border:
+    2px solid
+    var(--gold);
+
+  border-radius:13px;
+
   padding:10px;
+
+  box-shadow:
+    0 6px 15px
+    var(--shadow);
 }
 
 .score strong{
   display:block;
+
+  color:
+    var(--wine);
 }
 
 .score-count{
-  margin-top:5px;
-  color:var(--acid);
-  font-size:12px;
+  color:
+    var(--red);
+
+  margin-top:3px;
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-weight:900;
 }
 
-/* ---------- NOW PLAYING ---------- */
 
-.listen-panel{
-  min-height:220px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
+/* ========================================
+   LISTEN
+======================================== */
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5,4,4,.25),
-      rgba(5,4,4,.92)
-    ),
-    url("/images/sonavabadus.jpg") center/cover;
+.listen-card{
+  text-align:center;
 }
 
-.mystery{
-  font-family:"Press Start 2P",monospace;
-  font-size:clamp(19px,5vw,31px);
-  line-height:1.5;
+.unknown{
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:
+    clamp(
+      42px,
+      12vw,
+      76px
+    );
+
+  font-weight:900;
+
+  font-style:italic;
+
+  color:
+    var(--wine);
+
+  line-height:1;
+}
+
+.listen-copy{
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-style:italic;
+
+  font-size:17px;
+
+  margin:
+    8px
+    0
+    14px;
 }
 
 .listen-buttons{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:14px;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:9px;
 }
 
 .spotify{
-  background:#b6ff94;
-  color:#071008;
-  border-color:#b6ff94;
+  background:
+    #bce5a7;
+
+  color:
+    #17361d;
+
+  border-color:
+    #44774d;
 }
 
 .youtube{
-  background:var(--bone);
-  color:#111;
-  border-color:var(--bone);
+  background:
+    #f9d9dd;
+
+  color:
+    #75182c;
 }
 
-/* ---------- TIMELINE ---------- */
 
-.timeline-title{
-  margin-bottom:14px;
-}
+/* ========================================
+   TIMELINE
+======================================== */
 
 .timeline{
   display:flex;
+
   flex-direction:column;
 }
 
 .timeline-card{
   position:relative;
-  border:1px solid #59443d;
-  background:#100d0d;
-  padding:14px;
+
+  padding:16px;
+
+  background:
+    #fffaf3;
+
+  border:
+    2px solid
+    var(--gold);
+
+  border-radius:13px;
+
+  text-align:center;
+
+  box-shadow:
+    0 5px 12px
+    rgba(68,27,31,.12);
 }
 
 .timeline-year{
-  font-family:"Press Start 2P",monospace;
-  font-size:22px;
-  color:var(--skin);
-  margin-bottom:7px;
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:30px;
+
+  font-weight:900;
+
+  color:
+    var(--wine);
 }
 
 .timeline-song{
+  font-family:
+    "Bodoni Moda",
+    serif;
+
   font-weight:700;
+
+  font-size:17px;
 }
 
 .timeline-artist{
-  margin-top:3px;
-  color:var(--muted);
+  color:
+    var(--muted);
+
   font-size:12px;
+
+  margin-top:3px;
 }
 
 .slot{
-  min-height:46px;
   width:100%;
-  margin:7px 0;
 
-  border:1px dashed #806c61;
-  background:transparent;
+  margin:
+    8px
+    0;
 
-  color:var(--muted);
-  font-size:12px;
+  min-height:48px;
+
+  border:
+    2px dashed
+    var(--pink);
+
+  box-shadow:none;
+
+  color:
+    var(--wine);
+
+  background:
+    rgba(255,239,242,.55);
 }
 
 .slot::before{
-  content:"+ ";
-  color:var(--acid);
+  content:"✦ ";
+
+  color:
+    var(--gold);
 }
 
 .slot.active{
-  background:var(--acid);
-  color:#070707;
-  border-color:var(--acid);
+  background:
+    var(--pink);
+
   border-style:solid;
 }
 
-.slot.active::before{
-  color:#070707;
+
+/* ========================================
+   REVEAL
+======================================== */
+
+.reveal-wrap{
+  overflow:hidden;
 }
 
-/* ---------- REVEAL ---------- */
+.reveal-photo{
+  width:100%;
 
-.reveal{
-  min-height:420px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
+  height:auto;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.06),
-      rgba(5,4,4,.94)
-    ),
-    url("/images/godshave.jpg") center/cover;
+  display:block;
+
+  object-fit:contain;
+
+  border:
+    5px solid
+    var(--cream);
+
+  outline:
+    2px solid
+    var(--gold);
+
+  margin-bottom:18px;
 }
 
 .result{
-  font-family:"Press Start 2P",monospace;
-  font-size:clamp(24px,7vw,45px);
-  line-height:1.3;
+  font-family:
+    "Shrikhand",
+    serif;
+
+  font-size:
+    clamp(
+      36px,
+      11vw,
+      70px
+    );
+
+  line-height:1;
+
+  text-align:center;
 }
 
 .good{
-  color:var(--green);
+  color:
+    var(--green);
 }
 
 .bad{
-  color:var(--wrong);
+  color:
+    var(--red);
 }
 
 .big-year{
-  font-family:"Press Start 2P",monospace;
-  font-size:clamp(48px,15vw,95px);
-  line-height:1;
-  margin:20px 0;
-  color:var(--bone);
-  text-shadow:5px 5px 0 var(--blood);
+  text-align:center;
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:
+    clamp(
+      64px,
+      18vw,
+      110px
+    );
+
+  font-weight:900;
+
+  color:
+    var(--wine);
+
+  line-height:.95;
+
+  margin:
+    15px
+    0;
 }
 
 .reveal-song{
-  font-size:22px;
+  text-align:center;
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-size:24px;
+
   font-weight:700;
 }
 
 .reveal-artist{
-  color:var(--skin);
-  margin-top:5px;
+  text-align:center;
+
+  color:
+    var(--red);
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  font-style:italic;
+
+  font-size:18px;
 }
 
 .auto-progress{
-  height:5px;
-  background:#362b28;
-  margin-top:15px;
+  height:7px;
+
+  margin-top:18px;
+
+  background:
+    #d8b6a9;
+
   overflow:hidden;
+
+  border-radius:999px;
 }
 
 .auto-progress > div{
-  width:100%;
   height:100%;
-  background:var(--acid);
+
+  width:100%;
+
+  background:
+    var(--wine);
+
   transform-origin:left;
-  animation:countdown 4.5s linear forwards;
+
+  animation:
+    countdown
+    4.5s
+    linear
+    forwards;
 }
 
 @keyframes countdown{
-  from{transform:scaleX(1)}
-  to{transform:scaleX(0)}
+
+  from{
+    transform:
+      scaleX(1);
+  }
+
+  to{
+    transform:
+      scaleX(0);
+  }
+
 }
 
-/* ---------- WIN ---------- */
 
-.winner{
-  min-height:460px;
+/* ========================================
+   WINNER
+======================================== */
 
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
+.winner-card{
+  color:
+    var(--cream);
 
   background:
     linear-gradient(
-      rgba(0,0,0,.08),
-      rgba(0,0,0,.94)
-    ),
-    url("/images/destudio-venus.jpg") center/cover;
+      180deg,
+      rgba(111,27,48,.98),
+      rgba(58,13,25,.99)
+    );
+
+  border-color:
+    var(--gold);
+}
+
+.winner-photo{
+  width:100%;
+
+  height:auto;
+
+  display:block;
+
+  object-fit:contain;
+
+  border:
+    7px solid
+    var(--cream);
+
+  outline:
+    2px solid
+    var(--gold);
+
+  margin-bottom:18px;
 }
 
 .win-title{
-  font-family:"Press Start 2P",monospace;
-  font-size:14px;
-  color:var(--acid);
+  text-align:center;
+
+  color:
+    var(--gold-light);
+
+  font-family:
+    "Bodoni Moda",
+    serif;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:.15em;
 }
 
 .win-name{
-  font-family:"Press Start 2P",monospace;
-  font-size:clamp(27px,9vw,58px);
-  line-height:1.4;
-  margin:13px 0;
+  text-align:center;
+
+  font-family:
+    "Shrikhand",
+    serif;
+
+  font-size:
+    clamp(
+      38px,
+      12vw,
+      76px
+    );
+
+  color:
+    var(--pink-light);
+
+  text-shadow:
+    3px 3px 0
+    var(--wine-dark);
+
+  margin:
+    10px
+    0;
 }
 
-/* ---------- MOBILE ---------- */
+
+/* ========================================
+   MOBILE
+======================================== */
 
 @media(max-width:600px){
 
-  main{
-    padding-left:13px;
-    padding-right:13px;
-  }
-
   .grid2,
+  .home-actions,
   .join-layout,
   .listen-buttons{
-    grid-template-columns:1fr;
+    grid-template-columns:
+      1fr;
   }
 
-  .qr-frame{
-    margin:12px 0 0;
+  .join-layout{
+    text-align:center;
   }
 
-  .hero-photo{
-    height:190px;
+  .logo{
+    font-size:
+      clamp(
+        39px,
+        13vw,
+        66px
+      );
   }
 
-  .reveal{
-    min-height:390px;
+  .photo-frame{
+    border-width:5px;
   }
+
 }
+
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
 
 @media(prefers-reduced-motion:reduce){
+
   *{
     animation:none!important;
+
     transition:none!important;
   }
+
 }
+
 </style>
 </head>
 
-<body>
 
-<div class="bg"></div>
-<div class="grain"></div>
-<div class="scanlines"></div>
+<body>
 
 <main>
 
+
+<!-- ======================================
+     HEADER
+====================================== -->
+
 <header>
-  <div class="logo">kõrva<span>(n)</span>uss</div>
-  <div class="subtitle">
-    muusika ajas // 2–8 mängijat
+
+  <div class="stars">
+    ★ ✦ ★
   </div>
+
+  <div class="logo">
+    kõrva<span class="n">(n)</span>uss
+  </div>
+
+  <div class="subtitle">
+    meloodia, mälu & kahtlased aastaarvud
+  </div>
+
 </header>
 
 
-<!-- ================= HOME ================= -->
+
+<!-- ======================================
+     HOME
+====================================== -->
 
 <section id="home">
 
-  <div class="hero-photo"></div>
 
-  <div class="panel acid">
-    <div class="screen-label">PLAYER NAME</div>
+  <div class="photo-frame">
 
-    <input
-      id="name"
-      maxlength="24"
-      autocomplete="nickname"
-      placeholder="sisesta nimi"
+    <img
+      src="/images/sonavabadus.jpg"
+      alt=""
     >
+
+    <div class="photo-caption">
+      kuula enne, kui mälu valetama hakkab
+    </div>
+
   </div>
 
-  <div class="grid grid2">
+
+
+  <!-- RULES -->
+
+  <div class="card">
+
+    <div class="card-title">
+      Kuidas mängida?
+    </div>
+
+
+    <div class="rules">
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          1
+        </div>
+
+        <div>
+          Üks inimene loob mängu.
+          Teised liituvad
+          <strong>toa koodi või QR-koodiga.</strong>
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          2
+        </div>
+
+        <div>
+          Iga mängija alustab
+          <strong>ühe looga</strong>,
+          mille aastaarv moodustab tema
+          isikliku ajajoone.
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          3
+        </div>
+
+        <div>
+          Kuulake uut tundmatut lugu.
+          Mängija, kelle kord on,
+          peab otsustama,
+          <strong>kuhu see tema ajajoonel kuulub.</strong>
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          4
+        </div>
+
+        <div>
+          Kui paigutus on õige,
+          <strong>jääb lugu sulle.</strong>
+          Kui paned valesti,
+          läheb see kaduma.
+        </div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          5
+        </div>
+
+        <div>
+          Seejärel on järgmise inimese kord.
+          <strong>Esimene vajaliku arvu lugudeni võidab.</strong>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <p
+      class="small muted"
+      style="
+        text-align:center;
+        margin-top:15px;
+      "
+    >
+      Täpset aastat ei pea teadma.
+      Mõnikord piisab täiesti
+      kahtlasest sisetundest.
+    </p>
+
+
+    <div class="ornament">
+      <span>✦</span>
+    </div>
+
+
+    <blockquote class="lynch-quote">
+
+      “Keep your eye on the doughnut,
+      not on the hole.”
+
+      <cite>
+        — David Lynch
+      </cite>
+
+    </blockquote>
+
+  </div>
+
+
+
+  <!-- NAME -->
+
+  <div class="card">
+
+    <div class="welcome">
+      Kes sa täna oled?
+    </div>
+
+    <div class="ornament">
+      <span>✦</span>
+    </div>
+
+
+    <label>
+
+      SINU NIMI
+
+      <input
+        id="name"
+        maxlength="24"
+        autocomplete="nickname"
+        placeholder="kirjuta siia..."
+      >
+
+    </label>
+
+  </div>
+
+
+
+  <div class="home-actions">
 
     <button
       id="create"
       class="primary"
       type="button"
     >
-      UUS MÄNG
+      ✦ LOO MÄNG
     </button>
+
 
     <button
       id="showJoin"
+      class="gold"
       type="button"
     >
       LIITU
@@ -707,26 +1581,35 @@ button:disabled{
   </div>
 
 
+
   <div
     id="joinBox"
-    class="panel hidden"
+    class="card hidden"
   >
 
-    <div class="screen-label">
-      ENTER ROOM
+    <div class="card-title">
+      Liitu olemasoleva mänguga
     </div>
 
-    <input
-      id="code"
-      maxlength="4"
-      autocapitalize="characters"
-      placeholder="TOA KOOD"
-    >
+
+    <label>
+
+      TOA KOOD
+
+      <input
+        id="code"
+        maxlength="4"
+        autocapitalize="characters"
+        placeholder="AB12"
+      >
+
+    </label>
+
 
     <button
       id="join"
       class="primary full"
-      style="margin-top:10px"
+      style="margin-top:12px"
       type="button"
     >
       SISENE
@@ -734,43 +1617,65 @@ button:disabled{
 
   </div>
 
+
   <p
     id="homeError"
     class="small"
-    style="color:var(--wrong)"
+    style="
+      color:#ffd5dd;
+      text-align:center;
+    "
   ></p>
+
 
 </section>
 
 
-<!-- ================= LOBBY ================= -->
+
+<!-- ======================================
+     LOBBY
+====================================== -->
 
 <section
   id="lobby"
   class="hidden"
 >
 
-  <div class="panel acid">
 
-    <div class="screen-label">
-      ROOM CODE
+  <div class="card">
+
+    <div class="card-title">
+      Salajane salong
     </div>
+
 
     <div
       id="roomCode"
       class="room-code"
     ></div>
 
+
+    <div class="ornament">
+      <span>jaga seda koodi</span>
+    </div>
+
+
     <div class="join-layout">
+
 
       <div>
 
         <p class="small muted">
-          Skänni QR või jaga liitumislinki.
+
+          Sõber võib skännida QR-koodi
+          või avada sinu saadetud lingi.
+
         </p>
+
 
         <button
           id="copyLink"
+          class="gold"
           type="button"
         >
           KOPEERI LINK
@@ -778,30 +1683,38 @@ button:disabled{
 
       </div>
 
-      <div class="qr-frame">
-        <div id="qr"></div>
-      </div>
+
+
+      <div id="qr"></div>
+
 
     </div>
 
   </div>
 
 
+
+  <!-- SETTINGS -->
+
   <div
     id="settingsCard"
-    class="panel hidden"
+    class="card hidden"
   >
 
-    <div class="screen-label">
-      GAME SETTINGS
+    <div class="card-title">
+      Õhtu repertuaar
     </div>
+
 
     <div class="grid grid2">
 
+
       <label>
+
         MUUSIKA
 
         <select id="musicMode">
+
           <option value="estonian">
             Eesti
           </option>
@@ -811,33 +1724,51 @@ button:disabled{
           </option>
 
           <option value="mixed">
-            Eesti + välismaa
+            Kõik läbisegi
           </option>
+
         </select>
+
       </label>
+
 
 
       <label>
+
         VÕIDUKS KAARTE
 
         <select id="targetCards">
+
           <option>5</option>
+
           <option>6</option>
+
           <option>7</option>
-          <option selected>8</option>
+
+          <option selected>
+            8
+          </option>
+
           <option>9</option>
+
           <option>10</option>
+
           <option>12</option>
+
           <option>15</option>
+
         </select>
+
       </label>
+
 
     </div>
 
 
+
     <label
       class="flex small"
-      style="margin-top:15px"
+      style="margin-top:16px"
     >
 
       <input
@@ -855,15 +1786,22 @@ button:disabled{
 
     </label>
 
+
   </div>
 
 
-  <div class="panel">
 
-    <div class="screen-label">
-      PLAYERS
+  <!-- PLAYERS -->
+
+  <div class="card">
+
+    <div class="card-title">
+
+      Külalised
       <span id="count"></span>
+
     </div>
+
 
     <div
       id="lobbyPlayers"
@@ -877,40 +1815,57 @@ button:disabled{
       style="margin-top:15px"
       type="button"
     >
-      START
+      ✦ ALGAB ✦
     </button>
 
+
   </div>
+
 
 </section>
 
 
-<!-- ================= GAME ================= -->
+
+<!-- ======================================
+     GAME
+====================================== -->
 
 <section
   id="game"
   class="hidden"
 >
 
+
+  <!-- STATUS -->
+
   <div class="status-row">
 
+
     <span class="pill">
-      ROOM
+
+      tuba
       <b id="gameCode"></b>
+
     </span>
+
 
     <span
       id="modeLabel"
       class="pill"
     ></span>
 
+
     <span
       id="turnLabel"
       class="pill"
     ></span>
 
+
   </div>
 
+
+
+  <!-- SCORES -->
 
   <div
     id="scores"
@@ -918,24 +1873,33 @@ button:disabled{
   ></div>
 
 
+
   <!-- LISTEN -->
 
-  <div class="panel clean listen-panel">
+  <div class="card listen-card">
 
-    <div class="screen-label">
-      TRACK UNKNOWN
+    <div class="card-title">
+      Kõrvus kõlab...
     </div>
 
-    <div class="mystery">
-      ????
+
+    <div class="unknown">
+      ???
     </div>
 
-    <div class="small muted">
-      kuula. ära otsi aastat.
+
+    <div class="listen-copy">
+
+      ära vaata aastat.
+      ära guugelda.
+      usu sisetunnet.
+
     </div>
+
 
 
     <div class="listen-buttons">
+
 
       <a
         id="spotifyLink"
@@ -943,8 +1907,9 @@ button:disabled{
         target="_blank"
         rel="noopener"
       >
-        ▶ SPOTIFY
+        ♫ SPOTIFY
       </a>
+
 
       <a
         id="youtubeLink"
@@ -955,101 +1920,174 @@ button:disabled{
         ▶ YOUTUBE
       </a>
 
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- SECOND PHOTO -->
+
+  <div class="photo-frame">
+
+    <img
+      src="/images/destudio-venus.jpg"
+      alt=""
+    >
+
+    <div class="photo-caption">
+      mälu ei ole kronoloogiline
     </div>
 
   </div>
+
 
 
   <!-- TIMELINE -->
 
-  <div class="panel">
+  <div class="card">
 
-    <div class="screen-label timeline-title">
-      YOUR TIMELINE
+    <div class="card-title">
+      Sinu ajajoon
     </div>
 
-    <div id="timeline"></div>
+
+    <div
+      id="timeline"
+      class="timeline"
+    ></div>
+
 
     <div id="guessArea"></div>
 
+
   </div>
+
 
 
   <!-- REVEAL -->
 
   <div
     id="revealBox"
-    class="panel clean reveal hidden"
+    class="card reveal-wrap hidden"
   >
+
+
+    <img
+      src="/images/godshave.jpg"
+      class="reveal-photo"
+      alt=""
+    >
+
 
     <div
       id="revealResult"
       class="result"
     ></div>
 
+
     <div
       id="revealYear"
       class="big-year"
     ></div>
+
 
     <div
       id="revealSong"
       class="reveal-song"
     ></div>
 
+
     <div
       id="revealArtist"
       class="reveal-artist"
     ></div>
 
+
+
     <div
       id="autoProgress"
       class="auto-progress hidden"
     >
+
       <div></div>
+
     </div>
+
+
 
     <button
       id="next"
       class="primary full hidden"
-      style="margin-top:15px"
+      style="margin-top:16px"
       type="button"
     >
-      NEXT
+      JÄRGMINE →
     </button>
 
+
   </div>
+
 
 
   <!-- WINNER -->
 
   <div
     id="winnerBox"
-    class="panel clean winner hidden"
+    class="card winner-card hidden"
   ></div>
 
+
 </section>
+
 
 </main>
 
 
+
+<!-- ======================================
+     SCRIPTS
+====================================== -->
+
 <script src="/socket.io/socket.io.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"
+></script>
 
 
 <script>
+
 (() => {
 
-const socket = io();
 
-const $ = id =>
-  document.getElementById(id);
+const socket =
+  io();
 
-let state = null;
-let selectedSlot = null;
-let settingsTimer = null;
 
+const $ =
+  id =>
+    document.getElementById(id);
+
+
+let state =
+  null;
+
+
+let selectedSlot =
+  null;
+
+
+let settingsTimer =
+  null;
+
+
+
+/* ======================================
+   URL ROOM CODE
+====================================== */
 
 const params =
   new URLSearchParams(
@@ -1065,24 +2103,39 @@ if(params.get("room")){
       .toUpperCase()
       .slice(0,4);
 
+
   $("joinBox")
     .classList
     .remove("hidden");
+
 }
 
+
+
+/* ======================================
+   HOME
+====================================== */
 
 $("showJoin")
   .addEventListener(
     "click",
-    () =>
+    () => {
+
       $("joinBox")
         .classList
-        .toggle("hidden")
+        .toggle("hidden");
+
+    }
   );
 
 
-const playerName = () =>
-  $("name").value.trim();
+function playerName(){
+
+  return $("name")
+    .value
+    .trim();
+
+}
 
 
 function error(message){
@@ -1094,38 +2147,55 @@ function error(message){
 }
 
 
+
+/* CREATE ROOM */
+
 $("create")
   .addEventListener(
     "click",
     () => {
 
       socket.emit(
+
         "createRoom",
+
         {
           name:
             playerName()
         },
+
         result => {
 
           if(!result.ok){
+
             return error(
               result.error
             );
+
           }
 
+
           history.replaceState(
+
             {},
+
             "",
+
             "?room=" +
             result.code
+
           );
 
         }
+
       );
 
     }
   );
 
+
+
+/* JOIN ROOM */
 
 $("join")
   .addEventListener(
@@ -1133,36 +2203,53 @@ $("join")
     () => {
 
       socket.emit(
+
         "joinRoom",
+
         {
+
           name:
             playerName(),
 
           code:
             $("code").value
+
         },
 
         result => {
 
           if(!result.ok){
+
             return error(
               result.error
             );
+
           }
 
+
           history.replaceState(
+
             {},
+
             "",
+
             "?room=" +
             result.code
+
           );
 
         }
+
       );
 
     }
   );
 
+
+
+/* ======================================
+   GAME BUTTONS
+====================================== */
 
 $("start")
   .addEventListener(
@@ -1170,21 +2257,28 @@ $("start")
     () => {
 
       socket.emit(
+
         "startGame",
+
         {},
+
         result => {
 
           if(!result.ok){
+
             alert(
               result.error
             );
+
           }
 
         }
+
       );
 
     }
   );
+
 
 
 $("next")
@@ -1193,22 +2287,33 @@ $("next")
     () => {
 
       socket.emit(
+
         "nextRound",
+
         {},
+
         result => {
 
           if(!result.ok){
+
             alert(
               result.error
             );
+
           }
 
         }
+
       );
 
     }
   );
 
+
+
+/* ======================================
+   COPY LINK
+====================================== */
 
 $("copyLink")
   .addEventListener(
@@ -1218,15 +2323,18 @@ $("copyLink")
       const url =
         joinUrl();
 
+
       try{
 
         await navigator
           .clipboard
           .writeText(url);
 
+
         $("copyLink")
           .textContent =
             "KOPEERITUD ✓";
+
 
         setTimeout(
           () => {
@@ -1236,8 +2344,9 @@ $("copyLink")
                 "KOPEERI LINK";
 
           },
-          1600
+          1500
         );
+
 
       }catch{
 
@@ -1252,54 +2361,72 @@ $("copyLink")
   );
 
 
+
+/* ======================================
+   SETTINGS
+====================================== */
+
 [
   "musicMode",
   "targetCards",
   "autoNext"
 ]
-.forEach(id => {
+.forEach(
+  id => {
 
-  $(id)
-    .addEventListener(
-      "change",
-      () => {
+    $(id)
+      .addEventListener(
+        "change",
+        () => {
 
-        clearTimeout(
-          settingsTimer
-        );
-
-        settingsTimer =
-          setTimeout(
-            () => {
-
-              socket.emit(
-                "settings",
-                {
-                  musicMode:
-                    $("musicMode")
-                      .value,
-
-                  targetCards:
-                    Number(
-                      $("targetCards")
-                        .value
-                    ),
-
-                  autoNext:
-                    $("autoNext")
-                      .checked
-                }
-              );
-
-            },
-            150
+          clearTimeout(
+            settingsTimer
           );
 
-      }
-    );
 
-});
+          settingsTimer =
+            setTimeout(
+              () => {
 
+                socket.emit(
+
+                  "settings",
+
+                  {
+
+                    musicMode:
+                      $("musicMode")
+                        .value,
+
+                    targetCards:
+                      Number(
+                        $("targetCards")
+                          .value
+                      ),
+
+                    autoNext:
+                      $("autoNext")
+                        .checked
+
+                  }
+
+                );
+
+              },
+              150
+            );
+
+        }
+      );
+
+  }
+);
+
+
+
+/* ======================================
+   SERVER STATE
+====================================== */
 
 socket.on(
   "state",
@@ -1308,8 +2435,10 @@ socket.on(
     state =
       newState;
 
+
     selectedSlot =
       null;
+
 
     render();
 
@@ -1317,12 +2446,13 @@ socket.on(
 );
 
 
+
 function isHost(){
 
   return (
     state &&
     state.hostId ===
-    socket.id
+      socket.id
   );
 
 }
@@ -1333,7 +2463,7 @@ function myTurn(){
   return (
     state &&
     state.currentPlayerId ===
-    socket.id
+      socket.id
   );
 
 }
@@ -1342,16 +2472,26 @@ function myTurn(){
 function joinUrl(){
 
   return (
+
     location.origin +
+
     location.pathname +
+
     "?room=" +
+
     encodeURIComponent(
       state.code
     )
+
   );
 
 }
 
+
+
+/* ======================================
+   MAIN RENDER
+====================================== */
 
 function render(){
 
@@ -1359,30 +2499,42 @@ function render(){
     return;
   }
 
+
   $("home")
     .classList
     .add("hidden");
 
+
   if(!state.started){
+
     renderLobby();
+
   }else{
+
     renderGame();
+
   }
 
 }
 
 
-/* ---------- LOBBY ---------- */
+
+/* ======================================
+   LOBBY
+====================================== */
 
 function renderLobby(){
+
 
   $("lobby")
     .classList
     .remove("hidden");
 
+
   $("game")
     .classList
     .add("hidden");
+
 
 
   $("roomCode")
@@ -1390,9 +2542,11 @@ function renderLobby(){
       state.code;
 
 
+
   $("count")
     .textContent =
       `(${state.players.length}/8)`;
+
 
 
   $("settingsCard")
@@ -1403,17 +2557,21 @@ function renderLobby(){
     );
 
 
+
   if(isHost()){
+
 
     $("musicMode")
       .value =
         state.musicMode;
+
 
     $("targetCards")
       .value =
         String(
           state.targetCards
         );
+
 
     $("autoNext")
       .checked =
@@ -1422,42 +2580,63 @@ function renderLobby(){
   }
 
 
+
   const players =
     $("lobbyPlayers");
 
+
   players.innerHTML =
     "";
+
 
 
   state.players
     .forEach(
       (player,index) => {
 
+
         const row =
           document.createElement(
             "div"
           );
 
+
         row.className =
           "player";
 
+
         row.innerHTML = `
+
           <span>
+
             ${index + 1}.
+
             ${escapeHtml(player.name)}
-            ${player.isHost ? " ★" : ""}
+
+            ${player.isHost ? " ✦" : ""}
+
           </span>
 
-          <span class="${player.connected ? "online" : ""}">
-            ${player.connected ? "ONLINE" : "OFFLINE"}
+
+          <span
+            class="${player.connected ? "online" : ""}"
+          >
+
+            ${player.connected ? "kohal" : "kadunud"}
+
           </span>
+
         `;
 
+
         players
-          .appendChild(row);
+          .appendChild(
+            row
+          );
 
       }
     );
+
 
 
   $("start")
@@ -1468,16 +2647,22 @@ function renderLobby(){
     );
 
 
+
   $("start")
     .disabled =
       state.players.length < 2;
 
 
+
   $("start")
     .textContent =
+
       state.players.length < 2
-        ? "WAITING..."
-        : "START";
+
+        ? "OOTAME SELTSKONDA..."
+
+        : "✦ ALGAB ✦";
+
 
 
   drawQR();
@@ -1485,17 +2670,23 @@ function renderLobby(){
 }
 
 
-/* ---------- GAME ---------- */
+
+/* ======================================
+   GAME
+====================================== */
 
 function renderGame(){
+
 
   $("lobby")
     .classList
     .add("hidden");
 
+
   $("game")
     .classList
     .remove("hidden");
+
 
 
   $("gameCode")
@@ -1503,18 +2694,25 @@ function renderGame(){
       state.code;
 
 
+
   $("modeLabel")
     .textContent =
+
       state.musicMode ===
       "estonian"
-        ? "EE"
+
+        ? "EESTI"
+
         : state.musicMode ===
           "mixed"
-          ? "EE + WORLD"
-          : "WORLD";
+
+          ? "EESTI + MUU"
+
+          : "VÄLISMAA";
 
 
-  const currentPlayer =
+
+  const current =
     state.players
       .find(
         player =>
@@ -1523,16 +2721,23 @@ function renderGame(){
       );
 
 
+
   $("turnLabel")
     .textContent =
+
       myTurn()
+
         ? "SINU KORD"
-        : "KORD: " +
-          (
-            currentPlayer
-              ? currentPlayer.name
+
+        : (
+            current
+
+              ? current.name +
+                " arvab"
+
               : ""
           );
+
 
 
   $("turnLabel")
@@ -1543,12 +2748,15 @@ function renderGame(){
     );
 
 
+
   if(state.listening){
+
 
     $("spotifyLink")
       .href =
         state.listening
           .spotify;
+
 
     $("youtubeLink")
       .href =
@@ -1556,6 +2764,7 @@ function renderGame(){
           .youtube;
 
   }
+
 
 
   renderScores();
@@ -1569,63 +2778,90 @@ function renderGame(){
 }
 
 
-/* ---------- SCORES ---------- */
+
+/* ======================================
+   SCORES
+====================================== */
 
 function renderScores(){
 
+
   const scores =
     $("scores");
+
 
   scores.innerHTML =
     "";
 
 
+
   state.players
-    .forEach(player => {
+    .forEach(
+      player => {
 
-      const div =
-        document.createElement(
-          "div"
-        );
 
-      div.className =
-        "score";
+        const div =
+          document.createElement(
+            "div"
+          );
 
-      div.innerHTML = `
-        <strong>
-          ${escapeHtml(player.name)}
-        </strong>
 
-        <div class="score-count">
-          ${player.timelineCount}
-          /
-          ${state.targetCards}
-        </div>
-      `;
+        div.className =
+          "score";
 
-      scores
-        .appendChild(div);
 
-    });
+        div.innerHTML = `
+
+          <strong>
+            ${escapeHtml(player.name)}
+          </strong>
+
+          <div class="score-count">
+
+            ${player.timelineCount}
+            /
+            ${state.targetCards}
+
+          </div>
+
+        `;
+
+
+        scores
+          .appendChild(
+            div
+          );
+
+      }
+    );
 
 }
 
 
-/* ---------- TIMELINE ---------- */
+
+/* ======================================
+   TIMELINE
+====================================== */
 
 function renderTimeline(){
+
 
   const container =
     $("timeline");
 
+
   const guessArea =
     $("guessArea");
+
+
 
   container.innerHTML =
     "";
 
+
   guessArea.innerHTML =
     "";
+
 
 
   const items =
@@ -1634,37 +2870,57 @@ function renderTimeline(){
       : [];
 
 
+
   items.forEach(
     card => {
+
 
       const element =
         document.createElement(
           "div"
         );
 
+
       element.className =
         "timeline-card";
 
+
       element.innerHTML = `
+
         <div class="timeline-year">
+
           ${card.year}
+
         </div>
+
 
         <div class="timeline-song">
+
           ${escapeHtml(card.title)}
+
         </div>
+
 
         <div class="timeline-artist">
+
           ${escapeHtml(card.artist)}
+
         </div>
+
       `;
 
+
       container
-        .appendChild(element);
+        .appendChild(
+          element
+        );
 
     }
   );
 
+
+
+  /* WAITING */
 
   if(
     !myTurn() ||
@@ -1672,63 +2928,89 @@ function renderTimeline(){
     state.finished
   ){
 
+
     const message =
       document.createElement(
         "p"
       );
 
+
     message.className =
       "small muted";
 
 
+
     if(state.finished){
 
+
       message.textContent =
-        "GAME OVER";
+        "Õhtu on lõppenud.";
+
 
     }else if(myTurn()){
 
+
       message.textContent =
-        "vastus lukustatud.";
+        "Valik on tehtud.";
+
 
     }else{
 
+
       const current =
-        state.players.find(
-          player =>
-            player.id ===
-            state.currentPlayerId
-        );
+        state.players
+          .find(
+            player =>
+              player.id ===
+              state.currentPlayerId
+          );
+
 
       message.textContent =
+
         current
-          ? `${current.name} paigutab lugu...`
+
+          ? `${current.name} otsustab...`
+
           : "oota...";
 
     }
 
 
+
     guessArea
-      .appendChild(message);
+      .appendChild(
+        message
+      );
+
 
     return;
 
   }
 
 
+
+  /* ACTIVE PLAYER */
+
   const intro =
     document.createElement(
       "p"
     );
 
+
   intro.className =
     "small muted";
 
+
   intro.textContent =
-    "Kuhu tundmatu lugu ajajoonel kuulub?";
+    "Millisesse pilusse uus lugu kuulub?";
+
 
   guessArea
-    .appendChild(intro);
+    .appendChild(
+      intro
+    );
+
 
 
   const slots =
@@ -1737,39 +3019,55 @@ function renderTimeline(){
     );
 
 
+  let submit;
+
+
+
   for(
     let i = 0;
     i <= items.length;
     i++
   ){
 
+
     const button =
       document.createElement(
         "button"
       );
 
+
     button.type =
       "button";
+
 
     button.className =
       "slot";
 
 
+
     if(i === 0){
 
+
       button.textContent =
+
         items.length
+
           ? `enne ${items[0].year}`
+
           : "siia";
+
 
     }else if(
       i === items.length
     ){
 
+
       button.textContent =
         `pärast ${items[i-1].year}`;
 
+
     }else{
+
 
       button.textContent =
         `${items[i-1].year} — ${items[i].year}`;
@@ -1777,13 +3075,16 @@ function renderTimeline(){
     }
 
 
+
     button
       .addEventListener(
         "click",
         () => {
 
+
           selectedSlot =
             i;
+
 
           slots
             .querySelectorAll(
@@ -1791,11 +3092,13 @@ function renderTimeline(){
             )
             .forEach(
               slot =>
-                slot.classList
+                slot
+                  .classList
                   .remove(
                     "active"
                   )
             );
+
 
           button
             .classList
@@ -1803,43 +3106,55 @@ function renderTimeline(){
               "active"
             );
 
-          submit
-            .disabled =
-              false;
+
+          submit.disabled =
+            false;
 
         }
       );
 
 
     slots
-      .appendChild(button);
+      .appendChild(
+        button
+      );
 
   }
 
 
+
   guessArea
-    .appendChild(slots);
+    .appendChild(
+      slots
+    );
 
 
-  const submit =
+
+  submit =
     document.createElement(
       "button"
     );
 
+
   submit.type =
     "button";
+
 
   submit.className =
     "primary full";
 
+
   submit.style.marginTop =
-    "13px";
+    "14px";
+
 
   submit.textContent =
-    "LUKUSTA";
+    "KINNITA VALIK";
+
 
   submit.disabled =
     true;
+
 
 
   submit
@@ -1847,11 +3162,15 @@ function renderTimeline(){
       "click",
       () => {
 
+
         submit.disabled =
           true;
 
+
         socket.emit(
+
           "guessSlot",
+
           {
             slot:
               selectedSlot
@@ -1859,11 +3178,14 @@ function renderTimeline(){
 
           result => {
 
+
             if(!result.ok){
+
 
               alert(
                 result.error
               );
+
 
               submit.disabled =
                 false;
@@ -1871,35 +3193,47 @@ function renderTimeline(){
             }
 
           }
+
         );
 
       }
     );
 
 
+
   guessArea
-    .appendChild(submit);
+    .appendChild(
+      submit
+    );
 
 }
 
 
-/* ---------- REVEAL ---------- */
+
+/* ======================================
+   REVEAL
+====================================== */
 
 function renderReveal(){
+
 
   const box =
     $("revealBox");
 
 
+
   if(!state.reveal){
+
 
     box
       .classList
       .add("hidden");
 
+
     return;
 
   }
+
 
 
   box
@@ -1907,21 +3241,31 @@ function renderReveal(){
     .remove("hidden");
 
 
+
   $("revealResult")
     .textContent =
+
       state.reveal.correct
-        ? "ÕIGE"
-        : "VALE";
+
+        ? "BRAVO!"
+
+        : "OH EI!";
+
 
 
   $("revealResult")
     .className =
+
       "result " +
+
       (
         state.reveal.correct
+
           ? "good"
+
           : "bad"
       );
+
 
 
   $("revealYear")
@@ -1929,9 +3273,11 @@ function renderReveal(){
       state.reveal.year;
 
 
+
   $("revealSong")
     .textContent =
       state.reveal.title;
+
 
 
   $("revealArtist")
@@ -1939,51 +3285,69 @@ function renderReveal(){
       state.reveal.artist;
 
 
+
   $("autoProgress")
     .classList
     .toggle(
+
       "hidden",
+
       !state.autoNext ||
       state.finished
+
     );
+
 
 
   $("next")
     .classList
     .toggle(
+
       "hidden",
+
       !isHost() ||
       state.finished
+
     );
 
 }
 
 
-/* ---------- WINNER ---------- */
+
+/* ======================================
+   WINNER
+====================================== */
 
 function renderWinner(){
+
 
   const box =
     $("winnerBox");
 
 
+
   if(!state.finished){
+
 
     box
       .classList
       .add("hidden");
+
 
     return;
 
   }
 
 
+
   const winner =
-    state.players.find(
-      player =>
-        player.id ===
-        state.winnerId
-    );
+    state.players
+      .find(
+        player =>
+          player.id ===
+          state.winnerId
+      );
+
 
 
   box
@@ -1991,12 +3355,25 @@ function renderWinner(){
     .remove("hidden");
 
 
+
   box.innerHTML = `
+
+    <img
+      src="/images/destudio-venus.jpg"
+      class="winner-photo"
+      alt=""
+    >
+
+
     <div class="win-title">
-      GAME OVER
+
+      Daamid ja härrad...
+
     </div>
 
+
     <div class="win-name">
+
       ${
         escapeHtml(
           winner
@@ -2004,32 +3381,50 @@ function renderWinner(){
             : "?"
         )
       }
+
     </div>
 
-    <div class="small muted">
-      kõrva(n)uss on leidnud peremehe.
+
+    <div
+      class="subtitle"
+      style="
+        text-align:center;
+        margin-bottom:12px;
+      "
+    >
+
+      kõrva(n)uss on leidnud oma peremehe.
+
     </div>
+
   `;
 
 
+
   if(isHost()){
+
 
     const restart =
       document.createElement(
         "button"
       );
 
+
     restart.type =
       "button";
+
 
     restart.className =
       "primary full";
 
+
     restart.style.marginTop =
       "18px";
 
+
     restart.textContent =
-      "PLAY AGAIN";
+      "VEEL ÜKS KORD";
+
 
 
     restart
@@ -2037,22 +3432,31 @@ function renderWinner(){
         "click",
         () => {
 
+
           socket.emit(
+
             "restart",
+
             {},
+
             result => {
 
+
               if(!result.ok){
+
                 alert(
                   result.error
                 );
+
               }
 
             }
+
           );
 
         }
       );
+
 
 
     box
@@ -2065,15 +3469,21 @@ function renderWinner(){
 }
 
 
-/* ---------- QR ---------- */
+
+/* ======================================
+   QR
+====================================== */
 
 function drawQR(){
+
 
   const element =
     $("qr");
 
+
   element.innerHTML =
     "";
+
 
 
   if(
@@ -2081,19 +3491,35 @@ function drawQR(){
     "undefined"
   ){
 
-    element.innerHTML =
-      `<div style="color:#111;font-size:11px;padding:10px">
-        QR unavailable
-      </div>`;
+
+    element.innerHTML = `
+
+      <div
+        style="
+          color:#111;
+          font-size:12px;
+          padding:10px;
+        "
+      >
+        QR-koodi laadimine ebaõnnestus.
+        Kasuta liitumislinki.
+      </div>
+
+    `;
+
 
     return;
 
   }
 
 
+
   new QRCode(
+
     element,
+
     {
+
       text:
         joinUrl(),
 
@@ -2104,7 +3530,7 @@ function drawQR(){
         168,
 
       colorDark:
-        "#050505",
+        "#381019",
 
       colorLight:
         "#ffffff",
@@ -2113,32 +3539,50 @@ function drawQR(){
         QRCode
           .CorrectLevel
           .M
+
     }
+
   );
 
 }
 
 
-/* ---------- SAFE TEXT ---------- */
+
+/* ======================================
+   ESCAPE TEXT
+====================================== */
 
 function escapeHtml(value){
 
+
   return String(value)
     .replace(
+
       /[&<>"']/g,
+
       character => ({
+
         "&":"&amp;",
+
         "<":"&lt;",
+
         ">":"&gt;",
+
         '"':"&quot;",
+
         "'":"&#39;"
+
       })[character]
+
     );
 
 }
 
+
 })();
+
 </script>
+
 
 </body>
 </html>
