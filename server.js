@@ -11,24 +11,46 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const rooms = new Map();
 
-const SONGS = [
+const FOREIGN = [
+  ["Stand by Me","Ben E. King",1961],
+  ["California Dreamin'","The Mamas & the Papas",1965],
+  ["Paint It, Black","The Rolling Stones",1966],
+  ["Respect","Aretha Franklin",1967],
+  ["Space Oddity","David Bowie",1969],
+  ["Imagine","John Lennon",1971],
+  ["Superstition","Stevie Wonder",1972],
+  ["Bohemian Rhapsody","Queen",1975],
   ["Dancing Queen","ABBA",1976],
+  ["Dreams","Fleetwood Mac",1977],
+  ["Stayin' Alive","Bee Gees",1977],
+  ["Heroes","David Bowie",1977],
   ["I Will Survive","Gloria Gaynor",1978],
+  ["Heart of Glass","Blondie",1978],
+  ["Another One Bites the Dust","Queen",1980],
   ["Call Me","Blondie",1980],
   ["Billie Jean","Michael Jackson",1983],
   ["Girls Just Want to Have Fun","Cyndi Lauper",1983],
+  ["Sweet Dreams (Are Made of This)","Eurythmics",1983],
   ["Take on Me","a-ha",1985],
   ["Like a Prayer","Madonna",1989],
+  ["Enjoy the Silence","Depeche Mode",1990],
   ["Nothing Compares 2 U","Sinéad O’Connor",1990],
   ["Smells Like Teen Spirit","Nirvana",1991],
+  ["Rhythm Is a Dancer","Snap!",1992],
   ["Zombie","The Cranberries",1994],
   ["Wonderwall","Oasis",1995],
+  ["Freed from Desire","Gala",1996],
   ["Torn","Natalie Imbruglia",1997],
   ["...Baby One More Time","Britney Spears",1998],
   ["Yellow","Coldplay",2000],
+  ["Can't Get You Out of My Head","Kylie Minogue",2001],
   ["Complicated","Avril Lavigne",2002],
   ["Crazy in Love","Beyoncé feat. Jay-Z",2003],
   ["Mr. Brightside","The Killers",2003],
+  ["Toxic","Britney Spears",2003],
+  ["Seven Nation Army","The White Stripes",2003],
+  ["Crazy","Gnarls Barkley",2006],
+  ["Hips Don't Lie","Shakira feat. Wyclef Jean",2006],
   ["Rehab","Amy Winehouse",2006],
   ["Umbrella","Rihanna feat. Jay-Z",2007],
   ["Poker Face","Lady Gaga",2008],
@@ -38,62 +60,134 @@ const SONGS = [
   ["Get Lucky","Daft Punk feat. Pharrell Williams",2013],
   ["Royals","Lorde",2013],
   ["Take Me to Church","Hozier",2013],
+  ["Happy","Pharrell Williams",2013],
   ["Chandelier","Sia",2014],
   ["Uptown Funk","Mark Ronson feat. Bruno Mars",2014],
   ["Shape of You","Ed Sheeran",2017],
   ["bad guy","Billie Eilish",2019],
   ["Blinding Lights","The Weeknd",2019],
+  ["Watermelon Sugar","Harry Styles",2019],
   ["Levitating","Dua Lipa",2020],
   ["As It Was","Harry Styles",2022],
   ["Flowers","Miley Cyrus",2023],
-  ["Espresso","Sabrina Carpenter",2024],
-  ["Birds of a Feather","Billie Eilish",2024],
   ["Lose Control","Teddy Swims",2023],
-  ["Watermelon Sugar","Harry Styles",2019],
-  ["Happy","Pharrell Williams",2013],
-  ["Crazy","Gnarls Barkley",2006],
-  ["Hips Don't Lie","Shakira feat. Wyclef Jean",2006],
-  ["Toxic","Britney Spears",2003],
-  ["Seven Nation Army","The White Stripes",2003],
-  ["Can't Get You Out of My Head","Kylie Minogue",2001],
-  ["Freed from Desire","Gala",1996],
-  ["Rhythm Is a Dancer","Snap!",1992],
-  ["Enjoy the Silence","Depeche Mode",1990],
-  ["Sweet Dreams (Are Made of This)","Eurythmics",1983],
-  ["Another One Bites the Dust","Queen",1980],
-  ["Heart of Glass","Blondie",1978],
-  ["Stayin' Alive","Bee Gees",1977],
-  ["Dreams","Fleetwood Mac",1977],
-  ["Bohemian Rhapsody","Queen",1975],
-  ["Heroes","David Bowie",1977],
-  ["Superstition","Stevie Wonder",1972],
-  ["Imagine","John Lennon",1971],
-  ["Paint It, Black","The Rolling Stones",1966],
-  ["Respect","Aretha Franklin",1967],
-  ["California Dreamin'","The Mamas & the Papas",1965],
-  ["Stand by Me","Ben E. King",1961]
+  ["Espresso","Sabrina Carpenter",2024],
+  ["Birds of a Feather","Billie Eilish",2024]
+];
+
+const ESTONIAN = [
+  ["Kikilips","Ivo Linna",1987],
+  ["Mere lapsed","Ruja",1981],
+  ["Suudlus läbi jäätunud klaasi","Ruja",1980],
+  ["Eestlane olen ja eestlaseks jään","Ivo Linna",1988],
+  ["Sind surmani","Tõnis Mägi",1988],
+  ["Koit","Tõnis Mägi",1988],
+  ["Kaelakee hääl","Maarja-Liis Ilus & Ivo Linna",1996],
+  ["Keelatud maa","Maarja-Liis Ilus",1997],
+  ["Once in a Lifetime","Ines",2000],
+  ["Everybody","Tanel Padar, Dave Benton & 2XL",2001],
+  ["Club Kung Fu","Vanilla Ninja",2003],
+  ["Tough Enough","Vanilla Ninja",2003],
+  ["Kuu","Terminaator",2003],
+  ["Nii vaikseks kõik on jäänud","Jaan Tätte & Marko Matvere",2004],
+  ["Rändajad","Urban Symphony",2009],
+  ["Siren","Malcolm Lincoln",2010],
+  ["Rockefeller Street","Getter Jaani",2011],
+  ["Kuula","Ott Lepland",2012],
+  ["Päästke noored hinged","Grete Paia",2013],
+  ["Goodbye to Yesterday","Elina Born & Stig Rästa",2015],
+  ["Supersonic","Laura",2016],
+  ["Verona","Koit Toome & Laura",2017],
+  ["Storm","Victor Crone",2019],
+  ["Üks kord veel","NOËP",2019],
+  ["Young Boy","NOËP",2016],
+  ["Rooftop","NOËP",2018],
+  ["Tiiu talu tütreke","nublu",2018],
+  ["für Oksana","nublu feat. gameboy tetris",2019],
+  ["Universum","nublu",2020],
+  ["Mina ka","nublu feat. Reket",2018],
+  ["Magad vä?","5MIINUST",2018],
+  ["Aluspükse","5MIINUST",2019],
+  ["Paaristõuked","5MIINUST",2019],
+  ["(nendest) narkootikumidest ei tea me (küll) midagi","5MIINUST & Puuluup",2024],
+  ["Põhjamaa","Üle-eestiline ühendkoor",1980],
+  ["Saaremaa valss","Georg Ots",1951],
+  ["Vana vaksal","Vello Orumets",1972],
+  ["Horoskoop","Heidy Tamme",1969],
+  ["Tsirkus","Anne Veski",1983],
+  ["Roosiaia kuninganna","Anne Veski",1984],
+  ["Jätke võtmed väljapoole","Anne Veski",1986],
+  ["Valged roosid","Anne Veski",1989],
+  ["Mäng","2 Quick Start",1994],
+  ["Neiu mustas kleidis","2 Quick Start",1995],
+  ["Kingitus","2 Quick Start",1996],
+  ["17","Smilers",1998],
+  ["Mõistus on kadunud","Smilers",1999],
+  ["Tantsin sinuga taevas","Smilers",2001],
+  ["Käime katuseid mööda","Smilers",2003],
+  ["See on see","Smilers",2004],
+  ["Juulikuu lumi","Terminaator",1995],
+  ["Carmen","Terminaator",1997],
+  ["Romula","Terminaator",1997],
+  ["Ajateenija","Terminaator",1999],
+  ["Depressiivsed Eesti väikelinnad","HU?",2008],
+  ["Absoluutselt","HU?",2008],
+  ["Kosmos","Iiris",2010],
+  ["Crave","Iiris",2012],
+  ["Parmupillihullus","Trad.Attack!",2014],
+  ["Sõit","Trad.Attack!",2015],
+  ["Sädemed","Karl-Erik Taukar",2015],
+  ["Segased lood","Karl-Erik Taukar",2016],
+  ["Lähedal","Karl-Erik Taukar",2017],
+  ["Miljon sammu","Karl-Erik Taukar",2017],
+  ["Laura (Walk with Me)","Brainstorm",2015],
+  ["Mina jään","Lenna",2010],
+  ["Rapunzel","Lenna",2010],
+  ["Supernoova","Lenna",2014],
+  ["Lendame valguskiirusel","Traffic",2007],
+  ["Für Elise","Traffic",2014],
+  ["Sekundiga","Traffic",2015],
+  ["Vihm","Metsatöll",2004],
+  ["Küü","Metsatöll",2008],
+  ["Oma laulu ei leia ma üles","Vennaskond",1991],
+  ["Insener Garini hüperboloid","Vennaskond",1993]
 ];
 
 function shuffle(arr) {
   const a = arr.slice();
+
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
+
   return a;
 }
 
-function roomCode() {
+function newCode() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = "";
+  let code;
+
   do {
-    code = Array.from({length: 4}, () => chars[Math.floor(Math.random()*chars.length)]).join("");
+    code = Array.from(
+      { length: 4 },
+      () => chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
   } while (rooms.has(code));
+
   return code;
 }
 
+function poolFor(mode) {
+  if (mode === "estonian") return ESTONIAN;
+  if (mode === "mixed") return [...ESTONIAN, ...FOREIGN];
+
+  return FOREIGN;
+}
+
 function publicState(room, socketId) {
-  const me = room.players.find(p => p.id === socketId);
+  const me = room.players.find(player => player.id === socketId);
+
   return {
     code: room.code,
     hostId: room.hostId,
@@ -101,37 +195,67 @@ function publicState(room, socketId) {
     finished: room.finished,
     winnerId: room.winnerId || null,
     turnIndex: room.turnIndex,
-    currentPlayerId: room.started && room.players.length ? room.players[room.turnIndex % room.players.length].id : null,
-    currentSong: room.currentSong ? { title: room.currentSong[0], artist: room.currentSong[1] } : null,
-    reveal: room.reveal ? {
-      year: room.currentSong[2],
-      correct: room.reveal.correct,
-      guessedSlot: room.reveal.guessedSlot
-    } : null,
-    players: room.players.map(p => ({
-      id: p.id,
-      name: p.name,
-      timelineCount: p.timeline.length,
-      connected: p.connected,
-      isHost: p.id === room.hostId
+
+    currentPlayerId:
+      room.started && room.players.length
+        ? room.players[room.turnIndex % room.players.length].id
+        : null,
+
+    currentSong: room.currentSong
+      ? {
+          title: room.currentSong[0],
+          artist: room.currentSong[1]
+        }
+      : null,
+
+    reveal: room.reveal
+      ? {
+          year: room.currentSong[2],
+          correct: room.reveal.correct,
+          guessedSlot: room.reveal.guessedSlot
+        }
+      : null,
+
+    musicMode: room.musicMode,
+    targetCards: room.targetCards,
+    autoNext: room.autoNext,
+
+    players: room.players.map(player => ({
+      id: player.id,
+      name: player.name,
+      timelineCount: player.timeline.length,
+      connected: player.connected,
+      isHost: player.id === room.hostId
     })),
-    me: me ? {
-      id: me.id,
-      name: me.name,
-      timeline: me.timeline.map(s => ({ title: s[0], artist: s[1], year: s[2] }))
-    } : null,
-    targetCards: room.targetCards
+
+    me: me
+      ? {
+          id: me.id,
+          name: me.name,
+          timeline: me.timeline.map(song => ({
+            title: song[0],
+            artist: song[1],
+            year: song[2]
+          }))
+        }
+      : null
   };
 }
 
 function emitRoom(room) {
-  for (const p of room.players) {
-    io.to(p.id).emit("state", publicState(room, p.id));
-  }
+  room.players.forEach(player => {
+    io.to(player.id).emit(
+      "state",
+      publicState(room, player.id)
+    );
+  });
 }
 
 function startRound(room) {
-  if (room.deck.length === 0) room.deck = shuffle(SONGS);
+  if (!room.deck.length) {
+    room.deck = shuffle(poolFor(room.musicMode));
+  }
+
   room.currentSong = room.deck.pop();
   room.reveal = null;
 }
@@ -139,136 +263,526 @@ function startRound(room) {
 function startGame(room) {
   room.started = true;
   room.finished = false;
-  room.turnIndex = 0;
   room.winnerId = null;
-  room.deck = shuffle(SONGS);
-  room.players.forEach(p => {
-    p.timeline = [room.deck.pop()];
+  room.turnIndex = 0;
+
+  room.deck = shuffle(poolFor(room.musicMode));
+
+  room.players.forEach(player => {
+    player.timeline = [room.deck.pop()];
   });
+
   startRound(room);
 }
 
-function cleanupRoom(code) {
-  const room = rooms.get(code);
-  if (!room) return;
-  if (room.players.every(p => !p.connected)) {
-    rooms.delete(code);
-  }
+function nextRound(room) {
+  if (room.finished) return;
+
+  room.turnIndex =
+    (room.turnIndex + 1) % room.players.length;
+
+  startRound(room);
+  emitRoom(room);
 }
 
 io.on("connection", socket => {
-  socket.on("createRoom", ({name}, cb) => {
-    const cleanName = String(name || "").trim().slice(0, 24);
-    if (!cleanName) return cb?.({ok:false, error:"Sisesta nimi."});
-    const code = roomCode();
+
+  socket.on("createRoom", ({ name }, callback) => {
+
+    const cleanName =
+      String(name || "")
+        .trim()
+        .slice(0, 24);
+
+    if (!cleanName) {
+      return callback?.({
+        ok: false,
+        error: "Sisesta nimi."
+      });
+    }
+
+    const code = newCode();
+
     const room = {
       code,
       hostId: socket.id,
-      players: [{id:socket.id, name:cleanName, timeline:[], connected:true}],
-      started:false,
-      finished:false,
-      winnerId:null,
-      turnIndex:0,
-      deck:[],
-      currentSong:null,
-      reveal:null,
-      targetCards:8
+
+      players: [
+        {
+          id: socket.id,
+          name: cleanName,
+          timeline: [],
+          connected: true
+        }
+      ],
+
+      started: false,
+      finished: false,
+      winnerId: null,
+      turnIndex: 0,
+
+      deck: [],
+      currentSong: null,
+      reveal: null,
+
+      musicMode: "foreign",
+      targetCards: 8,
+      autoNext: true,
+      autoTimer: null
     };
+
     rooms.set(code, room);
+
     socket.data.roomCode = code;
     socket.join(code);
-    cb?.({ok:true, code});
+
+    callback?.({
+      ok: true,
+      code
+    });
+
     emitRoom(room);
   });
 
-  socket.on("joinRoom", ({name, code}, cb) => {
-    const cleanName = String(name || "").trim().slice(0,24);
-    const cleanCode = String(code || "").trim().toUpperCase();
-    if (!cleanName) return cb?.({ok:false, error:"Sisesta nimi."});
-    const room = rooms.get(cleanCode);
-    if (!room) return cb?.({ok:false, error:"Sellist tuba ei leitud."});
-    if (room.started) return cb?.({ok:false, error:"Mäng on juba alanud."});
-    if (room.players.length >= 4) return cb?.({ok:false, error:"Tuba on täis."});
-    if (room.players.some(p => p.name.toLowerCase() === cleanName.toLowerCase())) {
-      return cb?.({ok:false, error:"See nimi on juba kasutusel."});
+
+  socket.on("joinRoom", ({ name, code }, callback) => {
+
+    const cleanName =
+      String(name || "")
+        .trim()
+        .slice(0, 24);
+
+    const cleanCode =
+      String(code || "")
+        .trim()
+        .toUpperCase();
+
+    if (!cleanName) {
+      return callback?.({
+        ok: false,
+        error: "Sisesta nimi."
+      });
     }
-    room.players.push({id:socket.id, name:cleanName, timeline:[], connected:true});
+
+    const room = rooms.get(cleanCode);
+
+    if (!room) {
+      return callback?.({
+        ok: false,
+        error: "Sellist tuba ei leitud."
+      });
+    }
+
+    if (room.started) {
+      return callback?.({
+        ok: false,
+        error: "Mäng on juba alanud."
+      });
+    }
+
+    if (room.players.length >= 8) {
+      return callback?.({
+        ok: false,
+        error: "Tuba on täis (max 8)."
+      });
+    }
+
+    if (
+      room.players.some(
+        player =>
+          player.name.toLowerCase() ===
+          cleanName.toLowerCase()
+      )
+    ) {
+      return callback?.({
+        ok: false,
+        error: "See nimi on juba kasutusel."
+      });
+    }
+
+    room.players.push({
+      id: socket.id,
+      name: cleanName,
+      timeline: [],
+      connected: true
+    });
+
     socket.data.roomCode = cleanCode;
     socket.join(cleanCode);
-    cb?.({ok:true, code:cleanCode});
+
+    callback?.({
+      ok: true,
+      code: cleanCode
+    });
+
     emitRoom(room);
   });
 
-  socket.on("startGame", cb => {
-    const room = rooms.get(socket.data.roomCode);
-    if (!room) return cb?.({ok:false, error:"Tuba puudub."});
-    if (room.hostId !== socket.id) return cb?.({ok:false, error:"Ainult mängujuht saab alustada."});
-    if (room.players.length !== 4) return cb?.({ok:false, error:"Mänguks peab olema täpselt 4 mängijat."});
+
+  socket.on(
+    "settings",
+    ({ musicMode, targetCards, autoNext }, callback) => {
+
+      const room =
+        rooms.get(socket.data.roomCode);
+
+      if (!room) {
+        return callback?.({
+          ok: false,
+          error: "Tuba puudub."
+        });
+      }
+
+      if (room.hostId !== socket.id) {
+        return callback?.({
+          ok: false,
+          error:
+            "Ainult mängujuht saab seadeid muuta."
+        });
+      }
+
+      if (room.started) {
+        return callback?.({
+          ok: false,
+          error: "Mäng on juba alanud."
+        });
+      }
+
+      if (
+        ["foreign", "estonian", "mixed"]
+          .includes(musicMode)
+      ) {
+        room.musicMode = musicMode;
+      }
+
+      const target =
+        Number(targetCards);
+
+      if (Number.isInteger(target)) {
+        room.targetCards =
+          Math.max(
+            5,
+            Math.min(15, target)
+          );
+      }
+
+      room.autoNext =
+        Boolean(autoNext);
+
+      callback?.({
+        ok: true
+      });
+
+      emitRoom(room);
+    }
+  );
+
+
+  socket.on("startGame", callback => {
+
+    const room =
+      rooms.get(socket.data.roomCode);
+
+    if (!room) {
+      return callback?.({
+        ok: false,
+        error: "Tuba puudub."
+      });
+    }
+
+    if (room.hostId !== socket.id) {
+      return callback?.({
+        ok: false,
+        error:
+          "Ainult mängujuht saab alustada."
+      });
+    }
+
+    if (room.players.length < 2) {
+      return callback?.({
+        ok: false,
+        error:
+          "Mänguks on vaja vähemalt 2 mängijat."
+      });
+    }
+
     startGame(room);
-    cb?.({ok:true});
+
+    callback?.({
+      ok: true
+    });
+
     emitRoom(room);
   });
 
-  socket.on("guessSlot", ({slot}, cb) => {
-    const room = rooms.get(socket.data.roomCode);
-    if (!room || !room.started || room.finished) return cb?.({ok:false, error:"Mäng ei käi."});
-    const current = room.players[room.turnIndex % room.players.length];
-    if (!current || current.id !== socket.id) return cb?.({ok:false, error:"Praegu pole sinu kord."});
-    if (room.reveal) return cb?.({ok:false, error:"See voor on juba vastatud."});
 
-    let index = Number(slot);
-    if (!Number.isInteger(index)) return cb?.({ok:false, error:"Vigane valik."});
-    index = Math.max(0, Math.min(index, current.timeline.length));
+  socket.on(
+    "guessSlot",
+    ({ slot }, callback) => {
 
-    const year = room.currentSong[2];
-    const left = index === 0 ? -Infinity : current.timeline[index - 1][2];
-    const right = index === current.timeline.length ? Infinity : current.timeline[index][2];
-    const correct = year >= left && year <= right;
+      const room =
+        rooms.get(socket.data.roomCode);
 
-    room.reveal = {correct, guessedSlot:index};
+      if (
+        !room ||
+        !room.started ||
+        room.finished
+      ) {
+        return callback?.({
+          ok: false,
+          error: "Mäng ei käi."
+        });
+      }
 
-    if (correct) {
-      current.timeline.splice(index, 0, room.currentSong);
-      if (current.timeline.length >= room.targetCards) {
-        room.finished = true;
-        room.winnerId = current.id;
+      const currentPlayer =
+        room.players[
+          room.turnIndex %
+          room.players.length
+        ];
+
+      if (
+        currentPlayer.id !==
+        socket.id
+      ) {
+        return callback?.({
+          ok: false,
+          error:
+            "Praegu pole sinu kord."
+        });
+      }
+
+      if (room.reveal) {
+        return callback?.({
+          ok: false,
+          error:
+            "See voor on juba vastatud."
+        });
+      }
+
+      let index =
+        Number(slot);
+
+      if (!Number.isInteger(index)) {
+        return callback?.({
+          ok: false,
+          error: "Vigane valik."
+        });
+      }
+
+      index =
+        Math.max(
+          0,
+          Math.min(
+            index,
+            currentPlayer.timeline.length
+          )
+        );
+
+      const year =
+        room.currentSong[2];
+
+      const left =
+        index === 0
+          ? -Infinity
+          : currentPlayer
+              .timeline[index - 1][2];
+
+      const right =
+        index ===
+        currentPlayer.timeline.length
+          ? Infinity
+          : currentPlayer
+              .timeline[index][2];
+
+      const correct =
+        year >= left &&
+        year <= right;
+
+      room.reveal = {
+        correct,
+        guessedSlot: index
+      };
+
+      if (correct) {
+
+        currentPlayer.timeline.splice(
+          index,
+          0,
+          room.currentSong
+        );
+
+        if (
+          currentPlayer.timeline.length >=
+          room.targetCards
+        ) {
+          room.finished = true;
+          room.winnerId =
+            currentPlayer.id;
+        }
+      }
+
+      callback?.({
+        ok: true
+      });
+
+      emitRoom(room);
+
+      if (
+        room.autoNext &&
+        !room.finished
+      ) {
+
+        clearTimeout(
+          room.autoTimer
+        );
+
+        room.autoTimer =
+          setTimeout(
+            () => nextRound(room),
+            4500
+          );
       }
     }
-    cb?.({ok:true});
-    emitRoom(room);
+  );
+
+
+  socket.on("nextRound", callback => {
+
+    const room =
+      rooms.get(socket.data.roomCode);
+
+    if (
+      !room ||
+      !room.started
+    ) {
+      return callback?.({
+        ok: false,
+        error: "Mäng ei käi."
+      });
+    }
+
+    if (
+      room.hostId !==
+      socket.id
+    ) {
+      return callback?.({
+        ok: false,
+        error:
+          "Ainult mängujuht saab jätkata."
+      });
+    }
+
+    if (!room.reveal) {
+      return callback?.({
+        ok: false,
+        error:
+          "Esmalt peab mängija vastama."
+      });
+    }
+
+    if (room.finished) {
+      return callback?.({
+        ok: false,
+        error:
+          "Mäng on lõppenud."
+      });
+    }
+
+    clearTimeout(
+      room.autoTimer
+    );
+
+    nextRound(room);
+
+    callback?.({
+      ok: true
+    });
   });
 
-  socket.on("nextRound", cb => {
-    const room = rooms.get(socket.data.roomCode);
-    if (!room || !room.started) return cb?.({ok:false, error:"Mäng ei käi."});
-    if (room.hostId !== socket.id) return cb?.({ok:false, error:"Ainult mängujuht saab jätkata."});
-    if (!room.reveal) return cb?.({ok:false, error:"Esmalt peab mängija vastama."});
-    if (room.finished) return cb?.({ok:false, error:"Mäng on lõppenud."});
-    room.turnIndex = (room.turnIndex + 1) % room.players.length;
-    startRound(room);
-    cb?.({ok:true});
-    emitRoom(room);
-  });
 
-  socket.on("restart", cb => {
-    const room = rooms.get(socket.data.roomCode);
-    if (!room) return cb?.({ok:false, error:"Tuba puudub."});
-    if (room.hostId !== socket.id) return cb?.({ok:false, error:"Ainult mängujuht saab uut mängu alustada."});
+  socket.on("restart", callback => {
+
+    const room =
+      rooms.get(socket.data.roomCode);
+
+    if (!room) {
+      return callback?.({
+        ok: false,
+        error: "Tuba puudub."
+      });
+    }
+
+    if (
+      room.hostId !==
+      socket.id
+    ) {
+      return callback?.({
+        ok: false,
+        error:
+          "Ainult mängujuht saab uut mängu alustada."
+      });
+    }
+
+    clearTimeout(
+      room.autoTimer
+    );
+
     startGame(room);
-    cb?.({ok:true});
+
+    callback?.({
+      ok: true
+    });
+
     emitRoom(room);
   });
+
 
   socket.on("disconnect", () => {
-    const code = socket.data.roomCode;
-    const room = rooms.get(code);
+
+    const room =
+      rooms.get(
+        socket.data.roomCode
+      );
+
     if (!room) return;
-    const p = room.players.find(p => p.id === socket.id);
-    if (p) p.connected = false;
+
+    const player =
+      room.players.find(
+        player =>
+          player.id === socket.id
+      );
+
+    if (player) {
+      player.connected = false;
+    }
+
     emitRoom(room);
-    setTimeout(() => cleanupRoom(code), 15 * 60 * 1000);
+
+    setTimeout(() => {
+
+      const currentRoom =
+        rooms.get(room.code);
+
+      if (
+        currentRoom &&
+        currentRoom.players.every(
+          player =>
+            !player.connected
+        )
+      ) {
+        rooms.delete(room.code);
+      }
+
+    }, 15 * 60 * 1000);
   });
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Hitster 4 running on port ${PORT}`));
+
+server.listen(
+  process.env.PORT || 3000,
+  () => {
+    console.log(
+      "Hitster v2 running"
+    );
+  }
+);
