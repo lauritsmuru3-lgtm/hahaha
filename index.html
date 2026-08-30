@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <title>Hitster 4</title>
+  <style>
+    :root { color-scheme: dark; --bg:#101010; --card:#191919; --muted:#a5a5a5; --line:#333; --accent:#f2e84b; --danger:#ff7777; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--bg); color:white; }
+    main { width:min(760px,100%); margin:auto; padding:22px 16px 48px; }
+    h1 { font-size:clamp(32px,8vw,58px); margin:0; line-height:.95; letter-spacing:-.05em; }
+    .sub { color:var(--muted); margin:10px 0 24px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; margin:14px 0; }
+    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    input,button { font:inherit; min-height:48px; border-radius:14px; border:1px solid var(--line); }
+    input { width:100%; padding:12px 14px; background:#111; color:white; font-size:16px; }
+    button { padding:12px 16px; background:#222; color:white; cursor:pointer; font-weight:700; }
+    button.primary { background:var(--accent); color:#111; border-color:transparent; }
+    button:disabled { opacity:.45; cursor:not-allowed; }
+    .hidden { display:none !important; }
+    .roomcode { font-size:48px; font-weight:900; letter-spacing:.12em; }
+    .pill { padding:7px 10px; border-radius:999px; background:#242424; color:#ddd; font-size:14px; }
+    .players { display:grid; gap:8px; }
+    .player { display:flex; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); }
+    .player:last-child { border-bottom:0; }
+    .song { font-size:28px; font-weight:850; line-height:1.05; margin:6px 0; }
+    .artist { color:var(--muted); font-size:18px; }
+    .timeline { display:flex; gap:8px; overflow-x:auto; padding:8px 2px 12px; scroll-snap-type:x proximity; }
+    .timeline-card { min-width:148px; max-width:148px; padding:14px; border-radius:16px; border:1px solid var(--line); background:#131313; scroll-snap-align:start; }
+    .year { font-weight:900; font-size:27px; }
+    .tiny { color:var(--muted); font-size:13px; }
+    .slot { min-width:54px; padding:10px 8px; border:1px dashed #777; background:#181818; }
+    .slot.active { background:var(--accent); color:#111; border-style:solid; }
+    .result-good { color:#9ef0a8; font-weight:900; }
+    .result-bad { color:#ff9b9b; font-weight:900; }
+    .notice { color:var(--muted); line-height:1.45; }
+    a.action { display:inline-flex; min-height:48px; align-items:center; padding:12px 16px; border-radius:14px; text-decoration:none; background:#1db954; color:#07140b; font-weight:850; }
+    .footer { color:#777; font-size:12px; margin-top:24px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>HITSTER<br>4-LE</h1>
+  <p class="sub">Neli telefoni. Üks ühine tuba. Igal mängijal oma ajajoon.</p>
+
+  <section id="home">
+    <div class="card">
+      <label for="name">Sinu nimi</label>
+      <input id="name" maxlength="24" autocomplete="nickname" placeholder="nt Laurits">
+    </div>
+    <div class="row">
+      <button id="create" class="primary">Loo uus mäng</button>
+      <button id="showJoin">Liitu mänguga</button>
+    </div>
+    <div id="joinBox" class="card hidden">
+      <label for="code">Toa kood</label>
+      <input id="code" maxlength="4" autocapitalize="characters" placeholder="AB12">
+      <button id="join" class="primary" style="margin-top:10px;width:100%">Liitu</button>
+    </div>
+    <p id="homeError" class="notice"></p>
+  </section>
+
+  <section id="lobby" class="hidden">
+    <div class="card">
+      <div class="tiny">TOA KOOD</div>
+      <div id="roomCode" class="roomcode"></div>
+      <p class="notice">Saada teistele selle lehe link ja toa kood. Kui kõik 4 on sees, saab mängujuht alustada.</p>
+      <div id="lobbyPlayers" class="players"></div>
+      <button id="start" class="primary hidden" style="width:100%;margin-top:14px">Alusta mängu</button>
+    </div>
+  </section>
+
+  <section id="game" class="hidden">
+    <div class="row" style="justify-content:space-between">
+      <span class="pill">Tuba <b id="gameCode"></b></span>
+      <span id="turnLabel" class="pill"></span>
+    </div>
+
+    <div class="card">
+      <div class="tiny">PRAEGUNE LUGU</div>
+      <div id="currentSong" class="song"></div>
+      <div id="currentArtist" class="artist"></div>
+      <a id="spotifyLink" class="action" target="_blank" rel="noopener" style="margin-top:14px">Ava Spotifys</a>
+      <p class="notice">Üks inimene avab loo Spotifys ja mängib seda kõigile. Ära otsi ilmumisaastat.</p>
+    </div>
+
+    <div class="card">
+      <div class="tiny">SINU AJATELG</div>
+      <div id="timeline" class="timeline"></div>
+      <div id="guessArea"></div>
+    </div>
+
+    <div id="revealBox" class="card hidden">
+      <div id="revealResult"></div>
+      <div id="revealYear" class="song"></div>
+      <button id="next" class="primary hidden" style="width:100%">Järgmine lugu</button>
+    </div>
+
+    <div id="winnerBox" class="card hidden"></div>
+  </section>
+
+  <p class="footer">Mitteametlik Hitsteri-laadne seltskonnamäng. Muusika mängitakse eraldi Spotify/YouTube’i kaudu.</p>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+(() => {
+  const socket = io();
+  const $ = id => document.getElementById(id);
+  let state = null;
+  let selectedSlot = null;
+
+  const params = new URLSearchParams(location.search);
+  if (params.get("room")) {
+    $("code").value = params.get("room").toUpperCase().slice(0,4);
+    $("joinBox").classList.remove("hidden");
+  }
+
+  $("showJoin").addEventListener("click", () => $("joinBox").classList.toggle("hidden"));
+
+  function cleanName() { return $("name").value.trim(); }
+  function showError(msg) { $("homeError").textContent = msg || ""; }
+
+  $("create").addEventListener("click", () => {
+    socket.emit("createRoom", {name:cleanName()}, res => {
+      if (!res.ok) return showError(res.error);
+      history.replaceState({}, "", "?room=" + res.code);
+    });
+  });
+
+  $("join").addEventListener("click", () => {
+    socket.emit("joinRoom", {name:cleanName(), code:$("code").value}, res => {
+      if (!res.ok) return showError(res.error);
+      history.replaceState({}, "", "?room=" + res.code);
+    });
+  });
+
+  $("start").addEventListener("click", () => socket.emit("startGame", {}, res => {
+    if (!res.ok) alert(res.error);
+  }));
+
+  $("next").addEventListener("click", () => socket.emit("nextRound", {}, res => {
+    if (!res.ok) alert(res.error);
+  }));
+
+  socket.on("state", s => {
+    state = s;
+    selectedSlot = null;
+    render();
+  });
+
+  function isHost() { return state && state.hostId === socket.id; }
+  function isMyTurn() { return state && state.currentPlayerId === socket.id; }
+
+  function render() {
+    if (!state) return;
+    $("home").classList.add("hidden");
+    if (!state.started) renderLobby();
+    else renderGame();
+  }
+
+  function renderLobby() {
+    $("lobby").classList.remove("hidden");
+    $("game").classList.add("hidden");
+    $("roomCode").textContent = state.code;
+    $("lobbyPlayers").innerHTML = "";
+    state.players.forEach((p,i) => {
+      const el = document.createElement("div");
+      el.className = "player";
+      el.innerHTML = `<span>${i+1}. ${escapeHtml(p.name)}${p.isHost ? " 👑" : ""}</span><span>${p.connected ? "✓" : "offline"}</span>`;
+      $("lobbyPlayers").appendChild(el);
+    });
+    $("start").classList.toggle("hidden", !isHost());
+    $("start").disabled = state.players.length !== 4;
+    $("start").textContent = state.players.length === 4 ? "Alusta mängu" : `Ootan mängijaid (${state.players.length}/4)`;
+  }
+
+  function renderGame() {
+    $("lobby").classList.add("hidden");
+    $("game").classList.remove("hidden");
+    $("gameCode").textContent = state.code;
+    const current = state.players.find(p => p.id === state.currentPlayerId);
+    $("turnLabel").textContent = isMyTurn() ? "SINU KORD" : `Kord: ${current ? current.name : ""}`;
+    $("currentSong").textContent = state.currentSong ? state.currentSong.title : "";
+    $("currentArtist").textContent = state.currentSong ? state.currentSong.artist : "";
+    const q = encodeURIComponent(`${state.currentSong?.title || ""} ${state.currentSong?.artist || ""}`);
+    $("spotifyLink").href = "https://open.spotify.com/search/" + q;
+
+    renderTimeline();
+    renderReveal();
+    renderWinner();
+  }
+
+  function renderTimeline() {
+    const tl = $("timeline");
+    tl.innerHTML = "";
+    const items = state.me?.timeline || [];
+
+    items.forEach((card, i) => {
+      const el = document.createElement("div");
+      el.className = "timeline-card";
+      el.innerHTML = `<div class="year">${card.year}</div><div><b>${escapeHtml(card.title)}</b></div><div class="tiny">${escapeHtml(card.artist)}</div>`;
+      tl.appendChild(el);
+    });
+
+    const area = $("guessArea");
+    area.innerHTML = "";
+
+    if (!isMyTurn() || state.reveal || state.finished) {
+      const p = document.createElement("p");
+      p.className = "notice";
+      p.textContent = isMyTurn() ? "Vastus on lukus." : "Vaata oma ajajoont ja kuula lugu. Praegu vastab teine mängija.";
+      area.appendChild(p);
+      return;
+    }
+
+    const hint = document.createElement("p");
+    hint.className = "notice";
+    hint.textContent = "Kuhu see lugu sinu ajajoonel kuulub? Vali koht:";
+    area.appendChild(hint);
+
+    const row = document.createElement("div");
+    row.className = "row";
+    for (let i=0; i<=items.length; i++) {
+      const b = document.createElement("button");
+      b.className = "slot";
+      b.type = "button";
+      b.textContent = i===0 ? "←" : i===items.length ? "→" : `${items[i-1].year} / ${items[i].year}`;
+      b.addEventListener("click", () => {
+        selectedSlot = i;
+        row.querySelectorAll("button").forEach(x => x.classList.remove("active"));
+        b.classList.add("active");
+        submit.disabled = false;
+      });
+      row.appendChild(b);
+    }
+    area.appendChild(row);
+
+    const submit = document.createElement("button");
+    submit.type = "button";
+    submit.className = "primary";
+    submit.style.marginTop = "12px";
+    submit.style.width = "100%";
+    submit.textContent = "Lukusta vastus";
+    submit.disabled = true;
+    submit.addEventListener("click", () => {
+      submit.disabled = true;
+      socket.emit("guessSlot", {slot:selectedSlot}, res => {
+        if (!res.ok) {
+          alert(res.error);
+          submit.disabled = false;
+        }
+      });
+    });
+    area.appendChild(submit);
+  }
+
+  function renderReveal() {
+    const box = $("revealBox");
+    if (!state.reveal) {
+      box.classList.add("hidden");
+      return;
+    }
+    box.classList.remove("hidden");
+    $("revealResult").className = state.reveal.correct ? "result-good" : "result-bad";
+    $("revealResult").textContent = state.reveal.correct ? "ÕIGE! Kaart jääb sulle." : "VALE! Kaart läheb ära.";
+    $("revealYear").textContent = `Õige aasta: ${state.reveal.year}`;
+    $("next").classList.toggle("hidden", !isHost() || state.finished);
+  }
+
+  function renderWinner() {
+    const box = $("winnerBox");
+    if (!state.finished) {
+      box.classList.add("hidden");
+      return;
+    }
+    const winner = state.players.find(p => p.id === state.winnerId);
+    box.classList.remove("hidden");
+    box.innerHTML = `<div class="tiny">MÄNG LÄBI</div><div class="song">🏆 ${escapeHtml(winner?.name || "Võitja")}</div><p class="notice">Esimesena ${state.targetCards} kaarti ajajoonel.</p>`;
+    if (isHost()) {
+      const b = document.createElement("button");
+      b.className = "primary";
+      b.style.width = "100%";
+      b.textContent = "Mängi uuesti";
+      b.addEventListener("click", () => socket.emit("restart", {}, res => { if (!res.ok) alert(res.error); }));
+      box.appendChild(b);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+})();
+</script>
+</body>
+</html>
