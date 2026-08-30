@@ -1,297 +1,253 @@
 <!doctype html>
 <html lang="et">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#111111">
-  <title>Hitster 4</title>
-  <style>
-    :root { color-scheme: dark; --bg:#101010; --card:#191919; --muted:#a5a5a5; --line:#333; --accent:#f2e84b; --danger:#ff7777; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family: ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--bg); color:white; }
-    main { width:min(760px,100%); margin:auto; padding:22px 16px 48px; }
-    h1 { font-size:clamp(32px,8vw,58px); margin:0; line-height:.95; letter-spacing:-.05em; }
-    .sub { color:var(--muted); margin:10px 0 24px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; margin:14px 0; }
-    .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    input,button { font:inherit; min-height:48px; border-radius:14px; border:1px solid var(--line); }
-    input { width:100%; padding:12px 14px; background:#111; color:white; font-size:16px; }
-    button { padding:12px 16px; background:#222; color:white; cursor:pointer; font-weight:700; }
-    button.primary { background:var(--accent); color:#111; border-color:transparent; }
-    button:disabled { opacity:.45; cursor:not-allowed; }
-    .hidden { display:none !important; }
-    .roomcode { font-size:48px; font-weight:900; letter-spacing:.12em; }
-    .pill { padding:7px 10px; border-radius:999px; background:#242424; color:#ddd; font-size:14px; }
-    .players { display:grid; gap:8px; }
-    .player { display:flex; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); }
-    .player:last-child { border-bottom:0; }
-    .song { font-size:28px; font-weight:850; line-height:1.05; margin:6px 0; }
-    .artist { color:var(--muted); font-size:18px; }
-    .timeline { display:flex; gap:8px; overflow-x:auto; padding:8px 2px 12px; scroll-snap-type:x proximity; }
-    .timeline-card { min-width:148px; max-width:148px; padding:14px; border-radius:16px; border:1px solid var(--line); background:#131313; scroll-snap-align:start; }
-    .year { font-weight:900; font-size:27px; }
-    .tiny { color:var(--muted); font-size:13px; }
-    .slot { min-width:54px; padding:10px 8px; border:1px dashed #777; background:#181818; }
-    .slot.active { background:var(--accent); color:#111; border-style:solid; }
-    .result-good { color:#9ef0a8; font-weight:900; }
-    .result-bad { color:#ff9b9b; font-weight:900; }
-    .notice { color:var(--muted); line-height:1.45; }
-    a.action { display:inline-flex; min-height:48px; align-items:center; padding:12px 16px; border-radius:14px; text-decoration:none; background:#1db954; color:#07140b; font-weight:850; }
-    .footer { color:#777; font-size:12px; margin-top:24px; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0d0d">
+<title>Hitster v2</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0d0d;--card:#181818;--soft:#222;--muted:#aaa;--line:#343434;--accent:#f0e84a;--good:#91e89e;--bad:#ff9999}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:white;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{width:min(820px,100%);margin:auto;padding:20px 16px 50px}
+h1{font-size:clamp(38px,10vw,72px);line-height:.86;letter-spacing:-.06em;margin:10px 0}
+.sub{color:var(--muted);margin:14px 0 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}
+.grid{display:grid;gap:12px}
+.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input,select,button{font:inherit;min-height:48px;border-radius:14px;border:1px solid var(--line)}
+input,select{width:100%;padding:12px 14px;background:#111;color:white;font-size:16px}
+button{padding:12px 16px;background:var(--soft);color:white;font-weight:800;cursor:pointer}
+button.primary{background:var(--accent);color:#111;border-color:transparent}
+button:disabled{opacity:.45;cursor:not-allowed}
+.hidden{display:none!important}
+.code{font-size:clamp(42px,12vw,70px);font-weight:950;letter-spacing:.12em}
+.tiny{color:var(--muted);font-size:12px;letter-spacing:.08em;font-weight:800}
+.notice{color:var(--muted);line-height:1.45}
+.players{display:grid;gap:4px}
+.player{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line)}
+.player:last-child{border-bottom:0}
+.song{font-size:30px;font-weight:900;line-height:1.05;margin:6px 0}
+.artist{font-size:18px;color:var(--muted)}
+.pill{padding:7px 11px;border-radius:999px;background:#222;font-size:14px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.action{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;text-decoration:none;font-weight:900}
+.spotify{background:#1db954;color:#07140b}
+.youtube{background:#fff;color:#111}
+.timeline{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 12px}
+.timeline-card{min-width:152px;max-width:152px;border:1px solid var(--line);background:#111;border-radius:16px;padding:14px}
+.year{font-size:28px;font-weight:950}
+.slot{min-width:56px}
+.slot.active{background:var(--accent);color:#111}
+.good{color:var(--good);font-weight:950}
+.bad{color:var(--bad);font-weight:950}
+#qr{background:white;padding:10px;border-radius:14px;width:180px;height:180px}
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.score{background:#111;border-radius:14px;padding:12px}
+@media(max-width:520px){.grid2,.actions{grid-template-columns:1fr}.code{letter-spacing:.08em}}
+</style>
 </head>
 <body>
 <main>
-  <h1>HITSTER<br>4-LE</h1>
-  <p class="sub">Neli telefoni. Üks ühine tuba. Igal mängijal oma ajajoon.</p>
+<h1>HITSTER<br>V2</h1>
+<p class="sub">2–8 mängijat · Eesti või välismaa muusika · igaühel oma telefon ja ajajoon.</p>
 
-  <section id="home">
-    <div class="card">
-      <label for="name">Sinu nimi</label>
-      <input id="name" maxlength="24" autocomplete="nickname" placeholder="nt Laurits">
-    </div>
-    <div class="row">
-      <button id="create" class="primary">Loo uus mäng</button>
-      <button id="showJoin">Liitu mänguga</button>
-    </div>
-    <div id="joinBox" class="card hidden">
-      <label for="code">Toa kood</label>
-      <input id="code" maxlength="4" autocapitalize="characters" placeholder="AB12">
-      <button id="join" class="primary" style="margin-top:10px;width:100%">Liitu</button>
-    </div>
-    <p id="homeError" class="notice"></p>
-  </section>
+<section id="home">
+  <div class="card">
+    <label for="name">Sinu nimi</label>
+    <input id="name" maxlength="24" autocomplete="nickname" placeholder="nt Laurits">
+  </div>
+  <div class="row">
+    <button id="create" class="primary">Loo uus mäng</button>
+    <button id="showJoin">Liitu mänguga</button>
+  </div>
+  <div id="joinBox" class="card hidden">
+    <label for="code">Toa kood</label>
+    <input id="code" maxlength="4" autocapitalize="characters" placeholder="AB12">
+    <button id="join" class="primary" style="width:100%;margin-top:10px">Liitu</button>
+  </div>
+  <p id="homeError" class="notice"></p>
+</section>
 
-  <section id="lobby" class="hidden">
-    <div class="card">
-      <div class="tiny">TOA KOOD</div>
-      <div id="roomCode" class="roomcode"></div>
-      <p class="notice">Saada teistele selle lehe link ja toa kood. Kui kõik 4 on sees, saab mängujuht alustada.</p>
-      <div id="lobbyPlayers" class="players"></div>
-      <button id="start" class="primary hidden" style="width:100%;margin-top:14px">Alusta mängu</button>
+<section id="lobby" class="hidden">
+  <div class="card">
+    <div class="tiny">TOA KOOD</div>
+    <div id="roomCode" class="code"></div>
+    <div class="grid grid2">
+      <div>
+        <p class="notice">Jaga linki või lase teistel QR-kood skännida. Mäng võib alata alates kahest mängijast.</p>
+        <button id="copyLink">Kopeeri liitumislink</button>
+      </div>
+      <div><canvas id="qr" width="180" height="180" aria-label="Liitumise QR-kood"></canvas></div>
     </div>
-  </section>
+  </div>
 
-  <section id="game" class="hidden">
-    <div class="row" style="justify-content:space-between">
-      <span class="pill">Tuba <b id="gameCode"></b></span>
-      <span id="turnLabel" class="pill"></span>
+  <div id="settingsCard" class="card hidden">
+    <div class="tiny">MÄNGU SEADED</div>
+    <div class="grid grid2" style="margin-top:10px">
+      <label>Muusika
+        <select id="musicMode">
+          <option value="foreign">Välismaa muusika</option>
+          <option value="estonian">Eesti muusika</option>
+          <option value="mixed">Eesti + välismaa läbisegi</option>
+        </select>
+      </label>
+      <label>Võiduks kaarte
+        <select id="targetCards">
+          <option>5</option><option>6</option><option>7</option><option selected>8</option><option>9</option><option>10</option><option>12</option><option>15</option>
+        </select>
+      </label>
     </div>
+    <label class="row" style="margin-top:12px"><input id="autoNext" type="checkbox" checked style="width:auto;min-height:auto"> Järgmine voor automaatselt ~4,5 sek pärast vastust</label>
+  </div>
 
-    <div class="card">
-      <div class="tiny">PRAEGUNE LUGU</div>
-      <div id="currentSong" class="song"></div>
-      <div id="currentArtist" class="artist"></div>
-      <a id="spotifyLink" class="action" target="_blank" rel="noopener" style="margin-top:14px">Ava Spotifys</a>
-      <p class="notice">Üks inimene avab loo Spotifys ja mängib seda kõigile. Ära otsi ilmumisaastat.</p>
+  <div class="card">
+    <div class="tiny">MÄNGIJAD <span id="count"></span></div>
+    <div id="lobbyPlayers" class="players"></div>
+    <button id="start" class="primary hidden" style="width:100%;margin-top:14px">Alusta mängu</button>
+  </div>
+</section>
+
+<section id="game" class="hidden">
+  <div class="row" style="justify-content:space-between">
+    <span class="pill">Tuba <b id="gameCode"></b></span>
+    <span id="modeLabel" class="pill"></span>
+    <span id="turnLabel" class="pill"></span>
+  </div>
+
+  <div id="scores" class="scoreboard" style="margin-top:14px"></div>
+
+  <div class="card">
+    <div class="tiny">PRAEGUNE LUGU</div>
+    <div id="currentSong" class="song"></div>
+    <div id="currentArtist" class="artist"></div>
+    <div class="actions">
+      <a id="spotifyLink" class="action spotify" target="_blank" rel="noopener">▶ Spotify</a>
+      <a id="youtubeLink" class="action youtube" target="_blank" rel="noopener">▶ YouTube</a>
     </div>
+    <p class="notice">Üks telefon mängib loo kõlarist. Ära vaata otsingutulemustest ilmumisaastat.</p>
+  </div>
 
-    <div class="card">
-      <div class="tiny">SINU AJATELG</div>
-      <div id="timeline" class="timeline"></div>
-      <div id="guessArea"></div>
-    </div>
+  <div class="card">
+    <div class="tiny">SINU AJATELG</div>
+    <div id="timeline" class="timeline"></div>
+    <div id="guessArea"></div>
+  </div>
 
-    <div id="revealBox" class="card hidden">
-      <div id="revealResult"></div>
-      <div id="revealYear" class="song"></div>
-      <button id="next" class="primary hidden" style="width:100%">Järgmine lugu</button>
-    </div>
+  <div id="revealBox" class="card hidden">
+    <div id="revealResult"></div>
+    <div id="revealYear" class="song"></div>
+    <p id="autoText" class="notice"></p>
+    <button id="next" class="primary hidden" style="width:100%">Järgmine lugu kohe</button>
+  </div>
 
-    <div id="winnerBox" class="card hidden"></div>
-  </section>
-
-  <p class="footer">Mitteametlik Hitsteri-laadne seltskonnamäng. Muusika mängitakse eraldi Spotify/YouTube’i kaudu.</p>
-</main>
+  <div id="winnerBox" class="card hidden"></div>
+</section>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-(() => {
-  const socket = io();
-  const $ = id => document.getElementById(id);
-  let state = null;
-  let selectedSlot = null;
+(()=>{
+const socket=io(), $=id=>document.getElementById(id);
+let state=null, selectedSlot=null, settingsTimer=null;
 
-  const params = new URLSearchParams(location.search);
-  if (params.get("room")) {
-    $("code").value = params.get("room").toUpperCase().slice(0,4);
-    $("joinBox").classList.remove("hidden");
+const params=new URLSearchParams(location.search);
+if(params.get("room")){$("code").value=params.get("room").toUpperCase().slice(0,4);$("joinBox").classList.remove("hidden")}
+
+$("showJoin").addEventListener("click",()=> $("joinBox").classList.toggle("hidden"));
+const name=()=>$("name").value.trim();
+const err=x=>$("homeError").textContent=x||"";
+
+$("create").addEventListener("click",()=>socket.emit("createRoom",{name:name()},r=>{if(!r.ok)return err(r.error);history.replaceState({},"","?room="+r.code)}));
+$("join").addEventListener("click",()=>socket.emit("joinRoom",{name:name(),code:$("code").value},r=>{if(!r.ok)return err(r.error);history.replaceState({},"","?room="+r.code)}));
+$("start").addEventListener("click",()=>socket.emit("startGame",{},r=>{if(!r.ok)alert(r.error)}));
+$("next").addEventListener("click",()=>socket.emit("nextRound",{},r=>{if(!r.ok)alert(r.error)}));
+$("copyLink").addEventListener("click",async()=>{const u=joinUrl();try{await navigator.clipboard.writeText(u);$("copyLink").textContent="Link kopeeritud ✓";setTimeout(()=>$("copyLink").textContent="Kopeeri liitumislink",1500)}catch{prompt("Kopeeri see link:",u)}});
+
+["musicMode","targetCards","autoNext"].forEach(id=>$(id).addEventListener("change",()=>{
+  clearTimeout(settingsTimer);
+  settingsTimer=setTimeout(()=>socket.emit("settings",{musicMode:$("musicMode").value,targetCards:Number($("targetCards").value),autoNext:$("autoNext").checked},()=>{}),150);
+}));
+
+socket.on("state",s=>{state=s;selectedSlot=null;render()});
+const isHost=()=>state&&state.hostId===socket.id;
+const myTurn=()=>state&&state.currentPlayerId===socket.id;
+const joinUrl=()=>location.origin+location.pathname+"?room="+encodeURIComponent(state.code);
+
+function render(){
+  if(!state)return;
+  $("home").classList.add("hidden");
+  if(!state.started) renderLobby(); else renderGame();
+}
+function renderLobby(){
+  $("lobby").classList.remove("hidden");$("game").classList.add("hidden");
+  $("roomCode").textContent=state.code;$("count").textContent=`(${state.players.length}/8)`;
+  $("settingsCard").classList.toggle("hidden",!isHost());
+  if(isHost()){
+    $("musicMode").value=state.musicMode;$("targetCards").value=String(state.targetCards);$("autoNext").checked=state.autoNext;
   }
+  const p=$("lobbyPlayers");p.innerHTML="";
+  state.players.forEach((x,i)=>{const d=document.createElement("div");d.className="player";d.innerHTML=`<span>${i+1}. ${esc(x.name)}${x.isHost?" 👑":""}</span><span>${x.connected?"✓":"offline"}</span>`;p.appendChild(d)});
+  $("start").classList.toggle("hidden",!isHost());
+  $("start").disabled=state.players.length<2;
+  $("start").textContent=state.players.length<2?"Ootan vähemalt üht mängijat":"Alusta mängu";
+  drawQR(joinUrl());
+}
+function renderGame(){
+  $("lobby").classList.add("hidden");$("game").classList.remove("hidden");
+  $("gameCode").textContent=state.code;
+  $("modeLabel").textContent=state.musicMode==="estonian"?"🇪🇪 Eesti":state.musicMode==="mixed"?"🇪🇪 + 🌍 Mix":"🌍 Välismaa";
+  const cur=state.players.find(p=>p.id===state.currentPlayerId);
+  $("turnLabel").textContent=myTurn()?"SINU KORD":`Kord: ${cur?cur.name:""}`;
+  $("currentSong").textContent=state.currentSong?.title||"";
+  $("currentArtist").textContent=state.currentSong?.artist||"";
+  const q=encodeURIComponent(`${state.currentSong?.title||""} ${state.currentSong?.artist||""}`);
+  $("spotifyLink").href="https://open.spotify.com/search/"+q;
+  $("youtubeLink").href="https://www.youtube.com/results?search_query="+q;
+  const scores=$("scores");scores.innerHTML="";
+  state.players.forEach(p=>{const d=document.createElement("div");d.className="score";d.innerHTML=`<b>${esc(p.name)}</b><div class="tiny">${p.timelineCount}/${state.targetCards} kaarti</div>`;scores.appendChild(d)});
+  renderTimeline();renderReveal();renderWinner();
+}
+function renderTimeline(){
+  const tl=$("timeline"),items=state.me?.timeline||[];tl.innerHTML="";
+  items.forEach(c=>{const e=document.createElement("div");e.className="timeline-card";e.innerHTML=`<div class="year">${c.year}</div><b>${esc(c.title)}</b><div class="tiny">${esc(c.artist)}</div>`;tl.appendChild(e)});
+  const a=$("guessArea");a.innerHTML="";
+  if(!myTurn()||state.reveal||state.finished){const p=document.createElement("p");p.className="notice";p.textContent=myTurn()?"Vastus on lukus.":"Kuula lugu — praegu vastab teine mängija.";a.appendChild(p);return}
+  const h=document.createElement("p");h.className="notice";h.textContent="Vali, kuhu uus lugu sinu ajajoonel kuulub:";a.appendChild(h);
+  const r=document.createElement("div");r.className="row";
+  let submit;
+  for(let i=0;i<=items.length;i++){const b=document.createElement("button");b.className="slot";b.type="button";b.textContent=i===0?"← enne kõiki":i===items.length?"pärast kõiki →":`${items[i-1].year} / ${items[i].year}`;b.addEventListener("click",()=>{selectedSlot=i;r.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");submit.disabled=false});r.appendChild(b)}
+  a.appendChild(r);submit=document.createElement("button");submit.className="primary";submit.style="width:100%;margin-top:12px";submit.textContent="Lukusta vastus";submit.disabled=true;submit.addEventListener("click",()=>{submit.disabled=true;socket.emit("guessSlot",{slot:selectedSlot},x=>{if(!x.ok){alert(x.error);submit.disabled=false}})});a.appendChild(submit);
+}
+function renderReveal(){
+  const b=$("revealBox");if(!state.reveal){b.classList.add("hidden");return}
+  b.classList.remove("hidden");$("revealResult").className=state.reveal.correct?"good":"bad";$("revealResult").textContent=state.reveal.correct?"ÕIGE! Kaart jääb sulle.":"VALE! Kaart läheb ära.";$("revealYear").textContent=`Õige aasta: ${state.reveal.year}`;
+  $("autoText").textContent=state.autoNext&&!state.finished?"Järgmine voor algab automaatselt umbes 4,5 sekundi pärast.":"";
+  $("next").classList.toggle("hidden",!isHost()||state.finished);
+}
+function renderWinner(){
+  const b=$("winnerBox");if(!state.finished){b.classList.add("hidden");return}
+  const w=state.players.find(p=>p.id===state.winnerId);b.classList.remove("hidden");b.innerHTML=`<div class="tiny">MÄNG LÄBI</div><div class="song">🏆 ${esc(w?.name||"Võitja")}</div><p class="notice">Esimesena ${state.targetCards} kaarti ajajoonel.</p>`;
+  if(isHost()){const x=document.createElement("button");x.className="primary";x.style.width="100%";x.textContent="Mängi uuesti";x.addEventListener("click",()=>socket.emit("restart",{},r=>{if(!r.ok)alert(r.error)}));b.appendChild(x)}
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
-  $("showJoin").addEventListener("click", () => $("joinBox").classList.toggle("hidden"));
-
-  function cleanName() { return $("name").value.trim(); }
-  function showError(msg) { $("homeError").textContent = msg || ""; }
-
-  $("create").addEventListener("click", () => {
-    socket.emit("createRoom", {name:cleanName()}, res => {
-      if (!res.ok) return showError(res.error);
-      history.replaceState({}, "", "?room=" + res.code);
-    });
-  });
-
-  $("join").addEventListener("click", () => {
-    socket.emit("joinRoom", {name:cleanName(), code:$("code").value}, res => {
-      if (!res.ok) return showError(res.error);
-      history.replaceState({}, "", "?room=" + res.code);
-    });
-  });
-
-  $("start").addEventListener("click", () => socket.emit("startGame", {}, res => {
-    if (!res.ok) alert(res.error);
-  }));
-
-  $("next").addEventListener("click", () => socket.emit("nextRound", {}, res => {
-    if (!res.ok) alert(res.error);
-  }));
-
-  socket.on("state", s => {
-    state = s;
-    selectedSlot = null;
-    render();
-  });
-
-  function isHost() { return state && state.hostId === socket.id; }
-  function isMyTurn() { return state && state.currentPlayerId === socket.id; }
-
-  function render() {
-    if (!state) return;
-    $("home").classList.add("hidden");
-    if (!state.started) renderLobby();
-    else renderGame();
-  }
-
-  function renderLobby() {
-    $("lobby").classList.remove("hidden");
-    $("game").classList.add("hidden");
-    $("roomCode").textContent = state.code;
-    $("lobbyPlayers").innerHTML = "";
-    state.players.forEach((p,i) => {
-      const el = document.createElement("div");
-      el.className = "player";
-      el.innerHTML = `<span>${i+1}. ${escapeHtml(p.name)}${p.isHost ? " 👑" : ""}</span><span>${p.connected ? "✓" : "offline"}</span>`;
-      $("lobbyPlayers").appendChild(el);
-    });
-    $("start").classList.toggle("hidden", !isHost());
-    $("start").disabled = state.players.length !== 4;
-    $("start").textContent = state.players.length === 4 ? "Alusta mängu" : `Ootan mängijaid (${state.players.length}/4)`;
-  }
-
-  function renderGame() {
-    $("lobby").classList.add("hidden");
-    $("game").classList.remove("hidden");
-    $("gameCode").textContent = state.code;
-    const current = state.players.find(p => p.id === state.currentPlayerId);
-    $("turnLabel").textContent = isMyTurn() ? "SINU KORD" : `Kord: ${current ? current.name : ""}`;
-    $("currentSong").textContent = state.currentSong ? state.currentSong.title : "";
-    $("currentArtist").textContent = state.currentSong ? state.currentSong.artist : "";
-    const q = encodeURIComponent(`${state.currentSong?.title || ""} ${state.currentSong?.artist || ""}`);
-    $("spotifyLink").href = "https://open.spotify.com/search/" + q;
-
-    renderTimeline();
-    renderReveal();
-    renderWinner();
-  }
-
-  function renderTimeline() {
-    const tl = $("timeline");
-    tl.innerHTML = "";
-    const items = state.me?.timeline || [];
-
-    items.forEach((card, i) => {
-      const el = document.createElement("div");
-      el.className = "timeline-card";
-      el.innerHTML = `<div class="year">${card.year}</div><div><b>${escapeHtml(card.title)}</b></div><div class="tiny">${escapeHtml(card.artist)}</div>`;
-      tl.appendChild(el);
-    });
-
-    const area = $("guessArea");
-    area.innerHTML = "";
-
-    if (!isMyTurn() || state.reveal || state.finished) {
-      const p = document.createElement("p");
-      p.className = "notice";
-      p.textContent = isMyTurn() ? "Vastus on lukus." : "Vaata oma ajajoont ja kuula lugu. Praegu vastab teine mängija.";
-      area.appendChild(p);
-      return;
-    }
-
-    const hint = document.createElement("p");
-    hint.className = "notice";
-    hint.textContent = "Kuhu see lugu sinu ajajoonel kuulub? Vali koht:";
-    area.appendChild(hint);
-
-    const row = document.createElement("div");
-    row.className = "row";
-    for (let i=0; i<=items.length; i++) {
-      const b = document.createElement("button");
-      b.className = "slot";
-      b.type = "button";
-      b.textContent = i===0 ? "←" : i===items.length ? "→" : `${items[i-1].year} / ${items[i].year}`;
-      b.addEventListener("click", () => {
-        selectedSlot = i;
-        row.querySelectorAll("button").forEach(x => x.classList.remove("active"));
-        b.classList.add("active");
-        submit.disabled = false;
-      });
-      row.appendChild(b);
-    }
-    area.appendChild(row);
-
-    const submit = document.createElement("button");
-    submit.type = "button";
-    submit.className = "primary";
-    submit.style.marginTop = "12px";
-    submit.style.width = "100%";
-    submit.textContent = "Lukusta vastus";
-    submit.disabled = true;
-    submit.addEventListener("click", () => {
-      submit.disabled = true;
-      socket.emit("guessSlot", {slot:selectedSlot}, res => {
-        if (!res.ok) {
-          alert(res.error);
-          submit.disabled = false;
-        }
-      });
-    });
-    area.appendChild(submit);
-  }
-
-  function renderReveal() {
-    const box = $("revealBox");
-    if (!state.reveal) {
-      box.classList.add("hidden");
-      return;
-    }
-    box.classList.remove("hidden");
-    $("revealResult").className = state.reveal.correct ? "result-good" : "result-bad";
-    $("revealResult").textContent = state.reveal.correct ? "ÕIGE! Kaart jääb sulle." : "VALE! Kaart läheb ära.";
-    $("revealYear").textContent = `Õige aasta: ${state.reveal.year}`;
-    $("next").classList.toggle("hidden", !isHost() || state.finished);
-  }
-
-  function renderWinner() {
-    const box = $("winnerBox");
-    if (!state.finished) {
-      box.classList.add("hidden");
-      return;
-    }
-    const winner = state.players.find(p => p.id === state.winnerId);
-    box.classList.remove("hidden");
-    box.innerHTML = `<div class="tiny">MÄNG LÄBI</div><div class="song">🏆 ${escapeHtml(winner?.name || "Võitja")}</div><p class="notice">Esimesena ${state.targetCards} kaarti ajajoonel.</p>`;
-    if (isHost()) {
-      const b = document.createElement("button");
-      b.className = "primary";
-      b.style.width = "100%";
-      b.textContent = "Mängi uuesti";
-      b.addEventListener("click", () => socket.emit("restart", {}, res => { if (!res.ok) alert(res.error); }));
-      box.appendChild(b);
-    }
-  }
-
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  }
+function drawQR(url){
+  const c=$("qr"),ctx=c.getContext("2d");
+  ctx.fillStyle="#fff";
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle="#111";
+  ctx.font="900 28px system-ui";
+  ctx.textAlign="center";
+  ctx.fillText(state.code,90,84);
+  ctx.font="700 12px system-ui";
+  ctx.fillText("TOA KOOD",90,108);
+  ctx.font="10px system-ui";
+  ctx.fillText("Kopeeri link nupust",90,132);
+  ctx.strokeStyle="#111";
+  ctx.lineWidth=5;
+  ctx.strokeRect(8,8,164,164);
+}
 })();
 </script>
 </body>
