@@ -28,9 +28,7 @@
   --shadow:rgba(37,7,15,.28);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html{
   background:var(--wine2);
@@ -72,13 +70,40 @@ main{
   padding:
     max(18px,env(safe-area-inset-top))
     14px
-    64px;
+    72px;
 }
+
+/* LANGUAGE */
+
+.language-switch{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:2px 0 8px;
+}
+
+.language-switch button{
+  min-height:34px;
+  padding:5px 11px;
+  box-shadow:none;
+  border:1px solid var(--gold2);
+  background:rgba(42,8,18,.42);
+  color:var(--cream);
+  font-size:12px;
+  letter-spacing:.09em;
+}
+
+.language-switch button.active{
+  background:var(--gold2);
+  color:var(--wine2);
+}
+
+/* HEADER */
 
 header{
   text-align:center;
   color:var(--cream);
-  padding:6px 4px 10px;
+  padding:4px 4px 10px;
 }
 
 .stars{
@@ -110,6 +135,8 @@ header{
   font-size:clamp(16px,4vw,23px);
   margin-top:8px;
 }
+
+/* CARDS */
 
 .card{
   position:relative;
@@ -152,7 +179,8 @@ header{
 }
 
 .grid2{
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
 }
 
 .flex{
@@ -196,7 +224,7 @@ header{
   font-style:italic;
 }
 
-/* FOTOD */
+/* PHOTOS */
 
 .photo-frame{
   background:var(--cream);
@@ -222,25 +250,32 @@ header{
   font-style:italic;
 }
 
-/* õrn aeglane liikumine */
-
 .dream-drift img{
-  transform:scale(1.015);
-  animation:dreamDrift 15s ease-in-out infinite alternate;
+  transform:scale(1.012);
+  animation:
+    dreamDrift
+    18s
+    ease-in-out
+    infinite
+    alternate;
   transform-origin:50% 45%;
 }
 
 @keyframes dreamDrift{
   from{
-    transform:scale(1.015) translate3d(-.3%,0,0);
+    transform:
+      scale(1.012)
+      translate3d(-.2%,0,0);
   }
 
   to{
-    transform:scale(1.035) translate3d(.6%,-.35%,0);
+    transform:
+      scale(1.03)
+      translate3d(.5%,-.25%,0);
   }
 }
 
-/* VORMID */
+/* FORMS */
 
 label{
   display:block;
@@ -263,11 +298,13 @@ select{
 
 input:focus,
 select:focus{
-  outline:3px solid rgba(191,141,52,.25);
+  outline:
+    3px solid
+    rgba(191,141,52,.25);
   border-color:var(--gold);
 }
 
-/* NUPUD */
+/* BUTTONS */
 
 button,
 .button{
@@ -282,7 +319,9 @@ button,
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 4px 0 var(--wine2);
+  box-shadow:
+    0 4px 0
+    var(--wine2);
   transition:
     transform .1s,
     box-shadow .1s;
@@ -290,8 +329,11 @@ button,
 
 button:active,
 .button:active{
-  transform:translateY(3px);
-  box-shadow:0 1px 0 var(--wine2);
+  transform:
+    translateY(3px);
+  box-shadow:
+    0 1px 0
+    var(--wine2);
 }
 
 button:disabled{
@@ -315,23 +357,27 @@ button:disabled{
 
 .home-actions{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:
+    1fr 1fr;
   gap:10px;
 }
 
-/* JUHEND */
+/* RULES */
 
 .rules{
-  line-height:1.65;
+  line-height:1.64;
 }
 
 .rule{
   display:grid;
-  grid-template-columns:34px 1fr;
+  grid-template-columns:
+    34px 1fr;
   gap:9px;
   align-items:start;
-  padding:8px 0;
-  border-bottom:1px dotted #b78d83;
+  padding:9px 0;
+  border-bottom:
+    1px dotted
+    #b78d83;
 }
 
 .rule:last-child{
@@ -356,7 +402,8 @@ button:disabled{
   text-align:center;
   color:var(--wine);
   font-family:"Bodoni Moda",serif;
-  font-size:clamp(19px,5vw,25px);
+  font-size:
+    clamp(19px,5vw,25px);
   font-style:italic;
   font-weight:700;
 }
@@ -376,7 +423,8 @@ button:disabled{
 
 .room-code{
   font-family:"Bodoni Moda",serif;
-  font-size:clamp(50px,15vw,92px);
+  font-size:
+    clamp(50px,15vw,92px);
   font-weight:900;
   letter-spacing:.08em;
   color:var(--wine);
@@ -386,7 +434,8 @@ button:disabled{
 
 .join-layout{
   display:grid;
-  grid-template-columns:1fr 190px;
+  grid-template-columns:
+    1fr 190px;
   gap:18px;
   align-items:center;
 }
@@ -397,7 +446,9 @@ button:disabled{
   padding:6px;
   margin:auto;
   background:#fff;
-  border:5px double var(--gold);
+  border:
+    5px double
+    var(--gold);
 }
 
 #qr img,
@@ -416,7 +467,9 @@ button:disabled{
   justify-content:space-between;
   gap:10px;
   padding:11px 2px;
-  border-bottom:1px dotted #b78d83;
+  border-bottom:
+    1px dotted
+    #b78d83;
 }
 
 .player:last-child{
@@ -432,7 +485,18 @@ button:disabled{
   color:var(--red);
 }
 
-/* GAME STATUS */
+.dj-badge{
+  display:inline-block;
+  margin-left:6px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:var(--pink);
+  color:var(--wine);
+  font-size:10px;
+  font-weight:900;
+}
+
+/* STATUS */
 
 .status-row{
   display:flex;
@@ -444,7 +508,9 @@ button:disabled{
 .pill{
   padding:7px 11px;
   background:var(--cream);
-  border:2px solid var(--gold);
+  border:
+    2px solid
+    var(--gold);
   border-radius:999px;
   color:var(--wine);
   font-size:12px;
@@ -460,7 +526,10 @@ button:disabled{
 .scoreboard{
   display:grid;
   grid-template-columns:
-    repeat(auto-fit,minmax(115px,1fr));
+    repeat(
+      auto-fit,
+      minmax(112px,1fr)
+    );
   gap:8px;
   margin-top:13px;
 }
@@ -468,10 +537,14 @@ button:disabled{
 .score{
   text-align:center;
   background:var(--cream);
-  border:2px solid var(--gold);
+  border:
+    2px solid
+    var(--gold);
   border-radius:13px;
   padding:10px;
-  box-shadow:0 6px 15px var(--shadow);
+  box-shadow:
+    0 6px 15px
+    var(--shadow);
 }
 
 .score strong{
@@ -486,7 +559,7 @@ button:disabled{
   margin-top:3px;
 }
 
-/* KUULAMINE */
+/* LISTEN */
 
 .listen-card{
   text-align:center;
@@ -494,7 +567,8 @@ button:disabled{
 
 .unknown{
   font-family:"Bodoni Moda",serif;
-  font-size:clamp(42px,12vw,76px);
+  font-size:
+    clamp(42px,12vw,76px);
   font-weight:900;
   font-style:italic;
   color:var(--wine);
@@ -508,12 +582,25 @@ button:disabled{
   margin:8px 0 14px;
 }
 
+.saloon-message{
+  margin:12px auto 0;
+  max-width:520px;
+  color:var(--muted);
+  font-family:"Bodoni Moda",serif;
+  font-style:italic;
+  font-size:14px;
+}
+
+/* DJ */
+
 .dj-box{
-  margin-top:12px;
-  padding:13px;
+  margin-top:14px;
+  padding:14px;
   background:#f4c8d2;
-  border:2px solid var(--wine);
-  border-radius:13px;
+  border:
+    2px solid
+    var(--wine);
+  border-radius:14px;
   text-align:left;
 }
 
@@ -524,139 +611,560 @@ button:disabled{
   color:var(--wine);
 }
 
-.dj-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:10px;
+.spotify-shell{
+  margin-top:12px;
+  min-height:154px;
+  border-radius:14px;
+  overflow:hidden;
+  background:#191414;
+  border:
+    2px solid
+    #463226;
 }
 
-.spotify{
+.spotify-status{
+  padding:13px;
+  color:#f8ebd9;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.spotify-exact-link{
+  margin-top:10px;
+  width:100%;
   background:#bce5a7;
   color:#17361d;
   border-color:#44774d;
 }
 
-.youtube{
-  background:#f9d9dd;
-  color:#75182c;
+/* TIMELINE */
+
+.timeline-wrap{
+  position:relative;
 }
 
-/* AJATELG */
+.timeline-help{
+  margin:4px 0 12px;
+}
 
-.timeline{
+.timeline-flow{
   display:flex;
   flex-direction:column;
+  gap:0;
+  padding-bottom:88px;
 }
 
 .timeline-card{
-  padding:13px 15px;
+  display:grid;
+  grid-template-columns:
+    82px 1fr;
+  gap:12px;
+  align-items:center;
+  padding:12px 13px;
   background:#fffaf3;
-  border:2px solid var(--gold);
+  border:
+    2px solid
+    var(--gold);
   border-radius:13px;
-  text-align:center;
-  box-shadow:0 5px 12px rgba(68,27,31,.12);
+  box-shadow:
+    0 5px 12px
+    rgba(68,27,31,.12);
 }
 
 .timeline-year{
   font-family:"Bodoni Moda",serif;
-  font-size:29px;
+  font-size:28px;
+  line-height:1;
   font-weight:900;
   color:var(--wine);
+  text-align:center;
+}
+
+.timeline-copy{
+  text-align:left;
+  min-width:0;
 }
 
 .timeline-song{
   font-family:"Bodoni Moda",serif;
   font-weight:700;
-  font-size:16px;
+  font-size:15px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .timeline-artist{
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
   margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
-.slot{
-  width:100%;
-  margin:7px 0;
-  min-height:46px;
-  border:2px dashed var(--pink);
+.insert-slot{
+  width:
+    calc(100% - 22px);
+  margin:
+    7px auto;
+  min-height:48px;
+  border:
+    2px dashed
+    #d992a7;
   box-shadow:none;
+  background:
+    rgba(255,239,242,.62);
   color:var(--wine);
-  background:rgba(255,239,242,.55);
+  position:relative;
 }
 
-.slot::before{
-  content:"✦ ";
-  color:var(--gold);
+.insert-slot::before,
+.insert-slot::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:18px;
+  height:1px;
+  background:#d992a7;
 }
 
-.slot.active{
+.insert-slot::before{
+  left:-12px;
+}
+
+.insert-slot::after{
+  right:-12px;
+}
+
+.insert-slot.active{
   background:var(--pink);
   border-style:solid;
+  transform:scale(1.01);
+}
+
+.guess-dock{
+  position:sticky;
+  bottom:
+    max(
+      10px,
+      env(safe-area-inset-bottom)
+    );
+  z-index:15;
+  margin-top:-70px;
+  padding:10px;
+  background:
+    rgba(43,9,18,.94);
+  border:
+    2px solid
+    var(--gold2);
+  border-radius:18px;
+  box-shadow:
+    0 12px 32px
+    rgba(0,0,0,.38);
+  backdrop-filter:
+    blur(10px);
+}
+
+.guess-dock .choice{
+  color:#ffe9d5;
+  text-align:center;
+  font-size:12px;
+  margin-bottom:8px;
 }
 
 .locked{
   padding:13px;
   background:#f4c8d2;
-  border:2px solid var(--gold);
+  border:
+    2px solid
+    var(--gold);
   border-radius:12px;
   text-align:center;
   color:var(--wine);
   font-weight:800;
 }
 
-/* REVEAL */
+/* CAMP REVEAL */
+
+.reveal-card{
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(
+      circle at 50% 22%,
+      rgba(255,214,132,.25),
+      transparent 22rem
+    ),
+    linear-gradient(
+      180deg,
+      #25020d 0%,
+      #6b132b 58%,
+      #26040f 100%
+    );
+  border:
+    3px solid
+    var(--gold2);
+  color:var(--cream);
+  box-shadow:
+    0 18px 50px
+    rgba(0,0,0,.45),
+    inset 0 0 0 5px
+    rgba(255,221,160,.08);
+}
+
+.reveal-card::after{
+  content:"★";
+  color:var(--gold2);
+  font-size:22px;
+}
+
+.reveal-curtain{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
+
+.reveal-curtain::before,
+.reveal-curtain::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:52%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(50,0,16,.98) 0 28px,
+      rgba(110,11,42,.98) 28px 54px
+    );
+  box-shadow:
+    inset 0 0 35px
+    rgba(0,0,0,.6);
+  transform-origin:top;
+}
+
+.reveal-curtain::before{
+  left:0;
+}
+
+.reveal-curtain::after{
+  right:0;
+}
+
+.reveal-live
+.reveal-curtain::before{
+  animation:
+    curtainLeft
+    .9s
+    cubic-bezier(.2,.7,.15,1)
+    forwards;
+}
+
+.reveal-live
+.reveal-curtain::after{
+  animation:
+    curtainRight
+    .9s
+    cubic-bezier(.2,.7,.15,1)
+    forwards;
+}
+
+@keyframes curtainLeft{
+  to{
+    transform:
+      translateX(-94%)
+      rotate(-3deg);
+  }
+}
+
+@keyframes curtainRight{
+  to{
+    transform:
+      translateX(94%)
+      rotate(3deg);
+  }
+}
+
+.reveal-marquee{
+  text-align:center;
+  color:var(--gold2);
+  letter-spacing:.17em;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  margin:2px 0 12px;
+}
 
 .reveal-photo{
   width:100%;
   height:auto;
   display:block;
   object-fit:contain;
-  border:5px solid var(--cream);
-  outline:2px solid var(--gold);
+  border:
+    5px solid
+    var(--cream);
+  outline:
+    2px solid
+    var(--gold);
   margin-bottom:18px;
+  opacity:.96;
 }
 
-.result{
-  font-family:"Shrikhand",serif;
-  font-size:clamp(34px,10vw,66px);
-  line-height:1;
-  text-align:center;
+.reveal-live
+.reveal-photo{
+  animation:
+    photoFlash
+    .8s
+    .55s
+    both;
 }
 
-.good{
-  color:var(--green);
-}
+@keyframes photoFlash{
+  0%{
+    opacity:0;
+    filter:
+      brightness(2.2)
+      contrast(1.2);
+  }
 
-.bad{
-  color:var(--red);
+  100%{
+    opacity:.96;
+    filter:none;
+  }
 }
 
 .big-year{
   text-align:center;
   font-family:"Bodoni Moda",serif;
-  font-size:clamp(64px,18vw,110px);
+  font-size:
+    clamp(72px,20vw,122px);
   font-weight:900;
-  color:var(--wine);
-  line-height:.95;
-  margin:15px 0;
+  color:var(--gold2);
+  line-height:.88;
+  margin:17px 0;
+  text-shadow:
+    3px 3px 0 #23000b,
+    0 0 26px
+    rgba(255,205,109,.22);
+}
+
+.reveal-live
+.big-year{
+  animation:
+    yearCrash
+    .7s
+    .72s
+    cubic-bezier(.17,.88,.25,1.35)
+    both;
+}
+
+@keyframes yearCrash{
+  from{
+    opacity:0;
+    transform:
+      scale(2.2)
+      rotate(-8deg);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      scale(1)
+      rotate(0);
+  }
 }
 
 .reveal-song{
   text-align:center;
   font-family:"Bodoni Moda",serif;
-  font-size:24px;
-  font-weight:700;
+  font-size:26px;
+  font-weight:800;
+  color:#fff5e6;
 }
 
 .reveal-artist{
   text-align:center;
-  color:var(--red);
+  color:var(--pink);
   font-family:"Bodoni Moda",serif;
   font-style:italic;
+  font-size:19px;
+}
+
+.reveal-live
+.reveal-song,
+.reveal-live
+.reveal-artist{
+  animation:
+    riseIn
+    .55s
+    1.15s
+    both;
+}
+
+@keyframes riseIn{
+  from{
+    opacity:0;
+    transform:
+      translateY(18px);
+  }
+
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.result{
+  margin-top:18px;
+  font-family:"Shrikhand",serif;
+  font-size:
+    clamp(40px,12vw,78px);
+  line-height:.95;
+  text-align:center;
+  color:#fff0df;
+  text-shadow:
+    4px 4px 0
+    #25010d;
+}
+
+.result.good{
+  color:#d9ffb9;
+}
+
+.result.bad{
+  color:#ff9bb1;
+}
+
+.reveal-live
+.result{
+  animation:
+    resultWobble
+    .65s
+    1.45s
+    both;
+}
+
+@keyframes resultWobble{
+  0%{
+    opacity:0;
+    transform:
+      scale(.2)
+      rotate(16deg);
+  }
+
+  70%{
+    opacity:1;
+    transform:
+      scale(1.08)
+      rotate(-3deg);
+  }
+
+  100%{
+    transform:
+      scale(1)
+      rotate(0);
+  }
+}
+
+.camp-stars{
+  height:30px;
+  position:relative;
+  margin:4px 0;
+}
+
+.camp-stars span{
+  position:absolute;
+  color:var(--gold2);
+  opacity:0;
+}
+
+.reveal-live
+.camp-stars span{
+  animation:
+    starPop
+    1.4s
+    1.35s
+    ease-out
+    both;
+}
+
+.camp-stars span:nth-child(1){
+  left:5%;
+  top:4px;
+  font-size:22px;
+}
+
+.camp-stars span:nth-child(2){
+  left:18%;
+  top:15px;
+  font-size:13px;
+  animation-delay:1.55s;
+}
+
+.camp-stars span:nth-child(3){
+  left:42%;
+  top:2px;
   font-size:18px;
+  animation-delay:1.45s;
+}
+
+.camp-stars span:nth-child(4){
+  right:22%;
+  top:13px;
+  font-size:14px;
+  animation-delay:1.62s;
+}
+
+.camp-stars span:nth-child(5){
+  right:6%;
+  top:1px;
+  font-size:24px;
+  animation-delay:1.5s;
+}
+
+@keyframes starPop{
+  0%{
+    opacity:0;
+    transform:
+      scale(.1)
+      rotate(0);
+  }
+
+  45%{
+    opacity:1;
+    transform:
+      scale(1.4)
+      rotate(160deg);
+  }
+
+  100%{
+    opacity:.8;
+    transform:
+      scale(1)
+      rotate(250deg);
+  }
+}
+
+.reveal-quote{
+  margin:17px auto 5px;
+  max-width:560px;
+  text-align:center;
+  color:#f8dfb1;
+  font-family:"Bodoni Moda",serif;
+  font-style:italic;
+  font-size:17px;
+}
+
+.reveal-quote cite{
+  display:block;
+  margin-top:5px;
+  color:#d8ab62;
+  font-family:"DM Sans",sans-serif;
+  font-style:normal;
+  font-size:10px;
+  letter-spacing:.12em;
 }
 
 .round-results{
@@ -670,22 +1178,26 @@ button:disabled{
   justify-content:space-between;
   gap:10px;
   padding:9px 11px;
-  background:#fff7ec;
-  border:1px solid #d0aa68;
+  background:
+    rgba(255,247,236,.94);
+  color:var(--ink);
+  border:
+    1px solid
+    #d0aa68;
   border-radius:10px;
 }
 
 .progress{
   height:7px;
   margin-top:18px;
-  background:#d8b6a9;
+  background:#5c3440;
   overflow:hidden;
   border-radius:999px;
 }
 
 .progress > div{
   height:100%;
-  background:var(--wine);
+  background:var(--gold2);
   animation:
     countdown
     var(--seconds,8s)
@@ -696,11 +1208,13 @@ button:disabled{
 
 @keyframes countdown{
   from{
-    transform:scaleX(1);
+    transform:
+      scaleX(1);
   }
 
   to{
-    transform:scaleX(0);
+    transform:
+      scaleX(0);
   }
 }
 
@@ -722,8 +1236,12 @@ button:disabled{
   height:auto;
   display:block;
   object-fit:contain;
-  border:7px solid var(--cream);
-  outline:2px solid var(--gold);
+  border:
+    7px solid
+    var(--cream);
+  outline:
+    2px solid
+    var(--gold);
   margin-bottom:18px;
 }
 
@@ -738,9 +1256,12 @@ button:disabled{
 .win-name{
   text-align:center;
   font-family:"Shrikhand",serif;
-  font-size:clamp(38px,12vw,76px);
+  font-size:
+    clamp(38px,12vw,76px);
   color:var(--blush);
-  text-shadow:3px 3px 0 var(--wine2);
+  text-shadow:
+    3px 3px 0
+    var(--wine2);
   margin:10px 0;
 }
 
@@ -749,16 +1270,20 @@ button:disabled{
 .toast{
   position:sticky;
   bottom:12px;
-  z-index:20;
+  z-index:30;
   margin:10px auto 0;
   width:min(560px,96%);
   padding:12px 15px;
   background:#2d0b15;
   color:#fff0e3;
-  border:2px solid var(--gold2);
+  border:
+    2px solid
+    var(--gold2);
   border-radius:999px;
   text-align:center;
-  box-shadow:0 8px 22px rgba(0,0,0,.28);
+  box-shadow:
+    0 8px 22px
+    rgba(0,0,0,.28);
 }
 
 /* MOBILE */
@@ -767,8 +1292,7 @@ button:disabled{
 
   .grid2,
   .home-actions,
-  .join-layout,
-  .dj-buttons{
+  .join-layout{
     grid-template-columns:1fr;
   }
 
@@ -787,6 +1311,24 @@ button:disabled{
         13vw,
         66px
       );
+  }
+
+  .timeline-card{
+    grid-template-columns:
+      72px 1fr;
+    padding:10px 11px;
+  }
+
+  .timeline-year{
+    font-size:25px;
+  }
+
+  .timeline-song{
+    font-size:14px;
+  }
+
+  .insert-slot{
+    min-height:50px;
   }
 }
 
@@ -814,115 +1356,151 @@ button:disabled{
     kõrva<span class="n">(n)</span>uss
   </div>
 
-  <div class="subtitle">
-    meloodia, mälu & kahtlased aastaarvud
-  </div>
+  <div
+    class="subtitle"
+    data-i18n="tagline"
+  ></div>
 
 </header>
 
 
-<!-- AVALEHT -->
+<!-- HOME -->
 
 <section id="home">
 
-  <div class="photo-frame dream-drift">
+  <div
+    class="language-switch"
+    aria-label="Language"
+  >
+
+    <button
+      id="langEt"
+      type="button"
+    >
+      EESTI
+    </button>
+
+    <button
+      id="langEn"
+      type="button"
+    >
+      ENGLISH
+    </button>
+
+  </div>
+
+
+  <div
+    class="photo-frame dream-drift"
+  >
 
     <img
       src="/images/sonavabadus.jpg"
       alt=""
     >
 
-    <div class="photo-caption">
-      kuula enne, kui mälu valetama hakkab
-    </div>
+    <div
+      class="photo-caption"
+      data-i18n="heroCaption"
+    ></div>
 
   </div>
 
 
   <div class="card">
 
-    <div class="card-title">
-      Kuidas mängida?
-    </div>
+    <div
+      class="card-title"
+      data-i18n="howToPlay"
+    ></div>
+
 
     <div class="rules">
 
       <div class="rule">
+
         <div class="rule-number">
           1
         </div>
 
-        <div>
-          Üks inimene loob mängu.
-          Teised liituvad
-          <strong>toa koodi või QR-koodiga.</strong>
-        </div>
+        <div
+          data-i18n-html="rule1"
+        ></div>
+
       </div>
 
 
       <div class="rule">
+
         <div class="rule-number">
           2
         </div>
 
-        <div>
-          Iga mängija saab ühe teada aastaga loo
-          ja ehitab sellest
-          <strong>oma ajajoone.</strong>
-        </div>
+        <div
+          data-i18n-html="rule2"
+        ></div>
+
       </div>
 
 
       <div class="rule">
+
         <div class="rule-number">
           3
         </div>
 
-        <div>
-          Igas voorus on üks
-          <strong>DJ</strong>,
-          kes avab loo oma telefonis
-          ja mängib selle teistele.
-          DJ ise selles voorus ei arva.
-        </div>
+        <div
+          data-i18n-html="rule3"
+        ></div>
+
       </div>
 
 
       <div class="rule">
+
         <div class="rule-number">
           4
         </div>
 
-        <div>
-          Arvaja valib,
-          <strong>kuhu uus lugu ajajoonel kuulub.</strong>
-          Õige koht tähendab,
-          et lugu jääb sulle.
-        </div>
+        <div
+          data-i18n-html="rule4"
+        ></div>
+
       </div>
 
 
       <div class="rule">
+
         <div class="rule-number">
           5
         </div>
 
-        <div>
-          Võid mängida klassikaliselt ühe arvajaga
-          või valida režiimi,
-          kus
-          <strong>kõik peale DJ arvavad korraga.</strong>
+        <div
+          data-i18n-html="rule5"
+        ></div>
+
+      </div>
+
+
+      <div class="rule">
+
+        <div class="rule-number">
+          6
         </div>
+
+        <div
+          data-i18n-html="rule6"
+        ></div>
+
       </div>
 
     </div>
 
 
-    <p class="small muted center">
-      Täpset aastat pole vaja teada.
-      Mõnikord piisab täiesti
-      kahtlasest sisetundest.
-    </p>
+    <p
+      class="small muted center"
+      data-i18n="rulesTip"
+    ></p>
 
 
     <div class="ornament">
@@ -946,19 +1524,22 @@ button:disabled{
 
   <div class="card">
 
-    <div class="card-title">
-      Kes sa täna oled?
-    </div>
+    <div
+      class="card-title"
+      data-i18n="whoAreYou"
+    ></div>
+
 
     <label>
 
-      SINU NIMI
+      <span
+        data-i18n="yourName"
+      ></span>
 
       <input
         id="name"
         maxlength="24"
         autocomplete="nickname"
-        placeholder="kirjuta siia..."
       >
 
     </label>
@@ -972,17 +1553,16 @@ button:disabled{
       id="create"
       class="primary"
       type="button"
-    >
-      ✦ LOO MÄNG
-    </button>
+      data-i18n="createGame"
+    ></button>
+
 
     <button
       id="showJoin"
       class="gold"
       type="button"
-    >
-      LIITU
-    </button>
+      data-i18n="join"
+    ></button>
 
   </div>
 
@@ -992,13 +1572,17 @@ button:disabled{
     class="card hidden"
   >
 
-    <div class="card-title">
-      Liitu olemasoleva mänguga
-    </div>
+    <div
+      class="card-title"
+      data-i18n="joinExisting"
+    ></div>
+
 
     <label>
 
-      TOA KOOD
+      <span
+        data-i18n="roomCodeLabel"
+      ></span>
 
       <input
         id="code"
@@ -1015,9 +1599,8 @@ button:disabled{
       class="primary full"
       style="margin-top:12px"
       type="button"
-    >
-      SISENE
-    </button>
+      data-i18n="enter"
+    ></button>
 
   </div>
 
@@ -1040,9 +1623,10 @@ button:disabled{
 
   <div class="card">
 
-    <div class="card-title">
-      Salajane salong
-    </div>
+    <div
+      class="card-title"
+      data-i18n="secretSalon"
+    ></div>
 
 
     <div
@@ -1052,7 +1636,11 @@ button:disabled{
 
 
     <div class="ornament">
-      <span>jaga seda koodi</span>
+
+      <span
+        data-i18n="shareCode"
+      ></span>
+
     </div>
 
 
@@ -1060,21 +1648,18 @@ button:disabled{
 
       <div>
 
-        <p class="small muted">
-          Skänni QR-kood
-          või saada link.
-          Refresh ei tohiks enam
-          su mängukohta kaotada.
-        </p>
+        <p
+          class="small muted"
+          data-i18n="joinHelp"
+        ></p>
 
 
         <button
           id="copyLink"
           class="gold"
           type="button"
-        >
-          KOPEERI LINK
-        </button>
+          data-i18n="copyLink"
+        ></button>
 
       </div>
 
@@ -1091,30 +1676,36 @@ button:disabled{
     class="card hidden"
   >
 
-    <div class="card-title">
-      Õhtu repertuaar
-    </div>
+    <div
+      class="card-title"
+      data-i18n="eveningProgram"
+    ></div>
 
 
     <div class="grid grid2">
 
       <label>
 
-        MUUSIKA
+        <span
+          data-i18n="music"
+        ></span>
 
         <select id="musicMode">
 
-          <option value="estonian">
-            Eesti
-          </option>
+          <option
+            value="estonian"
+            data-i18n="estonian"
+          ></option>
 
-          <option value="foreign">
-            Välismaa
-          </option>
+          <option
+            value="foreign"
+            data-i18n="foreign"
+          ></option>
 
-          <option value="mixed">
-            Kõik läbisegi
-          </option>
+          <option
+            value="mixed"
+            data-i18n="mixed"
+          ></option>
 
         </select>
 
@@ -1123,24 +1714,27 @@ button:disabled{
 
       <label>
 
-        RASKUS
+        <span
+          data-i18n="difficulty"
+        ></span>
 
         <select id="difficulty">
 
-          <option value="easy">
-            Peoõhtu
-          </option>
+          <option
+            value="easy"
+            data-i18n="easy"
+          ></option>
 
           <option
             value="normal"
             selected
-          >
-            Tavaline
-          </option>
+            data-i18n="normal"
+          ></option>
 
-          <option value="hard">
-            Muusikanohik
-          </option>
+          <option
+            value="hard"
+            data-i18n="hard"
+          ></option>
 
         </select>
 
@@ -1149,17 +1743,21 @@ button:disabled{
 
       <label>
 
-        MÄNGUREŽIIM
+        <span
+          data-i18n="gameMode"
+        ></span>
 
         <select id="gameMode">
 
-          <option value="classic">
-            Klassikaline: üks arvab
-          </option>
+          <option
+            value="classic"
+            data-i18n="classicMode"
+          ></option>
 
-          <option value="everyone">
-            Kõik peale DJ arvavad
-          </option>
+          <option
+            value="everyone"
+            data-i18n="everyoneMode"
+          ></option>
 
         </select>
 
@@ -1168,7 +1766,51 @@ button:disabled{
 
       <label>
 
-        VÕIDUKS KAARTE
+        <span
+          data-i18n="djMode"
+        ></span>
+
+        <select id="djMode">
+
+          <option
+            value="rotating"
+            data-i18n="djRotating"
+          ></option>
+
+          <option
+            value="host"
+            data-i18n="djHost"
+          ></option>
+
+          <option
+            value="fixed"
+            data-i18n="djFixed"
+          ></option>
+
+        </select>
+
+      </label>
+
+
+      <label
+        id="fixedDjWrap"
+        class="hidden"
+      >
+
+        <span
+          data-i18n="choosePermanentDj"
+        ></span>
+
+        <select id="fixedDj"></select>
+
+      </label>
+
+
+      <label>
+
+        <span
+          data-i18n="cardsToWin"
+        ></span>
 
         <select id="targetCards">
 
@@ -1192,27 +1834,29 @@ button:disabled{
 
       <label>
 
-        REVEAL'I KESTUS
+        <span
+          data-i18n="revealTime"
+        ></span>
 
         <select id="revealSeconds">
 
           <option value="5">
-            5 sek
+            5 s
           </option>
 
           <option
             value="8"
             selected
           >
-            8 sek
+            8 s
           </option>
 
           <option value="12">
-            12 sek
+            12 s
           </option>
 
           <option value="20">
-            20 sek
+            20 s
           </option>
 
         </select>
@@ -1237,9 +1881,18 @@ button:disabled{
         "
       >
 
-      järgmine voor automaatselt
+      <span
+        data-i18n="autoNext"
+      ></span>
 
     </label>
+
+
+    <p
+      id="djModeNote"
+      class="small muted"
+      style="margin-bottom:0"
+    ></p>
 
   </div>
 
@@ -1247,8 +1900,13 @@ button:disabled{
   <div class="card">
 
     <div class="card-title">
-      Külalised
+
+      <span
+        data-i18n="players"
+      ></span>
+
       <span id="count"></span>
+
     </div>
 
 
@@ -1263,16 +1921,14 @@ button:disabled{
       class="primary full hidden"
       style="margin-top:15px"
       type="button"
-    >
-      ✦ ALGAB ✦
-    </button>
+    ></button>
 
   </div>
 
 </section>
 
 
-<!-- MÄNG -->
+<!-- GAME -->
 
 <section
   id="game"
@@ -1282,19 +1938,27 @@ button:disabled{
   <div class="status-row">
 
     <span class="pill">
-      tuba
+
+      <span
+        data-i18n="roomShort"
+      ></span>
+
       <b id="gameCode"></b>
+
     </span>
+
 
     <span
       id="modeLabel"
       class="pill"
     ></span>
 
+
     <span
       id="turnLabel"
       class="pill"
     ></span>
+
 
     <span
       id="djLabel"
@@ -1310,13 +1974,12 @@ button:disabled{
   ></div>
 
 
-  <!-- MUUSIKA -->
-
   <div class="card listen-card">
 
-    <div class="card-title">
-      Kõrvus kõlab...
-    </div>
+    <div
+      class="card-title"
+      data-i18n="nowPlaying"
+    ></div>
 
 
     <div class="unknown">
@@ -1327,9 +1990,13 @@ button:disabled{
     <div
       id="listenCopy"
       class="listen-copy"
-    >
-      kuula. ära guugelda. usu sisetunnet.
-    </div>
+    ></div>
+
+
+    <div
+      id="saloonMessage"
+      class="saloon-message"
+    ></div>
 
 
     <div
@@ -1337,9 +2004,10 @@ button:disabled{
       class="dj-box hidden"
     >
 
-      <div class="small muted">
-        SINA OLED SELLES VOORUS DJ
-      </div>
+      <div
+        class="small muted"
+        data-i18n="youAreDj"
+      ></div>
 
 
       <div
@@ -1354,70 +2022,78 @@ button:disabled{
       ></div>
 
 
-      <div class="dj-buttons">
+      <div
+        id="spotifyShell"
+        class="spotify-shell"
+      >
 
-        <a
-          id="spotifyLink"
-          class="button spotify"
-          target="_blank"
-          rel="noopener"
-        >
-          ♫ SPOTIFY
-        </a>
+        <div
+          id="spotifyStatus"
+          class="spotify-status"
+        ></div>
 
 
-        <a
-          id="youtubeLink"
-          class="button youtube"
-          target="_blank"
-          rel="noopener"
-        >
-          ▶ YOUTUBE
-        </a>
+        <div id="spotifyEmbed"></div>
 
       </div>
+
+
+      <a
+        id="spotifyExactLink"
+        class="button spotify-exact-link hidden"
+        target="_blank"
+        rel="noopener"
+        data-i18n="openExactSpotify"
+      ></a>
 
 
       <p
         class="small muted"
         style="margin-bottom:0"
-      >
-        Mängi lugu teistele,
-        aga ära ütle artisti,
-        pealkirja ega aastat.
-      </p>
+        data-i18n="djInstruction"
+      ></p>
 
     </div>
 
   </div>
 
 
-  <div class="photo-frame dream-drift">
+  <div
+    class="photo-frame dream-drift"
+  >
 
     <img
       src="/images/destudio-venus.jpg"
       alt=""
     >
 
-    <div class="photo-caption">
-      mälu ei ole kronoloogiline
-    </div>
+    <div
+      class="photo-caption"
+      data-i18n="memoryCaption"
+    ></div>
 
   </div>
 
 
-  <!-- AJATELG -->
+  <!-- TIMELINE -->
 
-  <div class="card">
+  <div class="card timeline-wrap">
 
-    <div class="card-title">
-      Sinu ajajoon
-    </div>
+    <div
+      class="card-title"
+      data-i18n="yourTimeline"
+    ></div>
+
+
+    <p
+      id="timelineHelp"
+      class="small muted timeline-help"
+    ></p>
 
 
     <div
       id="timeline"
-      class="timeline"
+      class="timeline-flow"
     ></div>
 
 
@@ -1433,9 +2109,10 @@ button:disabled{
     class="card hidden"
   >
 
-    <div class="card-title">
-      Mängujuht
-    </div>
+    <div
+      class="card-title"
+      data-i18n="host"
+    ></div>
 
 
     <div
@@ -1448,9 +2125,8 @@ button:disabled{
       id="revealNow"
       class="gold full hidden"
       type="button"
-    >
-      AVA VOOR PRAEGU
-    </button>
+      data-i18n="revealNow"
+    ></button>
 
   </div>
 
@@ -1459,20 +2135,25 @@ button:disabled{
 
   <div
     id="revealBox"
-    class="card hidden"
+    class="card reveal-card hidden"
   >
+
+    <div
+      class="reveal-curtain"
+    ></div>
+
+
+    <div
+      class="reveal-marquee"
+      data-i18n="truthArrives"
+    ></div>
+
 
     <img
       src="/images/godshave.jpg"
       class="reveal-photo"
       alt=""
     >
-
-
-    <div
-      id="revealHeadline"
-      class="result"
-    ></div>
 
 
     <div
@@ -1493,6 +2174,29 @@ button:disabled{
     ></div>
 
 
+    <div class="camp-stars">
+
+      <span>★</span>
+      <span>✦</span>
+      <span>★</span>
+      <span>✦</span>
+      <span>★</span>
+
+    </div>
+
+
+    <div
+      id="revealHeadline"
+      class="result"
+    ></div>
+
+
+    <blockquote
+      id="revealQuote"
+      class="reveal-quote"
+    ></blockquote>
+
+
     <div
       id="roundResults"
       class="round-results"
@@ -1503,7 +2207,9 @@ button:disabled{
       id="autoProgress"
       class="progress hidden"
     >
+
       <div></div>
+
     </div>
 
 
@@ -1512,14 +2218,13 @@ button:disabled{
       class="primary full hidden"
       style="margin-top:16px"
       type="button"
-    >
-      JÄRGMINE →
-    </button>
+      data-i18n="next"
+    ></button>
 
   </div>
 
 
-  <!-- VÕITJA -->
+  <!-- WINNER -->
 
   <div
     id="winnerBox"
@@ -1543,10 +2248,16 @@ button:disabled{
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
+<script
+  src="https://open.spotify.com/embed/iframe-api/v1"
+  async
+></script>
+
 
 <script>
 
 (() => {
+
 
 const socket =
   io();
@@ -1573,7 +2284,31 @@ let currentRoundForProgress =
   null;
 
 
+let lastRevealRound =
+  null;
+
+
+let spotifyIframeAPI =
+  null;
+
+
+let spotifyController =
+  null;
+
+
+let spotifyLoadedRound =
+  null;
+
+
+let uiLang =
+  getStored(
+    "korvanuss.language"
+  ) ||
+  "et";
+
+
 const STORAGE = {
+
   token:
     "korvanuss.playerToken",
 
@@ -1581,9 +2316,813 @@ const STORAGE = {
     "korvanuss.name",
 
   room:
-    "korvanuss.room"
+    "korvanuss.room",
+
+  language:
+    "korvanuss.language"
+
 };
 
+
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+
+const I18N = {
+
+  et: {
+
+    tagline:
+      "meloodia, mälu & kahtlased aastaarvud",
+
+    heroCaption:
+      "kuula enne, kui mälu valetama hakkab",
+
+    howToPlay:
+      "Kuidas mängida?",
+
+
+    rule1:
+      "Üks inimene loob mängu. Teised liituvad <strong>toa koodi või QR-koodi abil.</strong>",
+
+
+    rule2:
+      "Iga võistleja alustab ühe looga, mille ilmumisaasta on teada. Need lood moodustavad sinu <strong>isikliku ajajoone.</strong>",
+
+
+    rule3:
+      "Igas voorus mängib <strong>DJ</strong> tundmatu loo ette. Loo pealkirja, esitajat ja aastat näeb ainult DJ.",
+
+
+    rule4:
+      "Klassikalises režiimis arvab korraga üks võistleja. Režiimis <strong>„Kõik arvavad”</strong> paigutavad loo korraga kõik peale DJ.",
+
+
+    rule5:
+      "Puuduta oma ajajoonel kohta, kuhu lugu sinu arvates kuulub: <strong>enne, kahe loo vahele või pärast.</strong> Seejärel kinnita valik.",
+
+
+    rule6:
+      "Õige paigutuse korral lisatakse lugu sinu ajajoonele. Võidab esimene võistleja, kes kogub vajaliku arvu lugusid. <strong>Püsiv DJ ei võistle.</strong>",
+
+
+    rulesTip:
+      "Täpset aastat ei pea teadma. Kuula produktsiooni, häält, instrumente ja seda kahtlast tunnet kõhus.",
+
+
+    whoAreYou:
+      "Kes sa täna oled?",
+
+    yourName:
+      "Sinu nimi",
+
+    namePlaceholder:
+      "kirjuta siia...",
+
+    createGame:
+      "✦ LOO MÄNG",
+
+    join:
+      "LIITU",
+
+    joinExisting:
+      "Liitu olemasoleva mänguga",
+
+    roomCodeLabel:
+      "Toa kood",
+
+    enter:
+      "SISENE",
+
+    secretSalon:
+      "Salajane salong",
+
+    shareCode:
+      "jaga seda koodi",
+
+    joinHelp:
+      "Teised saavad liituda QR-koodi, toa koodi või jagatud lingi abil.",
+
+    copyLink:
+      "KOPEERI LINK",
+
+    eveningProgram:
+      "Õhtu repertuaar",
+
+    music:
+      "Muusika",
+
+    estonian:
+      "Eesti",
+
+    foreign:
+      "Välismaa",
+
+    mixed:
+      "Eesti + välismaa",
+
+    difficulty:
+      "Raskus",
+
+    easy:
+      "Peoõhtu",
+
+    normal:
+      "Tavaline",
+
+    hard:
+      "Muusikanohik",
+
+    gameMode:
+      "Mängurežiim",
+
+    classicMode:
+      "Klassikaline: üks arvab",
+
+    everyoneMode:
+      "Kõik arvavad",
+
+    djMode:
+      "DJ-režiim",
+
+    djRotating:
+      "DJ vahetub iga voor",
+
+    djHost:
+      "Host on püsiv DJ",
+
+    djFixed:
+      "Vali püsiv DJ",
+
+    choosePermanentDj:
+      "Püsiv DJ",
+
+    cardsToWin:
+      "Võiduks lugusid",
+
+    revealTime:
+      "Vastuse näitamise aeg",
+
+    autoNext:
+      "järgmine voor algab automaatselt",
+
+    djNoteRotating:
+      "DJ vahetub iga voor. Rotatsioonis osalevad kõik mängijad.",
+
+    djNotePermanent:
+      "Püsiv DJ mängib kogu mängu jooksul muusikat, kuid ei arva ega kogu lugusid.",
+
+    players:
+      "Mängijad",
+
+    roomShort:
+      "tuba",
+
+    nowPlaying:
+      "Kõrvus kõlab…",
+
+    listen:
+      "Kuula. Ära guugelda. Usu sisetunnet.",
+
+    youAreDj:
+      "SINA OLED DJ",
+
+    djInstruction:
+      "Vajuta Spotify pleieris Play ja mängi lugu teistele. Ära ütle pealkirja, esitajat ega aastat.",
+
+    spotifyLoading:
+      "Otsin õiget lugu ja valmistan pleieri ette…",
+
+    spotifyNeedsSetup:
+      "Spotify pleier vajab veel ühekordset seadistamist Renderis.",
+
+    spotifyNotFound:
+      "Spotify ei leidnud sellele loole kindlat vastet.",
+
+    spotifyError:
+      "Spotify pleier ei saanud praegu ühendust.",
+
+    openExactSpotify:
+      "AVA TÄPNE LUGU SPOTIFYS",
+
+    memoryCaption:
+      "mälu ei ole kronoloogiline",
+
+    yourTimeline:
+      "Sinu ajajoon",
+
+    timelineHelp:
+      "Vali roosa vahe, kuhu tundmatu lugu sinu arvates kuulub.",
+
+    host:
+      "Mängujuht",
+
+    revealNow:
+      "AVA VASTUS PRAEGU",
+
+    truthArrives:
+      "★ TÕDE SAABUB LAVAAUGUST ★",
+
+    next:
+      "JÄRGMINE →",
+
+    start:
+      "✦ ALGAB ✦",
+
+    waitingPlayers:
+      "OOTAME SELTSKONDA…",
+
+    permanentDj:
+      "DJ",
+
+    present:
+      "kohal",
+
+    missing:
+      "kadunud",
+
+    yourTurn:
+      "SINU KORD",
+
+    youGuess:
+      "SINA ARVAD",
+
+    roundOff:
+      "SELLES VOORUS PUHKAD",
+
+    guesses:
+      "arvab",
+
+    dj:
+      "DJ",
+
+    locked:
+      "Valik lukus ✦ Ootame teisi.",
+
+    djDoesNotGuess:
+      "Sina oled DJ. Selles voorus sa ei arva.",
+
+    otherPlayerGuessing:
+      "Praegu arvab teine mängija.",
+
+    roundOpen:
+      "Vastus on avatud. Vaata allapoole.",
+
+    chooseSlot:
+      "Vali koht ajajoonel.",
+
+    before:
+      "enne",
+
+    after:
+      "pärast",
+
+    between:
+      "vahele",
+
+    confirm:
+      "KINNITA VALIK",
+
+    selected:
+      "Valitud koht",
+
+    bravo:
+      "BRAVO!",
+
+    tragedy:
+      "TRAGÖÖDIA!",
+
+    secretRevealed:
+      "SALADUS ON PALJASTATUD",
+
+    answerRevealed:
+      "VASTUS ON AVATUD",
+
+    correct:
+      "✓ õige",
+
+    wrong:
+      "✕ vale",
+
+    waitingFor:
+      "Ootame",
+
+    everyoneAnswered:
+      "Kõik vajalikud vastused on olemas.",
+
+    roundRevealed:
+      "Vastus on avatud.",
+
+    copied:
+      "Link kopeeritud ✦",
+
+    connectionLost:
+      "Ühendus kadus. Proovin tagasi tulla…",
+
+    winnerIntro:
+      "Daamid ja härrad…",
+
+    winnerText:
+      "kõrva(n)uss on leidnud oma uue peremehe.",
+
+    again:
+      "VEEL ÜKS KORD",
+
+    err_NAME_REQUIRED:
+      "Sisesta nimi.",
+
+    err_ROOM_NOT_FOUND:
+      "Sellist tuba ei leitud.",
+
+    err_GAME_ALREADY_STARTED:
+      "Mäng on juba alanud.",
+
+    err_ROOM_FULL:
+      "Tuba on täis.",
+
+    err_NAME_TAKEN:
+      "See nimi on juba kasutusel.",
+
+    err_HOST_ONLY:
+      "Seda saab teha ainult mängujuht.",
+
+    err_NEED_TWO_PLAYERS:
+      "Mänguks on vaja vähemalt kaht ühendatud inimest.",
+
+    err_CHOOSE_DJ:
+      "Vali püsiv DJ.",
+
+    err_START_FAILED:
+      "Mängu käivitamine ebaõnnestus.",
+
+    err_CANNOT_GUESS_NOW:
+      "Praegu ei saa vastata.",
+
+    err_ROUND_CHANGED:
+      "See voor on juba vahetunud.",
+
+    err_NOT_GUESSER:
+      "Selles voorus sa ei arva.",
+
+    err_ALREADY_GUESSED:
+      "Vastus on juba lukustatud.",
+
+    err_INVALID_SLOT:
+      "Valitud koht ei sobi.",
+
+    err_WRONG_PHASE:
+      "Praegu ei saa vastust avada.",
+
+    err_NO_GUESSES:
+      "Enne vastuse avamist peab vähemalt üks mängija valiku kinnitama.",
+
+    err_GAME_FINISHED:
+      "Mäng on lõppenud.",
+
+    err_REVEAL_FIRST:
+      "Ava enne vastus.",
+
+    genericError:
+      "Midagi läks valesti."
+  },
+
+
+  en: {
+
+    tagline:
+      "melody, memory & suspicious dates",
+
+    heroCaption:
+      "listen before memory starts lying",
+
+    howToPlay:
+      "How to play",
+
+    rule1:
+      "One person creates a game. Everyone else joins with the <strong>room code or QR code.</strong>",
+
+    rule2:
+      "Every competitor starts with one song whose release year is visible. These songs form your <strong>personal timeline.</strong>",
+
+    rule3:
+      "Each round, the <strong>DJ</strong> plays one mystery song. Only the DJ can see its title, artist and year.",
+
+    rule4:
+      "In Classic mode, one competitor guesses at a time. In <strong>Everyone Guesses</strong>, everybody except the DJ places the same song at once.",
+
+    rule5:
+      "Tap the place where you think the song belongs: <strong>before, between two songs, or after.</strong> Then confirm your choice.",
+
+    rule6:
+      "If the placement is correct, the song is added to your timeline. The first competitor to collect the target number of songs wins. <strong>A permanent DJ does not compete.</strong>",
+
+    rulesTip:
+      "You do not need the exact year. Listen to the production, voice, instruments and the suspicious feeling in your stomach.",
+
+    whoAreYou:
+      "Who are you tonight?",
+
+    yourName:
+      "Your name",
+
+    namePlaceholder:
+      "type here...",
+
+    createGame:
+      "✦ CREATE GAME",
+
+    join:
+      "JOIN",
+
+    joinExisting:
+      "Join an existing game",
+
+    roomCodeLabel:
+      "Room code",
+
+    enter:
+      "ENTER",
+
+    secretSalon:
+      "Secret salon",
+
+    shareCode:
+      "share this code",
+
+    joinHelp:
+      "Others can join with the QR code, room code or shared link.",
+
+    copyLink:
+      "COPY LINK",
+
+    eveningProgram:
+      "Tonight's programme",
+
+    music:
+      "Music",
+
+    estonian:
+      "Estonian",
+
+    foreign:
+      "International",
+
+    mixed:
+      "Estonian + international",
+
+    difficulty:
+      "Difficulty",
+
+    easy:
+      "Party",
+
+    normal:
+      "Normal",
+
+    hard:
+      "Music nerd",
+
+    gameMode:
+      "Game mode",
+
+    classicMode:
+      "Classic: one guesses",
+
+    everyoneMode:
+      "Everyone guesses",
+
+    djMode:
+      "DJ mode",
+
+    djRotating:
+      "DJ changes every round",
+
+    djHost:
+      "Host is permanent DJ",
+
+    djFixed:
+      "Choose permanent DJ",
+
+    choosePermanentDj:
+      "Permanent DJ",
+
+    cardsToWin:
+      "Songs to win",
+
+    revealTime:
+      "Reveal time",
+
+    autoNext:
+      "start the next round automatically",
+
+    djNoteRotating:
+      "The DJ changes every round. Everyone takes a turn as DJ.",
+
+    djNotePermanent:
+      "A permanent DJ plays the music for the whole game, but does not guess or collect songs.",
+
+    players:
+      "Players",
+
+    roomShort:
+      "room",
+
+    nowPlaying:
+      "Now playing…",
+
+    listen:
+      "Listen. Don't Google. Trust the feeling.",
+
+    youAreDj:
+      "YOU ARE THE DJ",
+
+    djInstruction:
+      "Press Play in the Spotify player and play the song for everyone. Do not say the title, artist or year.",
+
+    spotifyLoading:
+      "Finding the exact track and preparing the player…",
+
+    spotifyNeedsSetup:
+      "The Spotify player still needs a one-time setup in Render.",
+
+    spotifyNotFound:
+      "Spotify could not find a confident match for this song.",
+
+    spotifyError:
+      "The Spotify player could not connect right now.",
+
+    openExactSpotify:
+      "OPEN EXACT TRACK IN SPOTIFY",
+
+    memoryCaption:
+      "memory is not chronological",
+
+    yourTimeline:
+      "Your timeline",
+
+    timelineHelp:
+      "Choose the pink gap where you think the mystery song belongs.",
+
+    host:
+      "Host",
+
+    revealNow:
+      "REVEAL ANSWER NOW",
+
+    truthArrives:
+      "★ THE TRUTH ENTERS FROM STAGE LEFT ★",
+
+    next:
+      "NEXT →",
+
+    start:
+      "✦ BEGIN ✦",
+
+    waitingPlayers:
+      "WAITING FOR COMPANY…",
+
+    permanentDj:
+      "DJ",
+
+    present:
+      "here",
+
+    missing:
+      "missing",
+
+    yourTurn:
+      "YOUR TURN",
+
+    youGuess:
+      "YOU GUESS",
+
+    roundOff:
+      "YOU REST THIS ROUND",
+
+    guesses:
+      "is guessing",
+
+    dj:
+      "DJ",
+
+    locked:
+      "Choice locked ✦ Waiting for the others.",
+
+    djDoesNotGuess:
+      "You are the DJ. You do not guess this round.",
+
+    otherPlayerGuessing:
+      "Another player is guessing right now.",
+
+    roundOpen:
+      "The answer is open. Look below.",
+
+    chooseSlot:
+      "Choose a place on the timeline.",
+
+    before:
+      "before",
+
+    after:
+      "after",
+
+    between:
+      "between",
+
+    confirm:
+      "CONFIRM CHOICE",
+
+    selected:
+      "Selected",
+
+    bravo:
+      "BRAVO!",
+
+    tragedy:
+      "TRAGEDY!",
+
+    secretRevealed:
+      "THE SECRET IS EXPOSED",
+
+    answerRevealed:
+      "THE ANSWER IS REVEALED",
+
+    correct:
+      "✓ correct",
+
+    wrong:
+      "✕ wrong",
+
+    waitingFor:
+      "Waiting for",
+
+    everyoneAnswered:
+      "All required answers are in.",
+
+    roundRevealed:
+      "The answer is open.",
+
+    copied:
+      "Link copied ✦",
+
+    connectionLost:
+      "Connection lost. Trying to return…",
+
+    winnerIntro:
+      "Ladies and gentlemen…",
+
+    winnerText:
+      "kõrva(n)uss has found its new host.",
+
+    again:
+      "ONE MORE TIME",
+
+    err_NAME_REQUIRED:
+      "Enter your name.",
+
+    err_ROOM_NOT_FOUND:
+      "That room could not be found.",
+
+    err_GAME_ALREADY_STARTED:
+      "The game has already started.",
+
+    err_ROOM_FULL:
+      "The room is full.",
+
+    err_NAME_TAKEN:
+      "That name is already in use.",
+
+    err_HOST_ONLY:
+      "Only the host can do that.",
+
+    err_NEED_TWO_PLAYERS:
+      "At least two connected people are needed.",
+
+    err_CHOOSE_DJ:
+      "Choose a permanent DJ.",
+
+    err_START_FAILED:
+      "The game could not start.",
+
+    err_CANNOT_GUESS_NOW:
+      "You cannot guess right now.",
+
+    err_ROUND_CHANGED:
+      "That round has already changed.",
+
+    err_NOT_GUESSER:
+      "You are not guessing this round.",
+
+    err_ALREADY_GUESSED:
+      "Your answer is already locked.",
+
+    err_INVALID_SLOT:
+      "That timeline position is invalid.",
+
+    err_WRONG_PHASE:
+      "The answer cannot be revealed right now.",
+
+    err_NO_GUESSES:
+      "At least one player must confirm a choice before revealing.",
+
+    err_GAME_FINISHED:
+      "The game is over.",
+
+    err_REVEAL_FIRST:
+      "Reveal the answer first.",
+
+    genericError:
+      "Something went wrong."
+  }
+};
+
+
+/* =========================================================
+   LYNCH + WEIRD TEXT
+========================================================= */
+
+const LYNCH_QUOTES = [
+
+  {
+    text:
+      "Even bad coffee is better than no coffee at all.",
+    author:
+      "David Lynch"
+  },
+
+  {
+    text:
+      "I don't know where it came from, but I love curtains.",
+    author:
+      "David Lynch"
+  },
+
+  {
+    text:
+      "Keep your eye on the doughnut, not on the hole.",
+    author:
+      "David Lynch"
+  },
+
+  {
+    text:
+      "What, fish?",
+    author:
+      "David Lynch"
+  }
+
+];
+
+
+const SALON_MESSAGES = {
+
+  et: [
+
+    "1987 astus just tuppa.",
+
+    "Palun ära usalda saksofoni.",
+
+    "See laul mäletab sind.",
+
+    "Kuskil liigub praegu kardin.",
+
+    "Ajajoon on süütu. Sina ei ole.",
+
+    "Sellel aastaarvul puudub alibi.",
+
+    "Keegi jättis bassikäigu ukse taha.",
+
+    "Minevik helistas. Ta ei öelnud midagi."
+
+  ],
+
+
+  en: [
+
+    "1987 has entered the room.",
+
+    "Please do not trust the saxophone.",
+
+    "The song remembers you.",
+
+    "Somewhere, a curtain is moving.",
+
+    "The timeline is innocent. You are not.",
+
+    "This year has no alibi.",
+
+    "Someone left the bassline outside.",
+
+    "The past called. It said nothing."
+
+  ]
+
+};
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
 
 function getStored(key){
 
@@ -1632,25 +3171,22 @@ function ensureToken(){
     !token
   ){
 
-    if(
-      window.crypto &&
-      crypto.randomUUID
-    ){
+    token =
 
-      token =
-        crypto.randomUUID();
+      window.crypto
+        ?.randomUUID
+        ?.()
 
-    }else{
+      ||
 
-      token =
-        Math.random()
-          .toString(36)
-          .slice(2) +
+      Math.random()
+        .toString(36)
+        .slice(2)
 
-        Date.now()
-          .toString(36);
+      +
 
-    }
+      Date.now()
+        .toString(36);
 
 
     setStored(
@@ -1668,6 +3204,148 @@ function ensureToken(){
 
 const playerToken =
   ensureToken();
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function t(key){
+
+  return (
+
+    I18N[uiLang]
+      ?.[key]
+
+    ??
+
+    I18N.et[key]
+
+    ??
+
+    key
+
+  );
+
+}
+
+
+function applyLanguage(
+  language,
+  persist = true
+){
+
+  uiLang =
+    language === "en"
+      ? "en"
+      : "et";
+
+
+  document
+    .documentElement
+    .lang =
+      uiLang;
+
+
+  document.title =
+    "kõrva(n)uss";
+
+
+  if(
+    persist
+  ){
+
+    setStored(
+      STORAGE.language,
+      uiLang
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "[data-i18n]"
+    )
+    .forEach(
+      element => {
+
+        element.textContent =
+          t(
+            element.dataset.i18n
+          );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-i18n-html]"
+    )
+    .forEach(
+      element => {
+
+        element.innerHTML =
+          t(
+            element.dataset.i18nHtml
+          );
+
+      }
+    );
+
+
+  $("name").placeholder =
+    t(
+      "namePlaceholder"
+    );
+
+
+  $("langEt")
+    .classList
+    .toggle(
+      "active",
+      uiLang === "et"
+    );
+
+
+  $("langEn")
+    .classList
+    .toggle(
+      "active",
+      uiLang === "en"
+    );
+
+
+  if(
+    state
+  ){
+
+    render();
+
+  }
+
+}
+
+
+$("langEt")
+  .addEventListener(
+    "click",
+    () =>
+      applyLanguage(
+        "et"
+      )
+  );
+
+
+$("langEn")
+  .addEventListener(
+    "click",
+    () =>
+      applyLanguage(
+        "en"
+      )
+  );
 
 
 const params =
@@ -1714,7 +3392,15 @@ if(
 }
 
 
-/* TOAST */
+applyLanguage(
+  uiLang,
+  false
+);
+
+
+/* =========================================================
+   GENERAL HELPERS
+========================================================= */
 
 function toast(message){
 
@@ -1739,13 +3425,31 @@ function toast(message){
         $("toast")
           .classList
           .add("hidden"),
+
       2600
     );
 
 }
 
 
-/* HELPERS */
+function errorFromCode(code){
+
+  return (
+
+    t(
+      `err_${code}`
+    )
+
+    ||
+
+    t(
+      "genericError"
+    )
+
+  );
+
+}
+
 
 function playerName(){
 
@@ -1756,7 +3460,9 @@ function playerName(){
 }
 
 
-function error(message){
+function showHomeError(
+  message
+){
 
   $("homeError")
     .textContent =
@@ -1767,10 +3473,13 @@ function error(message){
 
 function isHost(){
 
-  return (
+  return Boolean(
+
     state &&
+
     state.hostToken ===
       playerToken
+
   );
 
 }
@@ -1778,10 +3487,13 @@ function isHost(){
 
 function amDj(){
 
-  return (
+  return Boolean(
+
     state &&
+
     state.djToken ===
       playerToken
+
   );
 
 }
@@ -1789,10 +3501,13 @@ function amDj(){
 
 function myTurn(){
 
-  return (
+  return Boolean(
+
     state &&
+
     state.activePlayerToken ===
       playerToken
+
   );
 
 }
@@ -1801,12 +3516,17 @@ function myTurn(){
 function joinUrl(){
 
   return (
+
     location.origin +
+
     location.pathname +
+
     "?room=" +
+
     encodeURIComponent(
       state.code
     )
+
   );
 
 }
@@ -1847,15 +3567,83 @@ function saveSession(
 }
 
 
-/* HOME */
+function deterministicIndex(
+  seed,
+  length
+){
+
+  const str =
+    String(
+      seed || ""
+    );
+
+
+  let hash =
+    0;
+
+
+  for(
+    let i = 0;
+    i < str.length;
+    i++
+  ){
+
+    hash =
+      (
+        (
+          hash << 5
+        )
+        -
+        hash
+        +
+        str.charCodeAt(i)
+      )
+      |
+      0;
+
+  }
+
+
+  return (
+    Math.abs(hash) %
+    length
+  );
+
+}
+
+
+function salonMessage(){
+
+  const list =
+    SALON_MESSAGES[
+      uiLang
+    ];
+
+
+  return list[
+    deterministicIndex(
+      state?.roundId,
+      list.length
+    )
+  ];
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
 
 $("showJoin")
   .addEventListener(
     "click",
     () =>
+
       $("joinBox")
         .classList
-        .toggle("hidden")
+        .toggle(
+          "hidden"
+        )
   );
 
 
@@ -1870,9 +3658,12 @@ $("create")
 
       socket.emit(
         "createRoom",
+
         {
           name,
-          playerToken
+          playerToken,
+          language:
+            uiLang
         },
 
         result => {
@@ -1881,9 +3672,10 @@ $("create")
             !result?.ok
           ){
 
-            return error(
-              result?.error ||
-              "Ei õnnestunud."
+            return showHomeError(
+              errorFromCode(
+                result?.error
+              )
             );
 
           }
@@ -1910,15 +3702,15 @@ $("join")
         playerName();
 
 
-      const code =
-        $("code").value;
-
-
       socket.emit(
         "joinRoom",
+
         {
           name,
-          code,
+
+          code:
+            $("code").value,
+
           playerToken
         },
 
@@ -1928,9 +3720,21 @@ $("join")
             !result?.ok
           ){
 
-            return error(
-              result?.error ||
-              "Ei õnnestunud."
+            return showHomeError(
+              errorFromCode(
+                result?.error
+              )
+            );
+
+          }
+
+
+          if(
+            result.language
+          ){
+
+            applyLanguage(
+              result.language
             );
 
           }
@@ -1948,8 +3752,6 @@ $("join")
   );
 
 
-/* COPY LINK */
-
 $("copyLink")
   .addEventListener(
     "click",
@@ -1965,13 +3767,17 @@ $("copyLink")
 
 
         toast(
-          "Link kopeeritud ✦"
+          t(
+            "copied"
+          )
         );
 
       }catch{
 
         prompt(
-          "Kopeeri link:",
+          t(
+            "copyLink"
+          ),
           joinUrl()
         );
 
@@ -1981,7 +3787,9 @@ $("copyLink")
   );
 
 
-/* GAME BUTTONS */
+/* =========================================================
+   GAME BUTTONS
+========================================================= */
 
 $("start")
   .addEventListener(
@@ -1999,8 +3807,9 @@ $("start")
           ){
 
             toast(
-              result?.error ||
-              "Ei õnnestunud."
+              errorFromCode(
+                result?.error
+              )
             );
 
           }
@@ -2028,8 +3837,9 @@ $("revealNow")
           ){
 
             toast(
-              result?.error ||
-              "Ei õnnestunud."
+              errorFromCode(
+                result?.error
+              )
             );
 
           }
@@ -2057,8 +3867,9 @@ $("next")
           ){
 
             toast(
-              result?.error ||
-              "Ei õnnestunud."
+              errorFromCode(
+                result?.error
+              )
             );
 
           }
@@ -2070,12 +3881,87 @@ $("next")
   );
 
 
-/* SETTINGS */
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function sendSettings(){
+
+  clearTimeout(
+    settingsTimer
+  );
+
+
+  settingsTimer =
+    setTimeout(
+      () => {
+
+        socket.emit(
+          "settings",
+
+          {
+            musicMode:
+              $("musicMode").value,
+
+            difficulty:
+              $("difficulty").value,
+
+            gameMode:
+              $("gameMode").value,
+
+            djMode:
+              $("djMode").value,
+
+            fixedDjToken:
+              $("fixedDj").value ||
+              null,
+
+            targetCards:
+              Number(
+                $("targetCards").value
+              ),
+
+            autoNext:
+              $("autoNext").checked,
+
+            revealSeconds:
+              Number(
+                $("revealSeconds").value
+              )
+          },
+
+          result => {
+
+            if(
+              result &&
+              !result.ok
+            ){
+
+              toast(
+                errorFromCode(
+                  result.error
+                )
+              );
+
+            }
+
+          }
+        );
+
+      },
+
+      120
+    );
+
+}
+
 
 [
   "musicMode",
   "difficulty",
   "gameMode",
+  "djMode",
+  "fixedDj",
   "targetCards",
   "autoNext",
   "revealSeconds"
@@ -2086,71 +3972,16 @@ $("next")
     $(id)
       .addEventListener(
         "change",
-        () => {
-
-          clearTimeout(
-            settingsTimer
-          );
-
-
-          settingsTimer =
-            setTimeout(
-              () => {
-
-                socket.emit(
-                  "settings",
-                  {
-                    musicMode:
-                      $("musicMode").value,
-
-                    difficulty:
-                      $("difficulty").value,
-
-                    gameMode:
-                      $("gameMode").value,
-
-                    targetCards:
-                      Number(
-                        $("targetCards").value
-                      ),
-
-                    autoNext:
-                      $("autoNext").checked,
-
-                    revealSeconds:
-                      Number(
-                        $("revealSeconds").value
-                      )
-                  },
-
-                  result => {
-
-                    if(
-                      result &&
-                      !result.ok
-                    ){
-
-                      toast(
-                        result.error
-                      );
-
-                    }
-
-                  }
-                );
-
-              },
-              120
-            );
-
-        }
+        sendSettings
       );
 
   }
 );
 
 
-/* RECONNECT */
+/* =========================================================
+   RECONNECT
+========================================================= */
 
 socket.on(
   "connect",
@@ -2158,6 +3989,7 @@ socket.on(
 
     const code =
       roomFromUrl ||
+
       getStored(
         STORAGE.room
       );
@@ -2174,6 +4006,7 @@ socket.on(
 
     socket.emit(
       "resumeRoom",
+
       {
         code,
         playerToken
@@ -2184,6 +4017,17 @@ socket.on(
         if(
           result?.ok
         ){
+
+          if(
+            result.language
+          ){
+
+            applyLanguage(
+              result.language
+            );
+
+          }
+
 
           if(
             !$("name").value &&
@@ -2198,6 +4042,7 @@ socket.on(
 
           saveSession(
             result.code,
+
             result.name ||
             $("name").value
           );
@@ -2208,7 +4053,9 @@ socket.on(
 
           $("joinBox")
             .classList
-            .remove("hidden");
+            .remove(
+              "hidden"
+            );
 
         }
 
@@ -2228,8 +4075,25 @@ socket.on(
 
 
     selectedSlot =
-      state?.myGuess?.slot ??
+      state?.myGuess
+        ?.slot
+      ??
       null;
+
+
+    if(
+      state.language &&
+      state.language !==
+        uiLang
+    ){
+
+      applyLanguage(
+        state.language
+      );
+
+      return;
+
+    }
 
 
     render();
@@ -2247,7 +4111,9 @@ socket.on(
     ){
 
       toast(
-        "Ühendus kadus. Proovin tagasi tulla…"
+        t(
+          "connectionLost"
+        )
       );
 
     }
@@ -2256,7 +4122,271 @@ socket.on(
 );
 
 
-/* MAIN RENDER */
+/* =========================================================
+   SPOTIFY
+========================================================= */
+
+window.onSpotifyIframeApiReady =
+  IFrameAPI => {
+
+    spotifyIframeAPI =
+      IFrameAPI;
+
+
+    loadSpotifyForCurrentRound();
+
+  };
+
+
+async function loadSpotifyForCurrentRound(){
+
+  if(
+    !state ||
+    !state.djSecret ||
+    !amDj() ||
+    spotifyLoadedRound ===
+      state.roundId
+  ){
+
+    return;
+
+  }
+
+
+  spotifyLoadedRound =
+    state.roundId;
+
+
+  if(
+    !spotifyController
+  ){
+
+    $("spotifyEmbed")
+      .innerHTML =
+        "";
+
+  }
+
+
+  $("spotifyStatus")
+    .textContent =
+      t(
+        "spotifyLoading"
+      );
+
+
+  $("spotifyStatus")
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  $("spotifyExactLink")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  if(
+    !state.spotifyConfigured
+  ){
+
+    $("spotifyStatus")
+      .textContent =
+        t(
+          "spotifyNeedsSetup"
+        );
+
+
+    return;
+
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/spotify/track",
+        {
+          method:
+            "POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+              roomCode:
+                state.code,
+
+              playerToken,
+
+              roundId:
+                state.roundId
+            })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !data.ok
+    ){
+
+      if(
+        data.error ===
+        "TRACK_NOT_FOUND"
+      ){
+
+        $("spotifyStatus")
+          .textContent =
+            t(
+              "spotifyNotFound"
+            );
+
+      }else if(
+        data.error ===
+        "SPOTIFY_NOT_CONFIGURED"
+      ){
+
+        $("spotifyStatus")
+          .textContent =
+            t(
+              "spotifyNeedsSetup"
+            );
+
+      }else{
+
+        $("spotifyStatus")
+          .textContent =
+            t(
+              "spotifyError"
+            );
+
+      }
+
+
+      return;
+
+    }
+
+
+    if(
+      data.url
+    ){
+
+      $("spotifyExactLink")
+        .href =
+          data.url;
+
+
+      $("spotifyExactLink")
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
+
+
+    if(
+      !spotifyIframeAPI
+    ){
+
+      $("spotifyStatus")
+        .textContent =
+          t(
+            "spotifyLoading"
+          );
+
+
+      spotifyLoadedRound =
+        null;
+
+
+      return;
+
+    }
+
+
+    $("spotifyStatus")
+      .classList
+      .add(
+        "hidden"
+      );
+
+
+    const element =
+      $("spotifyEmbed");
+
+
+    if(
+      !spotifyController
+    ){
+
+      spotifyIframeAPI
+        .createController(
+          element,
+
+          {
+            width:
+              "100%",
+
+            height:
+              152,
+
+            uri:
+              data.uri
+          },
+
+          controller => {
+
+            spotifyController =
+              controller;
+
+          }
+        );
+
+    }else{
+
+      spotifyController
+        .loadEntity(
+          data.uri
+        );
+
+    }
+
+  }catch(
+    err
+  ){
+
+    console.error(
+      err
+    );
+
+
+    $("spotifyStatus")
+      .textContent =
+        t(
+          "spotifyError"
+        );
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
 
 function render(){
 
@@ -2271,7 +4401,9 @@ function render(){
 
   $("home")
     .classList
-    .add("hidden");
+    .add(
+      "hidden"
+    );
 
 
   if(
@@ -2289,18 +4421,24 @@ function render(){
 }
 
 
-/* LOBBY */
+/* =========================================================
+   LOBBY
+========================================================= */
 
 function renderLobby(){
 
   $("lobby")
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 
   $("game")
     .classList
-    .add("hidden");
+    .add(
+      "hidden"
+    );
 
 
   $("roomCode")
@@ -2321,6 +4459,9 @@ function renderLobby(){
     );
 
 
+  populateFixedDj();
+
+
   if(
     isHost()
   ){
@@ -2335,6 +4476,10 @@ function renderLobby(){
 
     $("gameMode").value =
       state.gameMode;
+
+
+    $("djMode").value =
+      state.djMode;
 
 
     $("targetCards").value =
@@ -2352,7 +4497,48 @@ function renderLobby(){
         state.revealSeconds
       );
 
+
+    if(
+      state.fixedDjToken
+    ){
+
+      $("fixedDj").value =
+        state.fixedDjToken;
+
+    }
+
   }
+
+
+  const fixedVisible =
+
+    isHost() &&
+
+    $("djMode").value ===
+      "fixed";
+
+
+  $("fixedDjWrap")
+    .classList
+    .toggle(
+      "hidden",
+      !fixedVisible
+    );
+
+
+  $("djModeNote")
+    .textContent =
+
+      $("djMode").value ===
+      "rotating"
+
+        ? t(
+            "djNoteRotating"
+          )
+
+        : t(
+            "djNotePermanent"
+          );
 
 
   $("lobbyPlayers")
@@ -2362,7 +4548,10 @@ function renderLobby(){
 
   state.players
     .forEach(
-      (player,index) => {
+      (
+        player,
+        index
+      ) => {
 
         const row =
           document.createElement(
@@ -2386,7 +4575,19 @@ function renderLobby(){
 
             ${
               player.isHost
-                ? "✦"
+                ? " ✦"
+                : ""
+            }
+
+            ${
+              player.isPermanentDj
+
+                ? `
+                  <span class="dj-badge">
+                    ${t("permanentDj")}
+                  </span>
+                `
+
                 : ""
             }
 
@@ -2396,15 +4597,19 @@ function renderLobby(){
           <span
             class="${
               player.connected
+
                 ? "online"
+
                 : "offline"
             }"
           >
 
             ${
               player.connected
-                ? "kohal"
-                : "kadunud"
+
+                ? t("present")
+
+                : t("missing")
             }
 
           </span>
@@ -2447,9 +4652,13 @@ function renderLobby(){
 
       connected < 2
 
-        ? "OOTAME SELTSKONDA…"
+        ? t(
+            "waitingPlayers"
+          )
 
-        : "✦ ALGAB ✦";
+        : t(
+            "start"
+          );
 
 
   drawQR();
@@ -2457,18 +4666,131 @@ function renderLobby(){
 }
 
 
-/* GAME */
+function populateFixedDj(){
+
+  const select =
+    $("fixedDj");
+
+
+  const oldValue =
+    select.value;
+
+
+  select.innerHTML =
+    "";
+
+
+  state.players
+    .filter(
+      player =>
+        player.connected
+    )
+    .forEach(
+      player => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          player.token;
+
+
+        option.textContent =
+          player.name;
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  const preferred =
+
+    state.fixedDjToken
+
+    ||
+
+    oldValue
+
+    ||
+
+    state.players
+      .find(
+        player =>
+          player.connected
+      )
+      ?.token;
+
+
+  if(
+    preferred
+  ){
+
+    select.value =
+      preferred;
+
+  }
+
+}
+
+
+$("djMode")
+  .addEventListener(
+    "change",
+    () => {
+
+      $("fixedDjWrap")
+        .classList
+        .toggle(
+          "hidden",
+
+          $("djMode").value !==
+          "fixed"
+        );
+
+
+      $("djModeNote")
+        .textContent =
+
+          $("djMode").value ===
+          "rotating"
+
+            ? t(
+                "djNoteRotating"
+              )
+
+            : t(
+                "djNotePermanent"
+              );
+
+    }
+  );
+
+
+/* =========================================================
+   GAME
+========================================================= */
 
 function renderGame(){
 
   $("lobby")
     .classList
-    .add("hidden");
+    .add(
+      "hidden"
+    );
 
 
   $("game")
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 
   $("gameCode")
@@ -2482,14 +4804,20 @@ function renderGame(){
       state.musicMode ===
       "estonian"
 
-        ? "EESTI"
+        ? t(
+            "estonian"
+          )
 
         : state.musicMode ===
           "mixed"
 
-          ? "EESTI + MUU"
+          ? t(
+              "mixed"
+            )
 
-          : "VÄLISMAA";
+          : t(
+              "foreign"
+            );
 
 
   const active =
@@ -2517,23 +4845,33 @@ function renderGame(){
       "everyone"
 
         ? (
+
             state.isGuesser
 
-              ? "SINA ARVAD"
+              ? t(
+                  "youGuess"
+                )
 
-              : "SELLE VOORU PUHKUS"
+              : t(
+                  "roundOff"
+                )
+
           )
 
         : (
+
             myTurn()
 
-              ? "SINU KORD"
+              ? t(
+                  "yourTurn"
+                )
 
               : active
 
-                ? `${active.name} arvab`
+                ? `${active.name} ${t("guesses")}`
 
-                : "oota…"
+                : "…"
+
           );
 
 
@@ -2550,9 +4888,16 @@ function renderGame(){
   $("djLabel")
     .textContent =
 
-      dj
-        ? `DJ: ${dj.name}`
-        : "DJ: ?";
+      `${t("dj")}: ${
+        dj
+          ? dj.name
+          : "?"
+      }`;
+
+
+  $("saloonMessage")
+    .textContent =
+      salonMessage();
 
 
   renderScores();
@@ -2570,7 +4915,9 @@ function renderGame(){
 }
 
 
-/* SCORES */
+/* =========================================================
+   SCORE
+========================================================= */
 
 function renderScores(){
 
@@ -2596,19 +4943,22 @@ function renderScores(){
         div.innerHTML = `
 
           <strong>
-
             ${escapeHtml(
               player.name
             )}
-
           </strong>
-
 
           <div class="score-count">
 
-            ${player.timelineCount}
-            /
-            ${state.targetCards}
+            ${
+              player.isPermanentDj
+
+                ? t(
+                    "permanentDj"
+                  )
+
+                : `${player.timelineCount}/${state.targetCards}`
+            }
 
           </div>
 
@@ -2626,7 +4976,9 @@ function renderScores(){
 }
 
 
-/* DJ */
+/* =========================================================
+   LISTEN / DJ
+========================================================= */
 
 function renderListen(){
 
@@ -2644,48 +4996,43 @@ function renderListen(){
 
     $("djSong")
       .textContent =
-        state.djSecret.song.title;
+        state.djSecret
+          .song
+          .title;
 
 
     $("djArtist")
       .textContent =
-        state.djSecret.song.artist;
-
-
-    $("spotifyLink")
-      .href =
-        state.djSecret.links.spotify;
-
-
-    $("youtubeLink")
-      .href =
-        state.djSecret.links.youtube;
+        state.djSecret
+          .song
+          .artist;
 
 
     $("listenCopy")
       .textContent =
-        "Sina mängid. Teised kuulavad.";
+        t(
+          "youAreDj"
+        );
 
-  }else if(
-    amDj()
-  ){
 
-    $("listenCopy")
-      .textContent =
-        "DJ info laadib…";
+    loadSpotifyForCurrentRound();
 
   }else{
 
     $("listenCopy")
       .textContent =
-        "kuula. ära guugelda. usu sisetunnet.";
+        t(
+          "listen"
+        );
 
   }
 
 }
 
 
-/* AJATELG */
+/* =========================================================
+   TIMELINE
+========================================================= */
 
 function renderTimeline(){
 
@@ -2706,12 +5053,163 @@ function renderTimeline(){
 
 
   const items =
-    state.me?.timeline ||
+    state.me
+      ?.timeline
+    ||
     [];
 
 
-  items.forEach(
-    card => {
+  $("timelineHelp")
+    .textContent =
+
+      state.isGuesser &&
+      state.phase ===
+        "guessing"
+
+        ? t(
+            "timelineHelp"
+          )
+
+        : "";
+
+
+  const canGuess =
+
+    state.isGuesser &&
+
+    state.phase ===
+      "guessing" &&
+
+    !state.myGuess &&
+
+    !state.finished;
+
+
+  for(
+    let i = 0;
+    i <= items.length;
+    i++
+  ){
+
+    if(
+      canGuess
+    ){
+
+      const slot =
+        document.createElement(
+          "button"
+        );
+
+
+      slot.type =
+        "button";
+
+
+      slot.className =
+        "insert-slot";
+
+
+      if(
+        i === 0
+      ){
+
+        slot.textContent =
+
+          items.length
+
+            ? `${t("before")} ${items[0].year}`
+
+            : t(
+                "chooseSlot"
+              );
+
+      }else if(
+        i ===
+        items.length
+      ){
+
+        slot.textContent =
+          `${t("after")} ${items[i - 1].year}`;
+
+      }else{
+
+        slot.textContent =
+          `${items[i - 1].year} — ${items[i].year}`;
+
+      }
+
+
+      slot
+        .addEventListener(
+          "click",
+          () => {
+
+            selectedSlot =
+              i;
+
+
+            timeline
+              .querySelectorAll(
+                ".insert-slot"
+              )
+              .forEach(
+                button =>
+                  button
+                    .classList
+                    .remove(
+                      "active"
+                    )
+              );
+
+
+            slot
+              .classList
+              .add(
+                "active"
+              );
+
+
+            renderGuessDock(
+              items
+            );
+
+
+            setTimeout(
+              () =>
+                slot
+                  .scrollIntoView(
+                    {
+                      behavior:
+                        "smooth",
+
+                      block:
+                        "center"
+                    }
+                  ),
+
+              30
+            );
+
+          }
+        );
+
+
+      timeline
+        .appendChild(
+          slot
+        );
+
+    }
+
+
+    if(
+      i <
+      items.length
+    ){
+
+      const card =
+        items[i];
+
 
       const element =
         document.createElement(
@@ -2729,12 +5227,16 @@ function renderTimeline(){
           ${card.year}
         </div>
 
-        <div class="timeline-song">
-          ${escapeHtml(card.title)}
-        </div>
+        <div class="timeline-copy">
 
-        <div class="timeline-artist">
-          ${escapeHtml(card.artist)}
+          <div class="timeline-song">
+            ${escapeHtml(card.title)}
+          </div>
+
+          <div class="timeline-artist">
+            ${escapeHtml(card.artist)}
+          </div>
+
         </div>
 
       `;
@@ -2746,7 +5248,8 @@ function renderTimeline(){
         );
 
     }
-  );
+
+  }
 
 
   if(
@@ -2760,25 +5263,17 @@ function renderTimeline(){
 
   if(
     state.phase ===
-    "reveal"
+      "reveal" ||
+
+    state.phase ===
+      "finished"
   ){
 
-    const message =
-      document.createElement(
-        "div"
-      );
-
-
-    message.className =
-      "locked";
-
-
-    message.textContent =
-      "Voor on avatud. Vaata tulemust allpool.";
-
-
-    area.appendChild(
-      message
+    addLockedMessage(
+      area,
+      t(
+        "roundOpen"
+      )
     );
 
 
@@ -2791,32 +5286,18 @@ function renderTimeline(){
     !state.isGuesser
   ){
 
-    const message =
-      document.createElement(
-        "div"
-      );
-
-
-    message.className =
-      "locked";
-
-
-    message.textContent =
+    addLockedMessage(
+      area,
 
       amDj()
 
-        ? "Sina oled DJ. Selles voorus sa ei arva."
+        ? t(
+            "djDoesNotGuess"
+          )
 
-        : state.gameMode ===
-          "classic"
-
-          ? "Praegu arvab teine mängija."
-
-          : "Selles voorus oled DJ / puhkad.";
-
-
-    area.appendChild(
-      message
+        : t(
+            "otherPlayerGuessing"
+          )
     );
 
 
@@ -2829,184 +5310,130 @@ function renderTimeline(){
     state.myGuess
   ){
 
-    const message =
-      document.createElement(
-        "div"
-      );
-
-
-    message.className =
-      "locked";
-
-
-    message.textContent =
-      "Valik lukus ✦ Ootame teisi.";
-
-
-    area.appendChild(
-      message
+    addLockedMessage(
+      area,
+      t(
+        "locked"
+      )
     );
 
+  }
+
+}
+
+
+function renderGuessDock(
+  items
+){
+
+  const area =
+    $("guessArea");
+
+
+  area.innerHTML =
+    "";
+
+
+  if(
+    selectedSlot ===
+    null
+  ){
 
     return;
 
   }
 
 
-  const intro =
-    document.createElement(
-      "p"
-    );
+  let label =
+    "";
 
 
-  intro.className =
-    "small muted";
+  if(
+    selectedSlot === 0
+  ){
+
+    label =
+
+      items.length
+
+        ? `${t("before")} ${items[0].year}`
+
+        : t(
+            "chooseSlot"
+          );
+
+  }else if(
+    selectedSlot ===
+    items.length
+  ){
+
+    label =
+      `${t("after")} ${items[items.length - 1].year}`;
+
+  }else{
+
+    label =
+      `${items[selectedSlot - 1].year} — ${items[selectedSlot].year}`;
+
+  }
 
 
-  intro.textContent =
-    "Millisesse pilusse tundmatu lugu kuulub?";
-
-
-  area.appendChild(
-    intro
-  );
-
-
-  const slots =
+  const dock =
     document.createElement(
       "div"
     );
 
 
-  let submitButton;
+  dock.className =
+    "guess-dock";
 
 
-  for(
-    let i = 0;
-    i <= items.length;
-    i++
-  ){
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-
-    button.type =
-      "button";
-
-
-    button.className =
-      "slot";
-
-
-    button.textContent =
-
-      i === 0
-
-        ? (
-            items.length
-
-              ? `enne ${items[0].year}`
-
-              : "siia"
-          )
-
-        : i ===
-          items.length
-
-          ? `pärast ${items[i-1].year}`
-
-          : `${items[i-1].year} — ${items[i].year}`;
-
-
-    button
-      .addEventListener(
-        "click",
-        () => {
-
-          selectedSlot =
-            i;
-
-
-          slots
-            .querySelectorAll(
-              ".slot"
-            )
-            .forEach(
-              slot =>
-                slot
-                  .classList
-                  .remove(
-                    "active"
-                  )
-            );
-
-
-          button
-            .classList
-            .add(
-              "active"
-            );
-
-
-          submitButton.disabled =
-            false;
-
-        }
-      );
-
-
-    slots.appendChild(
-      button
+  const choice =
+    document.createElement(
+      "div"
     );
 
-  }
+
+  choice.className =
+    "choice";
 
 
-  area.appendChild(
-    slots
-  );
+  choice.textContent =
+    `${t("selected")}: ${label}`;
 
 
-  submitButton =
+  const submit =
     document.createElement(
       "button"
     );
 
 
-  submitButton.type =
+  submit.type =
     "button";
 
 
-  submitButton.className =
+  submit.className =
     "primary full";
 
 
-  submitButton.style.marginTop =
-    "14px";
+  submit.textContent =
+    t(
+      "confirm"
+    );
 
 
-  submitButton.textContent =
-    "KINNITA VALIK";
-
-
-  submitButton.disabled =
-    true;
-
-
-  submitButton
+  submit
     .addEventListener(
       "click",
       () => {
 
-        submitButton.disabled =
+        submit.disabled =
           true;
 
 
         socket.emit(
           "submitGuess",
+
           {
             roundId:
               state.roundId,
@@ -3022,12 +5449,13 @@ function renderTimeline(){
             ){
 
               toast(
-                result?.error ||
-                "Ei õnnestunud."
+                errorFromCode(
+                  result?.error
+                )
               );
 
 
-              submitButton.disabled =
+              submit.disabled =
                 false;
 
             }
@@ -3039,20 +5467,61 @@ function renderTimeline(){
     );
 
 
+  dock.appendChild(
+    choice
+  );
+
+
+  dock.appendChild(
+    submit
+  );
+
+
   area.appendChild(
-    submitButton
+    dock
   );
 
 }
 
 
-/* HOST CONTROLS */
+function addLockedMessage(
+  area,
+  text
+){
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+
+  message.className =
+    "locked";
+
+
+  message.textContent =
+    text;
+
+
+  area.appendChild(
+    message
+  );
+
+}
+
+
+/* =========================================================
+   HOST
+========================================================= */
 
 function renderHostControls(){
 
   const visible =
+
     isHost() &&
+
     state.started &&
+
     !state.finished;
 
 
@@ -3075,7 +5544,7 @@ function renderHostControls(){
 
   if(
     state.phase ===
-    "guessing"
+      "guessing"
   ){
 
     const waiting =
@@ -3088,54 +5557,42 @@ function renderHostControls(){
 
         waiting.length
 
-          ? `Ootame: ${waiting.join(", ")}`
+          ? `${t("waitingFor")}: ${waiting.join(", ")}`
 
-          : "Kõik vajalikud vastused on olemas.";
-
-
-    const expectedGuessers =
-
-      state.gameMode ===
-      "classic"
-
-        ? 1
-
-        : Math.max(
-            0,
-            state.players
-              .filter(
-                player =>
-                  player.connected
-              )
-              .length - 1
-          );
+          : t(
+              "everyoneAnswered"
+            );
 
 
     $("revealNow")
       .classList
-      .toggle(
-        "hidden",
-        waiting.length ===
-          expectedGuessers
+      .remove(
+        "hidden"
       );
 
   }else{
 
     $("waitingText")
       .textContent =
-        "Voor on avatud.";
+        t(
+          "roundRevealed"
+        );
 
 
     $("revealNow")
       .classList
-      .add("hidden");
+      .add(
+        "hidden"
+      );
 
   }
 
 }
 
 
-/* REVEAL */
+/* =========================================================
+   REVEAL
+========================================================= */
 
 function renderReveal(){
 
@@ -3145,13 +5602,16 @@ function renderReveal(){
 
   if(
     !state.reveal ||
+
     state.phase ===
       "guessing"
   ){
 
     box
       .classList
-      .add("hidden");
+      .add(
+        "hidden"
+      );
 
 
     return;
@@ -3161,7 +5621,9 @@ function renderReveal(){
 
   box
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 
   const myResult =
@@ -3173,23 +5635,54 @@ function renderReveal(){
       );
 
 
+  $("revealYear")
+    .textContent =
+      state.reveal
+        .song
+        .year;
+
+
+  $("revealSong")
+    .textContent =
+      state.reveal
+        .song
+        .title;
+
+
+  $("revealArtist")
+    .textContent =
+      state.reveal
+        .song
+        .artist;
+
+
   const headline =
 
     amDj()
 
-      ? "SALADUS PALJASTUS"
+      ? t(
+          "secretRevealed"
+        )
 
       : myResult
 
         ? (
+
             myResult.correct
 
-              ? "BRAVO!"
+              ? t(
+                  "bravo"
+                )
 
-              : "OH EI!"
+              : t(
+                  "tragedy"
+                )
+
           )
 
-        : "VOOR AVATUD";
+        : t(
+            "answerRevealed"
+          );
 
 
   $("revealHeadline")
@@ -3203,7 +5696,9 @@ function renderReveal(){
       "result " +
 
       (
-        myResult?.correct
+
+        myResult
+          ?.correct
 
           ? "good"
 
@@ -3212,22 +5707,33 @@ function renderReveal(){
             ? "bad"
 
             : ""
+
       );
 
 
-  $("revealYear")
-    .textContent =
-      state.reveal.song.year;
+  const quote =
+    LYNCH_QUOTES[
+      deterministicIndex(
+        state.roundId,
+        LYNCH_QUOTES.length
+      )
+    ];
 
 
-  $("revealSong")
-    .textContent =
-      state.reveal.song.title;
+  $("revealQuote")
+    .innerHTML = `
 
+      “${escapeHtml(
+        quote.text
+      )}”
 
-  $("revealArtist")
-    .textContent =
-      state.reveal.song.artist;
+      <cite>
+        — ${escapeHtml(
+          quote.author
+        )}
+      </cite>
+
+    `;
 
 
   $("roundResults")
@@ -3258,8 +5764,14 @@ function renderReveal(){
           <span>
             ${
               result.correct
-                ? "✓ õige"
-                : "✕ vale"
+
+                ? t(
+                    "correct"
+                  )
+
+                : t(
+                    "wrong"
+                  )
             }
           </span>
 
@@ -3276,7 +5788,9 @@ function renderReveal(){
 
 
   const auto =
+
     state.autoNext &&
+
     !state.finished;
 
 
@@ -3290,6 +5804,7 @@ function renderReveal(){
 
   if(
     auto &&
+
     currentRoundForProgress !==
       state.roundId
   ){
@@ -3327,14 +5842,63 @@ function renderReveal(){
     .classList
     .toggle(
       "hidden",
+
       !isHost() ||
+
       state.finished
     );
+
+
+  if(
+    lastRevealRound !==
+    state.roundId
+  ){
+
+    lastRevealRound =
+      state.roundId;
+
+
+    box
+      .classList
+      .remove(
+        "reveal-live"
+      );
+
+
+    void box.offsetWidth;
+
+
+    box
+      .classList
+      .add(
+        "reveal-live"
+      );
+
+
+    setTimeout(
+      () =>
+        box
+          .scrollIntoView(
+            {
+              behavior:
+                "smooth",
+
+              block:
+                "start"
+            }
+          ),
+
+      80
+    );
+
+  }
 
 }
 
 
-/* WINNER */
+/* =========================================================
+   WINNER
+========================================================= */
 
 function renderWinner(){
 
@@ -3348,7 +5912,9 @@ function renderWinner(){
 
     box
       .classList
-      .add("hidden");
+      .add(
+        "hidden"
+      );
 
 
     return;
@@ -3367,7 +5933,9 @@ function renderWinner(){
 
   box
     .classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 
   box.innerHTML = `
@@ -3379,20 +5947,18 @@ function renderWinner(){
     >
 
     <div class="win-title">
-      Daamid ja härrad…
+      ${t("winnerIntro")}
     </div>
 
     <div class="win-name">
-      ${
-        escapeHtml(
-          winner?.name ||
-          "?"
-        )
-      }
+      ${escapeHtml(
+        winner?.name ||
+        "?"
+      )}
     </div>
 
     <div class="subtitle center">
-      kõrva(n)uss on leidnud oma peremehe.
+      ${t("winnerText")}
     </div>
 
   `;
@@ -3421,7 +5987,9 @@ function renderWinner(){
 
 
     button.textContent =
-      "VEEL ÜKS KORD";
+      t(
+        "again"
+      );
 
 
     button
@@ -3440,8 +6008,9 @@ function renderWinner(){
               ){
 
                 toast(
-                  result?.error ||
-                  "Ei õnnestunud."
+                  errorFromCode(
+                    result?.error
+                  )
                 );
 
               }
@@ -3462,7 +6031,9 @@ function renderWinner(){
 }
 
 
-/* QR */
+/* =========================================================
+   QR
+========================================================= */
 
 function drawQR(){
 
@@ -3480,15 +6051,16 @@ function drawQR(){
   ){
 
     element.innerHTML = `
+
       <div
         style="
           padding:12px;
           color:#111;
         "
       >
-        QR ei laadinud.
-        Kasuta linki.
+        QR unavailable
       </div>
+
     `;
 
 
@@ -3499,6 +6071,7 @@ function drawQR(){
 
   new QRCode(
     element,
+
     {
       text:
         joinUrl(),
@@ -3516,26 +6089,42 @@ function drawQR(){
         "#ffffff",
 
       correctLevel:
-        QRCode.CorrectLevel.M
+        QRCode
+          .CorrectLevel
+          .M
     }
   );
 
 }
 
 
-/* SAFE HTML */
+/* =========================================================
+   SAFE HTML
+========================================================= */
 
 function escapeHtml(value){
 
   return String(value)
     .replace(
       /[&<>"']/g,
+
       character => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
+
+        "&":
+          "&amp;",
+
+        "<":
+          "&lt;",
+
+        ">":
+          "&gt;",
+
+        '"':
+          "&quot;",
+
+        "'":
+          "&#39;"
+
       })[character]
     );
 
