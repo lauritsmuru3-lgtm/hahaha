@@ -11,11 +11,17 @@ const io = new Server(httpServer, {
   pingInterval: 10000
 });
 
+app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const rooms = new Map();
+const spotifyCache = new Map();
+
 const ROOM_TTL_MS = 6 * 60 * 60 * 1000;
 const EMPTY_ROOM_TTL_MS = 20 * 60 * 1000;
+
+let spotifyAccessToken = null;
+let spotifyAccessTokenExpiresAt = 0;
 
 const E = (title, artist, year, level = 2) => ({
   title,
@@ -35,9 +41,9 @@ const F = (title, artist, year, level = 2) => ({
 
 /*
   level:
-  1 = peo-/klassikahitt, lihtsam
+  1 = lihtsam / suur hitt
   2 = tavaline
-  3 = raskem / vähem ilmne
+  3 = raskem
 */
 
 const ESTONIAN = [
@@ -272,7 +278,7 @@ function shuffle(array) {
   return copy;
 }
 
-function roomCode() {
+function newRoomCode() {
   const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
@@ -355,21 +361,6 @@ function canonicalSong(song) {
   };
 }
 
-function songSearchLinks(song) {
-  const q =
-    encodeURIComponent(
-      `${song.title} ${song.artist}`
-    );
-
-  return {
-    spotify:
-      `https://open.spotify.com/search/${q}`,
-
-    youtube:
-      `https://www.youtube.com/results?search_query=${q}`
-  };
-}
-
 function playerByToken(
   room,
   token
@@ -388,13 +379,14 @@ function connectedPlayers(room) {
 }
 
 function chooseHost(room) {
+  const currentHost =
+    playerByToken(
+      room,
+      room.hostToken
+    );
+
   if (
-    room.players.some(
-      player =>
-        player.token ===
-          room.hostToken &&
-        player.connected
-    )
+    currentHost?.connected
   ) {
     return;
   }
@@ -409,6 +401,97 @@ function chooseHost(room) {
     replacement
       ? replacement.token
       : null;
+
+  if (
+    room.djMode === "fixed" &&
+    room.fixedDjToken &&
+    !playerByToken(
+      room,
+      room.fixedDjToken
+    )?.connected
+  ) {
+    room.fixedDjToken =
+      null;
+  }
+}
+
+function permanentDj(room) {
+  if (
+    room.djMode === "host"
+  ) {
+    const host =
+      playerByToken(
+        room,
+        room.hostToken
+      );
+
+    if (
+      host?.connected
+    ) {
+      return host;
+    }
+
+    return (
+      connectedPlayers(room)[0] ||
+      null
+    );
+  }
+
+  if (
+    room.djMode === "fixed"
+  ) {
+    const fixed =
+      playerByToken(
+        room,
+        room.fixedDjToken
+      );
+
+    if (
+      fixed?.connected
+    ) {
+      return fixed;
+    }
+
+    if (
+      !room.started
+    ) {
+      return null;
+    }
+
+    const host =
+      playerByToken(
+        room,
+        room.hostToken
+      );
+
+    if (
+      host?.connected
+    ) {
+      return host;
+    }
+
+    return (
+      connectedPlayers(room)[0] ||
+      null
+    );
+  }
+
+  return null;
+}
+
+function isPermanentDj(
+  room,
+  player
+) {
+  const dj =
+    permanentDj(room);
+
+  return Boolean(
+    dj &&
+    room.djMode !== "rotating" &&
+    dj.token ===
+      player.token
+  );
 }
 
 function currentClassicPlayer(room) {
@@ -417,6 +500,9 @@ function currentClassicPlayer(room) {
   ) {
     return null;
   }
+
+  const permDj =
+    permanentDj(room);
 
   for (
     let step = 0;
@@ -434,19 +520,39 @@ function currentClassicPlayer(room) {
       room.players[index];
 
     if (
-      player.connected
+      !player.connected
     ) {
-      room.turnIndex =
-        index;
-
-      return player;
+      continue;
     }
+
+    if (
+      room.djMode !== "rotating" &&
+      permDj &&
+      player.token ===
+        permDj.token
+    ) {
+      continue;
+    }
+
+    room.turnIndex =
+      index;
+
+    return player;
   }
 
   return null;
 }
 
 function djPlayer(room) {
+  const permDj =
+    permanentDj(room);
+
+  if (
+    room.djMode !== "rotating"
+  ) {
+    return permDj;
+  }
+
   const connected =
     connectedPlayers(room);
 
@@ -457,7 +563,8 @@ function djPlayer(room) {
   }
 
   const active =
-    room.gameMode === "classic"
+    room.gameMode ===
+      "classic"
       ? currentClassicPlayer(room)
       : null;
 
@@ -496,7 +603,10 @@ function djPlayer(room) {
     return player;
   }
 
-  return connected[0];
+  return (
+    connected[0] ||
+    null
+  );
 }
 
 function eligibleGuessers(room) {
@@ -511,11 +621,10 @@ function eligibleGuessers(room) {
       currentClassicPlayer(room);
 
     return (
-      active &&
-      active.connected
-    )
-      ? [active]
-      : [];
+      active?.connected
+        ? [active]
+        : []
+    );
   }
 
   return connectedPlayers(room)
@@ -533,16 +642,13 @@ function timelineSlotCorrect(
   year
 ) {
   const index =
-    Math.max(
-      0,
-      Math.min(
-        Number(slot),
-        timeline.length
-      )
-    );
+    Number(slot);
 
   if (
-    !Number.isInteger(index)
+    !Number.isInteger(index) ||
+    index < 0 ||
+    index >
+      timeline.length
   ) {
     return false;
   }
@@ -566,7 +672,7 @@ function timelineSlotCorrect(
   );
 }
 
-function insertSongSortedAt(
+function insertSongAt(
   timeline,
   slot,
   song
@@ -671,9 +777,6 @@ function startRound(room) {
   room.reveal =
     null;
 
-  room.revealStartedAt =
-    null;
-
   room.phase =
     "guessing";
 
@@ -695,14 +798,29 @@ function startGame(room) {
       room.difficulty
     );
 
-  const need =
-    room.players.length + 1;
+  const competitors =
+    room.players.filter(
+      player =>
+        !isPermanentDj(
+          room,
+          player
+        )
+    );
 
   if (
-    pool.length < need
+    !competitors.length
   ) {
     throw new Error(
-      "Not enough songs for this configuration."
+      "No competing players."
+    );
+  }
+
+  if (
+    pool.length <
+    competitors.length + 1
+  ) {
+    throw new Error(
+      "Not enough songs."
     );
   }
 
@@ -741,11 +859,23 @@ function startGame(room) {
 
   room.players.forEach(
     player => {
-      player.timeline = [
-        canonicalSong(
-          drawSong(room)
+
+      if (
+        isPermanentDj(
+          room,
+          player
         )
-      ];
+      ) {
+        player.timeline =
+          [];
+      } else {
+        player.timeline = [
+          canonicalSong(
+            drawSong(room)
+          )
+        ];
+      }
+
     }
   );
 
@@ -790,7 +920,7 @@ function revealRound(room) {
     if (
       correct
     ) {
-      insertSongSortedAt(
+      insertSongAt(
         player.timeline,
         guess.slot,
         room.currentSong
@@ -820,14 +950,18 @@ function revealRound(room) {
     results
   };
 
-  room.revealStartedAt =
-    now();
-
   room.phase =
     "reveal";
 
   const winners =
     room.players
+      .filter(
+        player =>
+          !isPermanentDj(
+            room,
+            player
+          )
+      )
       .filter(
         player =>
           player.timeline.length >=
@@ -860,12 +994,66 @@ function revealRound(room) {
   ) {
     room.autoTimer =
       setTimeout(
-        () => {
-          advanceRound(room);
-        },
+        () =>
+          advanceRound(room),
+
         room.revealSeconds *
         1000
       );
+  }
+}
+
+function advanceClassicTurn(room) {
+  if (
+    !room.players.length
+  ) {
+    return;
+  }
+
+  const permDj =
+    permanentDj(room);
+
+  const start =
+    (
+      room.turnIndex +
+      1
+    ) %
+    room.players.length;
+
+  for (
+    let step = 0;
+    step < room.players.length;
+    step += 1
+  ) {
+    const index =
+      (
+        start +
+        step
+      ) %
+      room.players.length;
+
+    const player =
+      room.players[index];
+
+    if (
+      !player.connected
+    ) {
+      continue;
+    }
+
+    if (
+      room.djMode !== "rotating" &&
+      permDj &&
+      player.token ===
+        permDj.token
+    ) {
+      continue;
+    }
+
+    room.turnIndex =
+      index;
+
+    return;
   }
 }
 
@@ -887,14 +1075,9 @@ function advanceRound(room) {
     room.gameMode ===
     "classic"
   ) {
-    room.turnIndex =
-      (
-        room.turnIndex +
-        1
-      ) %
-      room.players.length;
-
-    currentClassicPlayer(room);
+    advanceClassicTurn(
+      room
+    );
   }
 
   startRound(room);
@@ -924,39 +1107,12 @@ function publicState(
   const guessers =
     eligibleGuessers(room);
 
-  const isGuesser =
-    guessers.some(
-      player =>
-        player.token ===
-        playerToken
-    );
-
-  const myGuess =
-    room.guesses[
-      playerToken
-    ] || null;
-
-  const djSecret =
-    dj &&
-    dj.token ===
-      playerToken &&
-    room.currentSong
-      ? {
-          song:
-            canonicalSong(
-              room.currentSong
-            ),
-
-          links:
-            songSearchLinks(
-              room.currentSong
-            )
-        }
-      : null;
-
   return {
     code:
       room.code,
+
+    language:
+      room.language,
 
     started:
       room.started,
@@ -982,6 +1138,12 @@ function publicState(
     gameMode:
       room.gameMode,
 
+    djMode:
+      room.djMode,
+
+    fixedDjToken:
+      room.fixedDjToken,
+
     targetCards:
       room.targetCards,
 
@@ -998,18 +1160,24 @@ function publicState(
       room.roundId,
 
     activePlayerToken:
-      active
-        ? active.token
-        : null,
+      active?.token ||
+      null,
 
     djToken:
-      dj
-        ? dj.token
-        : null,
+      dj?.token ||
+      null,
 
-    isGuesser,
+    isGuesser:
+      guessers.some(
+        player =>
+          player.token ===
+          playerToken
+      ),
 
-    myGuess,
+    myGuess:
+      room.guesses[
+        playerToken
+      ] || null,
 
     waitingFor:
       guessers
@@ -1027,7 +1195,25 @@ function publicState(
     reveal:
       room.reveal,
 
-    djSecret,
+    djSecret:
+      (
+        dj?.token ===
+          playerToken &&
+        room.currentSong
+      )
+        ? {
+            song:
+              canonicalSong(
+                room.currentSong
+              )
+          }
+        : null,
+
+    spotifyConfigured:
+      Boolean(
+        process.env.SPOTIFY_CLIENT_ID &&
+        process.env.SPOTIFY_CLIENT_SECRET
+      ),
 
     players:
       room.players.map(
@@ -1044,6 +1230,12 @@ function publicState(
           isHost:
             player.token ===
             room.hostToken,
+
+          isPermanentDj:
+            isPermanentDj(
+              room,
+              player
+            ),
 
           timelineCount:
             player.timeline.length
@@ -1075,20 +1267,22 @@ function emitRoom(room) {
       room.players
   ) {
     if (
-      player.socketId
+      !player.socketId
     ) {
-      io
-        .to(
-          player.socketId
-        )
-        .emit(
-          "state",
-          publicState(
-            room,
-            player.token
-          )
-        );
+      continue;
     }
+
+    io
+      .to(
+        player.socketId
+      )
+      .emit(
+        "state",
+        publicState(
+          room,
+          player.token
+        )
+      );
   }
 }
 
@@ -1183,7 +1377,7 @@ function maybeAutoReveal(room) {
     return;
   }
 
-  const allSubmitted =
+  if (
     guessers.every(
       player =>
         Boolean(
@@ -1191,14 +1385,420 @@ function maybeAutoReveal(room) {
             player.token
           ]
         )
-    );
-
-  if (
-    allSubmitted
+    )
   ) {
     revealRound(room);
   }
 }
+
+/* =========================================================
+   SPOTIFY
+========================================================= */
+
+async function getSpotifyAccessToken() {
+  if (
+    spotifyAccessToken &&
+    now() <
+      spotifyAccessTokenExpiresAt -
+      30000
+  ) {
+    return spotifyAccessToken;
+  }
+
+  const clientId =
+    process.env.SPOTIFY_CLIENT_ID;
+
+  const clientSecret =
+    process.env.SPOTIFY_CLIENT_SECRET;
+
+  if (
+    !clientId ||
+    !clientSecret
+  ) {
+    const error =
+      new Error(
+        "Spotify is not configured."
+      );
+
+    error.code =
+      "SPOTIFY_NOT_CONFIGURED";
+
+    throw error;
+  }
+
+  const auth =
+    Buffer
+      .from(
+        `${clientId}:${clientSecret}`
+      )
+      .toString(
+        "base64"
+      );
+
+  const response =
+    await fetch(
+      "https://accounts.spotify.com/api/token",
+      {
+        method:
+          "POST",
+
+        headers:{
+          Authorization:
+            `Basic ${auth}`,
+
+          "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
+
+        body:
+          new URLSearchParams({
+            grant_type:
+              "client_credentials"
+          })
+      }
+    );
+
+  if (
+    !response.ok
+  ) {
+    throw new Error(
+      `Spotify token request failed: ${response.status}`
+    );
+  }
+
+  const data =
+    await response.json();
+
+  spotifyAccessToken =
+    data.access_token;
+
+  spotifyAccessTokenExpiresAt =
+    now() +
+    Number(
+      data.expires_in ||
+      3600
+    ) *
+    1000;
+
+  return spotifyAccessToken;
+}
+
+function normalized(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /\p{Diacritic}/gu,
+      ""
+    )
+    .replace(
+      /[^a-z0-9]+/g,
+      " "
+    )
+    .trim();
+}
+
+function spotifyMatchScore(
+  item,
+  song
+) {
+  const wantedTitle =
+    normalized(
+      song.title
+    );
+
+  const wantedArtist =
+    normalized(
+      song.artist
+    );
+
+  const itemTitle =
+    normalized(
+      item.name
+    );
+
+  const itemArtists =
+    normalized(
+      (
+        item.artists ||
+        []
+      )
+        .map(
+          artist =>
+            artist.name
+        )
+        .join(" ")
+    );
+
+  let score =
+    0;
+
+  if (
+    itemTitle ===
+    wantedTitle
+  ) {
+    score +=
+      10;
+  } else if (
+    itemTitle.includes(
+      wantedTitle
+    ) ||
+    wantedTitle.includes(
+      itemTitle
+    )
+  ) {
+    score +=
+      6;
+  }
+
+  if (
+    itemArtists.includes(
+      wantedArtist
+    )
+  ) {
+    score +=
+      8;
+  }
+
+  return score;
+}
+
+async function resolveSpotifyTrack(song) {
+  const cacheKey =
+    `${song.artist}|${song.title}`;
+
+  if (
+    spotifyCache.has(
+      cacheKey
+    )
+  ) {
+    return spotifyCache.get(
+      cacheKey
+    );
+  }
+
+  const token =
+    await getSpotifyAccessToken();
+
+  const query =
+    new URLSearchParams({
+      q:
+        `track:${song.title} artist:${song.artist}`,
+
+      type:
+        "track",
+
+      limit:
+        "5"
+    });
+
+  const response =
+    await fetch(
+      `https://api.spotify.com/v1/search?${query.toString()}`,
+      {
+        headers:{
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+  if (
+    !response.ok
+  ) {
+    throw new Error(
+      `Spotify search failed: ${response.status}`
+    );
+  }
+
+  const data =
+    await response.json();
+
+  const items =
+    data?.tracks?.items ||
+    [];
+
+  if (
+    !items.length
+  ) {
+    const error =
+      new Error(
+        "Track not found."
+      );
+
+    error.code =
+      "TRACK_NOT_FOUND";
+
+    throw error;
+  }
+
+  const best =
+    items
+      .slice()
+      .sort(
+        (a,b) =>
+          spotifyMatchScore(
+            b,
+            song
+          ) -
+          spotifyMatchScore(
+            a,
+            song
+          )
+      )[0];
+
+  const result = {
+    uri:
+      best.uri,
+
+    url:
+      best.external_urls
+        ?.spotify ||
+      null,
+
+    spotifyTitle:
+      best.name,
+
+    spotifyArtist:
+      (
+        best.artists ||
+        []
+      )
+        .map(
+          artist =>
+            artist.name
+        )
+        .join(", ")
+  };
+
+  spotifyCache.set(
+    cacheKey,
+    result
+  );
+
+  return result;
+}
+
+app.post(
+  "/api/spotify/track",
+  async (
+    req,
+    res
+  ) => {
+    try {
+      const room =
+        rooms.get(
+          cleanCode(
+            req.body?.roomCode
+          )
+        );
+
+      const playerToken =
+        String(
+          req.body
+            ?.playerToken ||
+          ""
+        ).trim();
+
+      const roundId =
+        String(
+          req.body
+            ?.roundId ||
+          ""
+        ).trim();
+
+      if (
+        !room ||
+        !playerToken ||
+        !roundId
+      ) {
+        return res
+          .status(404)
+          .json({
+            ok:false,
+            error:
+              "ROOM_NOT_FOUND"
+          });
+      }
+
+      const dj =
+        djPlayer(room);
+
+      if (
+        !dj ||
+        dj.token !==
+          playerToken ||
+        room.roundId !==
+          roundId ||
+        !room.currentSong
+      ) {
+        return res
+          .status(403)
+          .json({
+            ok:false,
+            error:
+              "NOT_CURRENT_DJ"
+          });
+      }
+
+      const track =
+        await resolveSpotifyTrack(
+          room.currentSong
+        );
+
+      return res.json({
+        ok:true,
+        ...track
+      });
+
+    } catch (
+      error
+    ) {
+      console.error(
+        "Spotify:",
+        error.message
+      );
+
+      if (
+        error.code ===
+        "SPOTIFY_NOT_CONFIGURED"
+      ) {
+        return res
+          .status(503)
+          .json({
+            ok:false,
+            error:
+              "SPOTIFY_NOT_CONFIGURED"
+          });
+      }
+
+      if (
+        error.code ===
+        "TRACK_NOT_FOUND"
+      ) {
+        return res
+          .status(404)
+          .json({
+            ok:false,
+            error:
+              "TRACK_NOT_FOUND"
+          });
+      }
+
+      return res
+        .status(502)
+        .json({
+          ok:false,
+          error:
+            "SPOTIFY_ERROR"
+        });
+    }
+  }
+);
+
+/* =========================================================
+   SOCKET.IO
+========================================================= */
 
 io.on(
   "connection",
@@ -1209,7 +1809,8 @@ io.on(
       (
         {
           name,
-          playerToken
+          playerToken,
+          language
         } = {},
         ack
       ) => {
@@ -1225,17 +1826,18 @@ io.on(
             {
               ok:false,
               error:
-                "Sisesta nimi."
+                "NAME_REQUIRED"
             }
           );
         }
 
         const code =
-          roomCode();
+          newRoomCode();
 
         const token =
           String(
-            playerToken || ""
+            playerToken ||
+            ""
           ).trim() ||
           randomToken();
 
@@ -1247,6 +1849,11 @@ io.on(
 
           lastActiveAt:
             now(),
+
+          language:
+            language === "en"
+              ? "en"
+              : "et",
 
           hostToken:
             token,
@@ -1271,6 +1878,12 @@ io.on(
 
           gameMode:
             "classic",
+
+          djMode:
+            "rotating",
+
+          fixedDjToken:
+            null,
 
           targetCards:
             8,
@@ -1303,9 +1916,6 @@ io.on(
             {},
 
           reveal:
-            null,
-
-          revealStartedAt:
             null,
 
           autoTimer:
@@ -1358,6 +1968,7 @@ io.on(
       }
     );
 
+
     socket.on(
       "joinRoom",
       (
@@ -1385,7 +1996,7 @@ io.on(
             {
               ok:false,
               error:
-                "Sisesta nimi."
+                "NAME_REQUIRED"
             }
           );
         }
@@ -1398,14 +2009,15 @@ io.on(
             {
               ok:false,
               error:
-                "Sellist tuba ei leitud."
+                "ROOM_NOT_FOUND"
             }
           );
         }
 
         const requestedToken =
           String(
-            playerToken || ""
+            playerToken ||
+            ""
           ).trim();
 
         if (
@@ -1440,7 +2052,10 @@ io.on(
                   room.code,
                 playerToken:
                   existing.token,
-                resumed:true
+                resumed:
+                  true,
+                language:
+                  room.language
               }
             );
 
@@ -1458,20 +2073,21 @@ io.on(
             {
               ok:false,
               error:
-                "Mäng on juba alanud. Kasuta sama seadet või vana liitumislinki, et oma kohta taastada."
+                "GAME_ALREADY_STARTED"
             }
           );
         }
 
         if (
-          room.players.length >= 8
+          room.players.length >=
+          8
         ) {
           return safeAck(
             ack,
             {
               ok:false,
               error:
-                "Tuba on täis (max 8)."
+                "ROOM_FULL"
             }
           );
         }
@@ -1490,7 +2106,7 @@ io.on(
             {
               ok:false,
               error:
-                "See nimi on juba kasutusel."
+                "NAME_TAKEN"
             }
           );
         }
@@ -1538,13 +2154,17 @@ io.on(
               room.code,
             playerToken:
               token,
-            resumed:false
+            resumed:
+              false,
+            language:
+              room.language
           }
         );
 
         emitRoom(room);
       }
     );
+
 
     socket.on(
       "resumeRoom",
@@ -1563,7 +2183,8 @@ io.on(
 
         const token =
           String(
-            playerToken || ""
+            playerToken ||
+            ""
           ).trim();
 
         if (
@@ -1572,7 +2193,9 @@ io.on(
         ) {
           return safeAck(
             ack,
-            {ok:false}
+            {
+              ok:false
+            }
           );
         }
 
@@ -1587,7 +2210,9 @@ io.on(
         ) {
           return safeAck(
             ack,
-            {ok:false}
+            {
+              ok:false
+            }
           );
         }
 
@@ -1608,13 +2233,16 @@ io.on(
             code:
               room.code,
             playerToken:
-              player.token
+              player.token,
+            language:
+              room.language
           }
         );
 
         emitRoom(room);
       }
     );
+
 
     socket.on(
       "settings",
@@ -1636,7 +2264,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -1655,7 +2283,7 @@ io.on(
             {
               ok:false,
               error:
-                "Ainult mängujuht saab seadeid muuta."
+                "HOST_ONLY"
             }
           );
         }
@@ -1668,7 +2296,7 @@ io.on(
             {
               ok:false,
               error:
-                "Mäng on juba alanud."
+                "GAME_ALREADY_STARTED"
             }
           );
         }
@@ -1709,6 +2337,38 @@ io.on(
         ) {
           room.gameMode =
             payload.gameMode;
+        }
+
+        if (
+          [
+            "rotating",
+            "host",
+            "fixed"
+          ].includes(
+            payload.djMode
+          )
+        ) {
+          room.djMode =
+            payload.djMode;
+        }
+
+        if (
+          payload.fixedDjToken &&
+          room.players.some(
+            candidate =>
+              candidate.token ===
+              payload.fixedDjToken
+          )
+        ) {
+          room.fixedDjToken =
+            payload.fixedDjToken;
+
+        } else if (
+          payload.djMode !==
+          "fixed"
+        ) {
+          room.fixedDjToken =
+            null;
         }
 
         const target =
@@ -1758,12 +2418,15 @@ io.on(
 
         safeAck(
           ack,
-          {ok:true}
+          {
+            ok:true
+          }
         );
 
         emitRoom(room);
       }
     );
+
 
     socket.on(
       "startGame",
@@ -1785,7 +2448,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -1804,35 +2467,61 @@ io.on(
             {
               ok:false,
               error:
-                "Ainult mängujuht saab alustada."
+                "HOST_ONLY"
             }
           );
         }
 
-        if (
+        const connected =
           connectedPlayers(
             room
-          ).length < 2
+          );
+
+        if (
+          connected.length <
+          2
         ) {
           return safeAck(
             ack,
             {
               ok:false,
               error:
-                "Mänguks on vaja vähemalt 2 ühendatud mängijat."
+                "NEED_TWO_PLAYERS"
+            }
+          );
+        }
+
+        if (
+          room.djMode ===
+            "fixed" &&
+          !room.fixedDjToken
+        ) {
+          return safeAck(
+            ack,
+            {
+              ok:false,
+              error:
+                "CHOOSE_DJ"
             }
           );
         }
 
         try {
-          startGame(room);
+          startGame(
+            room
+          );
 
           safeAck(
             ack,
-            {ok:true}
+            {
+              ok:true
+            }
           );
 
-          emitRoom(room);
+          emitRoom(
+            room
+          );
+
         } catch (
           error
         ) {
@@ -1845,12 +2534,13 @@ io.on(
             {
               ok:false,
               error:
-                "Mängu käivitamine ebaõnnestus."
+                "START_FAILED"
             }
           );
         }
       }
     );
+
 
     socket.on(
       "submitGuess",
@@ -1875,7 +2565,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -1896,7 +2586,7 @@ io.on(
             {
               ok:false,
               error:
-                "Praegu ei saa vastata."
+                "CANNOT_GUESS_NOW"
             }
           );
         }
@@ -1910,7 +2600,7 @@ io.on(
             {
               ok:false,
               error:
-                "See voor on juba vahetunud."
+                "ROUND_CHANGED"
             }
           );
         }
@@ -1932,7 +2622,7 @@ io.on(
             {
               ok:false,
               error:
-                "Selles voorus oled DJ või ootad oma korda."
+                "NOT_GUESSER"
             }
           );
         }
@@ -1947,7 +2637,7 @@ io.on(
             {
               ok:false,
               error:
-                "Vastus on juba lukustatud."
+                "ALREADY_GUESSED"
             }
           );
         }
@@ -1968,7 +2658,7 @@ io.on(
             {
               ok:false,
               error:
-                "Vigane koht ajajoonel."
+                "INVALID_SLOT"
             }
           );
         }
@@ -1985,7 +2675,9 @@ io.on(
 
         safeAck(
           ack,
-          {ok:true}
+          {
+            ok:true
+          }
         );
 
         emitRoom(room);
@@ -1995,6 +2687,7 @@ io.on(
         );
       }
     );
+
 
     socket.on(
       "revealNow",
@@ -2016,7 +2709,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -2035,21 +2728,21 @@ io.on(
             {
               ok:false,
               error:
-                "Ainult mängujuht saab vooru avada."
+                "HOST_ONLY"
             }
           );
         }
 
         if (
           room.phase !==
-          "guessing"
+            "guessing"
         ) {
           return safeAck(
             ack,
             {
               ok:false,
               error:
-                "Voor ei ole vastamisfaasis."
+                "WRONG_PHASE"
             }
           );
         }
@@ -2072,19 +2765,24 @@ io.on(
             {
               ok:false,
               error:
-                "Vähemalt üks vastus peab enne olemas olema."
+                "NO_GUESSES"
             }
           );
         }
 
-        revealRound(room);
+        revealRound(
+          room
+        );
 
         safeAck(
           ack,
-          {ok:true}
+          {
+            ok:true
+          }
         );
       }
     );
+
 
     socket.on(
       "nextRound",
@@ -2106,7 +2804,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -2125,7 +2823,7 @@ io.on(
             {
               ok:false,
               error:
-                "Ainult mängujuht saab jätkata."
+                "HOST_ONLY"
             }
           );
         }
@@ -2138,33 +2836,38 @@ io.on(
             {
               ok:false,
               error:
-                "Mäng on lõppenud."
+                "GAME_FINISHED"
             }
           );
         }
 
         if (
           room.phase !==
-          "reveal"
+            "reveal"
         ) {
           return safeAck(
             ack,
             {
               ok:false,
               error:
-                "Esmalt tuleb voor avada."
+                "REVEAL_FIRST"
             }
           );
         }
 
-        advanceRound(room);
+        advanceRound(
+          room
+        );
 
         safeAck(
           ack,
-          {ok:true}
+          {
+            ok:true
+          }
         );
       }
     );
+
 
     socket.on(
       "restart",
@@ -2186,7 +2889,7 @@ io.on(
             {
               ok:false,
               error:
-                "Tuba puudub."
+                "ROOM_NOT_FOUND"
             }
           );
         }
@@ -2205,7 +2908,7 @@ io.on(
             {
               ok:false,
               error:
-                "Ainult mängujuht saab uuesti alustada."
+                "HOST_ONLY"
             }
           );
         }
@@ -2220,20 +2923,27 @@ io.on(
             {
               ok:false,
               error:
-                "Uueks mänguks on vaja vähemalt 2 ühendatud mängijat."
+                "NEED_TWO_PLAYERS"
             }
           );
         }
 
         try {
-          startGame(room);
+          startGame(
+            room
+          );
 
           safeAck(
             ack,
-            {ok:true}
+            {
+              ok:true
+            }
           );
 
-          emitRoom(room);
+          emitRoom(
+            room
+          );
+
         } catch (
           error
         ) {
@@ -2246,12 +2956,13 @@ io.on(
             {
               ok:false,
               error:
-                "Uue mängu käivitamine ebaõnnestus."
+                "START_FAILED"
             }
           );
         }
       }
     );
+
 
     socket.on(
       "disconnect",
@@ -2287,16 +2998,23 @@ io.on(
             now();
         }
 
-        chooseHost(room);
+        chooseHost(
+          room
+        );
 
-        emitRoom(room);
+        emitRoom(
+          room
+        );
       }
     );
+
   }
 );
 
+
 setInterval(
   () => {
+
     const currentTime =
       now();
 
@@ -2309,7 +3027,8 @@ setInterval(
       const noneConnected =
         connectedPlayers(
           room
-        ).length === 0;
+        ).length ===
+        0;
 
       const age =
         currentTime -
@@ -2333,19 +3052,22 @@ setInterval(
         );
       }
     }
+
   },
   60 * 1000
 );
+
 
 const PORT =
   process.env.PORT ||
   3000;
 
+
 httpServer.listen(
   PORT,
   () => {
     console.log(
-      `kõrva(n)uss v4 running on port ${PORT}`
+      `kõrva(n)uss v5 running on port ${PORT}`
     );
   }
 );
