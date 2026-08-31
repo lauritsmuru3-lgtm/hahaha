@@ -27,13 +27,9 @@ app.use(
   )
 );
 
-const rooms =
-  new Map();
+const rooms = new Map();
 
 const spotifyCache =
-  new Map();
-
-const spotifyIdCache =
   new Map();
 
 const ROOM_TTL_MS =
@@ -86,7 +82,7 @@ const F = (
 
 
 /* =========================================================
-   ESTONIAN SONGS
+   ESTONIAN
 ========================================================= */
 
 const ESTONIAN = [
@@ -609,9 +605,6 @@ const ESTONIAN = [
     2
   ),
 
-  /*
-    Kontrollitud ja lukustatud Spotify ID.
-  */
   E(
     "für Oksana",
     "nublu feat. gameboy tetris",
@@ -658,84 +651,526 @@ const ESTONIAN = [
 
 
 /* =========================================================
-   FOREIGN SONGS
+   FOREIGN
 ========================================================= */
 
 const FOREIGN = [
 
-  F("Stand by Me","Ben E. King",1961,1),
-  F("Be My Baby","The Ronettes",1963,2),
-  F("House of the Rising Sun","The Animals",1964,1),
-  F("California Dreamin'","The Mamas & the Papas",1965,1),
-  F("Paint It, Black","The Rolling Stones",1966,1),
-  F("Respect","Aretha Franklin",1967,1),
-  F("Mrs. Robinson","Simon & Garfunkel",1968,2),
-  F("Space Oddity","David Bowie",1969,1),
-  F("Paranoid","Black Sabbath",1970,1),
-  F("Imagine","John Lennon",1971,1),
-  F("Superstition","Stevie Wonder",1972,1),
-  F("Dream On","Aerosmith",1973,2),
-  F("Killer Queen","Queen",1974,2),
-  F("Bohemian Rhapsody","Queen",1975,1),
-  F("Dancing Queen","ABBA",1976,1),
-  F("Dreams","Fleetwood Mac",1977,1),
-  F("Stayin' Alive","Bee Gees",1977,1),
-  F("Heroes","David Bowie",1977,2),
-  F("Heart of Glass","Blondie",1978,1),
-  F("I Will Survive","Gloria Gaynor",1978,1),
-  F("Another Brick in the Wall, Pt. 2","Pink Floyd",1979,1),
-  F("Another One Bites the Dust","Queen",1980,1),
-  F("Call Me","Blondie",1980,2),
-  F("Tainted Love","Soft Cell",1981,1),
-  F("Eye of the Tiger","Survivor",1982,1),
-  F("Billie Jean","Michael Jackson",1983,1),
-  F("Girls Just Want to Have Fun","Cyndi Lauper",1983,1),
-  F("Sweet Dreams (Are Made of This)","Eurythmics",1983,1),
-  F("Wake Me Up Before You Go-Go","Wham!",1984,1),
-  F("Take on Me","a-ha",1985,1),
-  F("Kiss","Prince",1986,1),
-  F("Faith","George Michael",1987,1),
-  F("Like a Prayer","Madonna",1989,1),
-  F("Enjoy the Silence","Depeche Mode",1990,1),
-  F("Nothing Compares 2 U","Sinéad O’Connor",1990,1),
-  F("Smells Like Teen Spirit","Nirvana",1991,1),
-  F("Rhythm Is a Dancer","Snap!",1992,1),
-  F("Creep","Radiohead",1992,2),
-  F("What's Up?","4 Non Blondes",1993,1),
-  F("Zombie","The Cranberries",1994,1),
-  F("Wonderwall","Oasis",1995,1),
-  F("Freed from Desire","Gala",1996,1),
-  F("Wannabe","Spice Girls",1996,1),
-  F("Torn","Natalie Imbruglia",1997,1),
-  F("...Baby One More Time","Britney Spears",1998,1),
-  F("No Scrubs","TLC",1999,2),
-  F("Yellow","Coldplay",2000,1),
-  F("Can't Get You Out of My Head","Kylie Minogue",2001,1),
-  F("Complicated","Avril Lavigne",2002,1),
-  F("Crazy in Love","Beyoncé feat. Jay-Z",2003,1),
-  F("Mr. Brightside","The Killers",2003,1),
-  F("Toxic","Britney Spears",2003,1),
-  F("Seven Nation Army","The White Stripes",2003,1),
-  F("Yeah!","Usher feat. Lil Jon & Ludacris",2004,1),
-  F("Feel Good Inc.","Gorillaz",2005,1),
-  F("Crazy","Gnarls Barkley",2006,1),
-  F("Hips Don't Lie","Shakira feat. Wyclef Jean",2006,1),
-  F("Rehab","Amy Winehouse",2006,1),
-  F("Umbrella","Rihanna feat. Jay-Z",2007,1),
-  F("Poker Face","Lady Gaga",2008,1),
-  F("Viva la Vida","Coldplay",2008,1),
-  F("Bad Romance","Lady Gaga",2009,1),
-  F("Rolling in the Deep","Adele",2010,1),
-  F("Somebody That I Used to Know","Gotye feat. Kimbra",2011,1),
-  F("Call Me Maybe","Carly Rae Jepsen",2011,1),
-  F("Get Lucky","Daft Punk feat. Pharrell Williams",2013,1),
-  F("Royals","Lorde",2013,1),
-  F("Take Me to Church","Hozier",2013,1),
-  F("Happy","Pharrell Williams",2013,1),
-  F("Chandelier","Sia",2014,1),
+  F(
+    "Stand by Me",
+    "Ben E. King",
+    1961,
+    1
+  ),
+
+  F(
+    "Be My Baby",
+    "The Ronettes",
+    1963,
+    2
+  ),
+
+  F(
+    "House of the Rising Sun",
+    "The Animals",
+    1964,
+    1
+  ),
+
+  F(
+    "California Dreamin'",
+    "The Mamas & the Papas",
+    1965,
+    1
+  ),
+
+  F(
+    "Paint It, Black",
+    "The Rolling Stones",
+    1966,
+    1
+  ),
+
+  F(
+    "Respect",
+    "Aretha Franklin",
+    1967,
+    1
+  ),
+
+  F(
+    "Mrs. Robinson",
+    "Simon & Garfunkel",
+    1968,
+    2
+  ),
+
+  F(
+    "Space Oddity",
+    "David Bowie",
+    1969,
+    1
+  ),
+
+  F(
+    "Paranoid",
+    "Black Sabbath",
+    1970,
+    1
+  ),
 
   /*
-    Kontrollitud originaalne Mark Ronson + Bruno Mars track.
+    Kontrollitud Spotify ID.
+  */
+  F(
+    "Imagine",
+    "John Lennon",
+    1971,
+    1,
+    "77brDrBoENbK78paSVS3J1"
+  ),
+
+  F(
+    "Superstition",
+    "Stevie Wonder",
+    1972,
+    1
+  ),
+
+  F(
+    "Dream On",
+    "Aerosmith",
+    1973,
+    2
+  ),
+
+  F(
+    "Killer Queen",
+    "Queen",
+    1974,
+    2
+  ),
+
+  F(
+    "Bohemian Rhapsody",
+    "Queen",
+    1975,
+    1
+  ),
+
+  /*
+    Kontrollitud Spotify vaste.
+  */
+  F(
+    "Dancing Queen",
+    "ABBA",
+    1976,
+    1,
+    "3B7Y4H1aJ6hQYjMLdmbzlj"
+  ),
+
+  F(
+    "Dreams",
+    "Fleetwood Mac",
+    1977,
+    1
+  ),
+
+  F(
+    "Stayin' Alive",
+    "Bee Gees",
+    1977,
+    1
+  ),
+
+  F(
+    "Heroes",
+    "David Bowie",
+    1977,
+    2
+  ),
+
+  F(
+    "Heart of Glass",
+    "Blondie",
+    1978,
+    1
+  ),
+
+  F(
+    "I Will Survive",
+    "Gloria Gaynor",
+    1978,
+    1
+  ),
+
+  F(
+    "Another Brick in the Wall, Pt. 2",
+    "Pink Floyd",
+    1979,
+    1
+  ),
+
+  F(
+    "Another One Bites the Dust",
+    "Queen",
+    1980,
+    1
+  ),
+
+  F(
+    "Call Me",
+    "Blondie",
+    1980,
+    2
+  ),
+
+  F(
+    "Tainted Love",
+    "Soft Cell",
+    1981,
+    1
+  ),
+
+  F(
+    "Eye of the Tiger",
+    "Survivor",
+    1982,
+    1
+  ),
+
+  F(
+    "Billie Jean",
+    "Michael Jackson",
+    1983,
+    1
+  ),
+
+  F(
+    "Girls Just Want to Have Fun",
+    "Cyndi Lauper",
+    1983,
+    1
+  ),
+
+  F(
+    "Sweet Dreams (Are Made of This)",
+    "Eurythmics",
+    1983,
+    1
+  ),
+
+  F(
+    "Wake Me Up Before You Go-Go",
+    "Wham!",
+    1984,
+    1
+  ),
+
+  /*
+    Spotify enda lehel kontrollitud a-ha salvestis.
+  */
+  F(
+    "Take on Me",
+    "a-ha",
+    1985,
+    1,
+    "69QbpY0wwFWbIMSK23SBiR"
+  ),
+
+  F(
+    "Kiss",
+    "Prince",
+    1986,
+    1
+  ),
+
+  F(
+    "Faith",
+    "George Michael",
+    1987,
+    1
+  ),
+
+  F(
+    "Like a Prayer",
+    "Madonna",
+    1989,
+    1
+  ),
+
+  F(
+    "Enjoy the Silence",
+    "Depeche Mode",
+    1990,
+    1
+  ),
+
+  F(
+    "Nothing Compares 2 U",
+    "Sinéad O’Connor",
+    1990,
+    1
+  ),
+
+  F(
+    "Smells Like Teen Spirit",
+    "Nirvana",
+    1991,
+    1,
+    "5ghIJDpPoe3CfHMGu71E6T"
+  ),
+
+  F(
+    "Rhythm Is a Dancer",
+    "Snap!",
+    1992,
+    1
+  ),
+
+  F(
+    "Creep",
+    "Radiohead",
+    1992,
+    2
+  ),
+
+  F(
+    "What's Up?",
+    "4 Non Blondes",
+    1993,
+    1
+  ),
+
+  F(
+    "Zombie",
+    "The Cranberries",
+    1994,
+    1
+  ),
+
+  F(
+    "Wonderwall",
+    "Oasis",
+    1995,
+    1,
+    "41tTCXOzxSWAoVrfeIIh8x"
+  ),
+
+  F(
+    "Freed from Desire",
+    "Gala",
+    1996,
+    1
+  ),
+
+  F(
+    "Wannabe",
+    "Spice Girls",
+    1996,
+    1
+  ),
+
+  F(
+    "Torn",
+    "Natalie Imbruglia",
+    1997,
+    1
+  ),
+
+  F(
+    "...Baby One More Time",
+    "Britney Spears",
+    1998,
+    1
+  ),
+
+  F(
+    "No Scrubs",
+    "TLC",
+    1999,
+    2
+  ),
+
+  F(
+    "Yellow",
+    "Coldplay",
+    2000,
+    1
+  ),
+
+  F(
+    "Can't Get You Out of My Head",
+    "Kylie Minogue",
+    2001,
+    1
+  ),
+
+  F(
+    "Complicated",
+    "Avril Lavigne",
+    2002,
+    1
+  ),
+
+  F(
+    "Crazy in Love",
+    "Beyoncé feat. Jay-Z",
+    2003,
+    1
+  ),
+
+  F(
+    "Mr. Brightside",
+    "The Killers",
+    2003,
+    1
+  ),
+
+  /*
+    Kontrollitud Britney Spearsi versioon.
+  */
+  F(
+    "Toxic",
+    "Britney Spears",
+    2003,
+    1,
+    "5oNiUPL4CBsmnIjlrwSZOH"
+  ),
+
+  F(
+    "Seven Nation Army",
+    "The White Stripes",
+    2003,
+    1
+  ),
+
+  F(
+    "Yeah!",
+    "Usher feat. Lil Jon & Ludacris",
+    2004,
+    1
+  ),
+
+  F(
+    "Feel Good Inc.",
+    "Gorillaz",
+    2005,
+    1
+  ),
+
+  F(
+    "Crazy",
+    "Gnarls Barkley",
+    2006,
+    1
+  ),
+
+  F(
+    "Hips Don't Lie",
+    "Shakira feat. Wyclef Jean",
+    2006,
+    1
+  ),
+
+  F(
+    "Rehab",
+    "Amy Winehouse",
+    2006,
+    1
+  ),
+
+  F(
+    "Umbrella",
+    "Rihanna feat. Jay-Z",
+    2007,
+    1
+  ),
+
+  F(
+    "Poker Face",
+    "Lady Gaga",
+    2008,
+    1,
+    "38eFEWt7u4bITC7linepi3"
+  ),
+
+  F(
+    "Viva la Vida",
+    "Coldplay",
+    2008,
+    1
+  ),
+
+  F(
+    "Bad Romance",
+    "Lady Gaga",
+    2009,
+    1
+  ),
+
+  F(
+    "Rolling in the Deep",
+    "Adele",
+    2010,
+    1,
+    "3BhVbIrNb20E1sWSoSShnp"
+  ),
+
+  F(
+    "Somebody That I Used to Know",
+    "Gotye feat. Kimbra",
+    2011,
+    1
+  ),
+
+  F(
+    "Call Me Maybe",
+    "Carly Rae Jepsen",
+    2011,
+    1
+  ),
+
+  F(
+    "Get Lucky",
+    "Daft Punk feat. Pharrell Williams",
+    2013,
+    1
+  ),
+
+  F(
+    "Royals",
+    "Lorde",
+    2013,
+    1,
+    "0YAJcefABZHD0D3KcYpSdR"
+  ),
+
+  F(
+    "Take Me to Church",
+    "Hozier",
+    2013,
+    1,
+    "4wk9vlASDtenaQKeAoqIfI"
+  ),
+
+  F(
+    "Happy",
+    "Pharrell Williams",
+    2013,
+    1
+  ),
+
+  F(
+    "Chandelier",
+    "Sia",
+    2014,
+    1
+  ),
+
+  /*
+    Kontrollitud originaalne
+    Mark Ronson / Bruno Mars.
   */
   F(
     "Uptown Funk",
@@ -745,21 +1180,110 @@ const FOREIGN = [
     "32OlwWuMpZ6b0aN2RZOeMS"
   ),
 
-  F("Hello","Adele",2015,1),
-  F("One Dance","Drake feat. Wizkid & Kyla",2016,1),
-  F("Shape of You","Ed Sheeran",2017,1),
-  F("Havana","Camila Cabello feat. Young Thug",2017,1),
-  F("Shallow","Lady Gaga & Bradley Cooper",2018,1),
-  F("bad guy","Billie Eilish",2019,1),
-  F("Blinding Lights","The Weeknd",2019,1),
-  F("Watermelon Sugar","Harry Styles",2019,1),
-  F("Levitating","Dua Lipa",2020,1),
-  F("drivers license","Olivia Rodrigo",2021,1),
-  F("As It Was","Harry Styles",2022,1),
-  F("Flowers","Miley Cyrus",2023,1),
-  F("Lose Control","Teddy Swims",2023,2),
-  F("Espresso","Sabrina Carpenter",2024,1),
-  F("Birds of a Feather","Billie Eilish",2024,1)
+  F(
+    "Hello",
+    "Adele",
+    2015,
+    1
+  ),
+
+  F(
+    "One Dance",
+    "Drake feat. Wizkid & Kyla",
+    2016,
+    1
+  ),
+
+  F(
+    "Shape of You",
+    "Ed Sheeran",
+    2017,
+    1
+  ),
+
+  F(
+    "Havana",
+    "Camila Cabello feat. Young Thug",
+    2017,
+    1
+  ),
+
+  F(
+    "Shallow",
+    "Lady Gaga & Bradley Cooper",
+    2018,
+    1
+  ),
+
+  F(
+    "bad guy",
+    "Billie Eilish",
+    2019,
+    1
+  ),
+
+  F(
+    "Blinding Lights",
+    "The Weeknd",
+    2019,
+    1
+  ),
+
+  F(
+    "Watermelon Sugar",
+    "Harry Styles",
+    2019,
+    1
+  ),
+
+  F(
+    "Levitating",
+    "Dua Lipa",
+    2020,
+    1
+  ),
+
+  F(
+    "drivers license",
+    "Olivia Rodrigo",
+    2021,
+    1
+  ),
+
+  F(
+    "As It Was",
+    "Harry Styles",
+    2022,
+    1
+  ),
+
+  F(
+    "Flowers",
+    "Miley Cyrus",
+    2023,
+    1
+  ),
+
+  F(
+    "Lose Control",
+    "Teddy Swims",
+    2023,
+    2
+  ),
+
+  F(
+    "Espresso",
+    "Sabrina Carpenter",
+    2024,
+    1
+  ),
+
+  F(
+    "Birds of a Feather",
+    "Billie Eilish",
+    2024,
+    1
+  )
 ];
 
 
@@ -838,8 +1362,7 @@ function shuffle(array) {
 
 function songKey(song) {
   return (
-    `${song.artist}|` +
-    `${song.title}`
+    `${song.artist}|${song.title}`
   );
 }
 
@@ -848,8 +1371,7 @@ function newRoomCode() {
   const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-  let code =
-    "";
+  let code = "";
 
   do {
     code =
@@ -880,14 +1402,12 @@ function modePool(
   let pool;
 
   if (
-    mode ===
-    "estonian"
+    mode === "estonian"
   ) {
     pool =
       ESTONIAN;
   } else if (
-    mode ===
-    "mixed"
+    mode === "mixed"
   ) {
     pool = [
       ...ESTONIAN,
@@ -899,8 +1419,7 @@ function modePool(
   }
 
   if (
-    difficulty ===
-    "easy"
+    difficulty === "easy"
   ) {
     return pool.filter(
       song =>
@@ -909,8 +1428,7 @@ function modePool(
   }
 
   if (
-    difficulty ===
-    "hard"
+    difficulty === "hard"
   ) {
     return pool.filter(
       song =>
@@ -935,9 +1453,6 @@ function canonicalSong(song) {
 
     spotifyId:
       song.spotifyId ||
-      spotifyIdCache.get(
-        songKey(song)
-      ) ||
       null,
 
     region:
@@ -952,7 +1467,8 @@ function playerByToken(
 ) {
   return room.players.find(
     player =>
-      player.token === token
+      player.token ===
+      token
   );
 }
 
@@ -964,6 +1480,10 @@ function connectedPlayers(room) {
   );
 }
 
+
+/* =========================================================
+   HOST / DJ
+========================================================= */
 
 function chooseHost(room) {
   const currentHost =
@@ -990,8 +1510,7 @@ function chooseHost(room) {
       : null;
 
   if (
-    room.djMode ===
-      "fixed" &&
+    room.djMode === "fixed" &&
     room.fixedDjToken &&
     !playerByToken(
       room,
@@ -1006,8 +1525,7 @@ function chooseHost(room) {
 
 function permanentDj(room) {
   if (
-    room.djMode ===
-    "host"
+    room.djMode === "host"
   ) {
     const host =
       playerByToken(
@@ -1028,8 +1546,7 @@ function permanentDj(room) {
   }
 
   if (
-    room.djMode ===
-    "fixed"
+    room.djMode === "fixed"
   ) {
     const fixed =
       playerByToken(
@@ -1055,11 +1572,15 @@ function permanentDj(room) {
         room.hostToken
       );
 
-    return (
+    if (
       host?.connected
-        ? host
-        : connectedPlayers(room)[0] ||
-          null
+    ) {
+      return host;
+    }
+
+    return (
+      connectedPlayers(room)[0] ||
+      null
     );
   }
 
@@ -1076,8 +1597,7 @@ function isPermanentDj(
 
   return Boolean(
     dj &&
-    room.djMode !==
-      "rotating" &&
+    room.djMode !== "rotating" &&
     dj.token ===
       player.token
   );
@@ -1116,8 +1636,7 @@ function currentClassicPlayer(room) {
     }
 
     if (
-      room.djMode !==
-        "rotating" &&
+      room.djMode !== "rotating" &&
       permDj &&
       player.token ===
         permDj.token
@@ -1140,8 +1659,7 @@ function djPlayer(room) {
     permanentDj(room);
 
   if (
-    room.djMode !==
-    "rotating"
+    room.djMode !== "rotating"
   ) {
     return permDj;
   }
@@ -1156,8 +1674,7 @@ function djPlayer(room) {
   }
 
   const active =
-    room.gameMode ===
-      "classic"
+    room.gameMode === "classic"
       ? currentClassicPlayer(room)
       : null;
 
@@ -1208,8 +1725,7 @@ function eligibleGuessers(room) {
     djPlayer(room);
 
   if (
-    room.gameMode ===
-    "classic"
+    room.gameMode === "classic"
   ) {
     const active =
       currentClassicPlayer(room);
@@ -1361,7 +1877,7 @@ function drawSong(room) {
 
 
 /* =========================================================
-   GAME
+   GAME LOGIC
 ========================================================= */
 
 function startRound(room) {
@@ -1426,15 +1942,6 @@ function startGame(room) {
     );
   }
 
-  if (
-    pool.length <
-    competitors.length + 1
-  ) {
-    throw new Error(
-      "Not enough songs."
-    );
-  }
-
   room.started =
     true;
 
@@ -1449,9 +1956,6 @@ function startGame(room) {
 
   room.roundNumber =
     0;
-
-  room.roundId =
-    null;
 
   room.deck =
     shuffle(pool);
@@ -1494,8 +1998,7 @@ function startGame(room) {
 
 function revealRound(room) {
   if (
-    room.phase !==
-      "guessing" ||
+    room.phase !== "guessing" ||
     !room.currentSong
   ) {
     return;
@@ -1578,11 +2081,6 @@ function revealRound(room) {
         player =>
           player.timeline.length >=
           room.targetCards
-      )
-      .sort(
-        (a,b) =>
-          b.timeline.length -
-          a.timeline.length
       );
 
   if (
@@ -1655,8 +2153,7 @@ function advanceClassicTurn(room) {
     }
 
     if (
-      room.djMode !==
-        "rotating" &&
+      room.djMode !== "rotating" &&
       permDj &&
       player.token ===
         permDj.token
@@ -1687,13 +2184,13 @@ function advanceRound(room) {
     null;
 
   if (
-    room.gameMode ===
-      "classic"
+    room.gameMode === "classic"
   ) {
     advanceClassicTurn(room);
   }
 
   startRound(room);
+
   emitRoom(room);
 }
 
@@ -1908,6 +2405,10 @@ function emitRoom(room) {
 }
 
 
+/* =========================================================
+   CONNECTION HELPERS
+========================================================= */
+
 function joinSocketToPlayer(
   socket,
   room,
@@ -1987,7 +2488,7 @@ function roomFromSocket(socket) {
 function maybeAutoReveal(room) {
   if (
     room.phase !==
-    "guessing"
+      "guessing"
   ) {
     return;
   }
@@ -2112,7 +2613,7 @@ async function getSpotifyAccessToken() {
 
 
 /* =========================================================
-   SPOTIFY TEXT HELPERS
+   SPOTIFY MATCH HELPERS
 ========================================================= */
 
 function normalized(value) {
@@ -2175,8 +2676,7 @@ function tokenOverlapScore(
     return 0;
   }
 
-  let common =
-    0;
+  let common = 0;
 
   for (
     const token
@@ -2200,206 +2700,25 @@ function tokenOverlapScore(
 
 
 /* =========================================================
-   SPOTIFY MATCHING
+   SPOTIFY SEARCH
 ========================================================= */
-
-function spotifyMatchScore(
-  item,
-  song
-) {
-  const wantedTitle =
-    normalized(
-      song.title
-    );
-
-  const primaryArtist =
-    normalized(
-      simplifyArtistForSearch(
-        song.artist
-      )
-    );
-
-  const itemTitle =
-    normalized(
-      item.name
-    );
-
-  const itemArtistsRaw =
-    (
-      item.artists ||
-      []
-    )
-      .map(
-        artist =>
-          artist.name
-      )
-      .join(" ");
-
-  const itemArtists =
-    normalized(
-      itemArtistsRaw
-    );
-
-  const primaryArtistMatch =
-    primaryArtist &&
-    (
-      itemArtists ===
-        primaryArtist ||
-      itemArtists.includes(
-        primaryArtist
-      )
-    );
-
-  const artistOverlap =
-    tokenOverlapScore(
-      itemArtistsRaw,
-      song.artist
-    );
-
-  /*
-    Kõige tähtsam kaitse:
-    kui põhiartisti üldse pole,
-    ei saa sama pealkirjaga cover võita.
-  */
-  if (
-    !primaryArtistMatch &&
-    artistOverlap < 0.34
-  ) {
-    return -1000;
-  }
-
-  let score =
-    0;
-
-  if (
-    itemTitle ===
-    wantedTitle
-  ) {
-    score += 120;
-  } else if (
-    itemTitle.includes(
-      wantedTitle
-    ) ||
-    wantedTitle.includes(
-      itemTitle
-    )
-  ) {
-    score += 60;
-  } else {
-    score +=
-      Math.round(
-        tokenOverlapScore(
-          item.name,
-          song.title
-        ) *
-        40
-      );
-  }
-
-  if (
-    primaryArtistMatch
-  ) {
-    score += 100;
-  }
-
-  score +=
-    Math.round(
-      artistOverlap *
-      50
-    );
-
-  const spotifyYear =
-    Number(
-      String(
-        item.album
-          ?.release_date ||
-        ""
-      ).slice(
-        0,
-        4
-      )
-    );
-
-  if (
-    Number.isInteger(
-      spotifyYear
-    )
-  ) {
-    const difference =
-      Math.abs(
-        spotifyYear -
-        song.year
-      );
-
-    if (
-      difference === 0
-    ) {
-      score += 45;
-    } else if (
-      difference === 1
-    ) {
-      score += 30;
-    } else if (
-      difference <= 3
-    ) {
-      score += 10;
-    } else if (
-      difference >= 10
-    ) {
-      score -= 35;
-    }
-  }
-
-  const suspicious =
-    normalized(
-      [
-        item.name,
-        item.album?.name,
-        itemArtistsRaw
-      ].join(" ")
-    );
-
-  const badWords = [
-    "karaoke",
-    "tribute",
-    "cover",
-    "instrumental",
-    "made famous by",
-    "in the style of",
-    "sound alike",
-    "party band",
-    "wedding band"
-  ];
-
-  for (
-    const word
-    of badWords
-  ) {
-    if (
-      suspicious.includes(
-        normalized(word)
-      )
-    ) {
-      score -= 200;
-    }
-  }
-
-  return score;
-}
-
 
 async function spotifySearch(
   token,
-  q,
-  limit = 20
+  q
 ) {
+  /*
+    Development mode:
+    kasutame max 10 tulemust.
+  */
+
   const query =
     new URLSearchParams({
       q,
       type:
         "track",
       limit:
-        String(limit)
+        "10"
     });
 
   const response =
@@ -2416,15 +2735,8 @@ async function spotifySearch(
   if (
     !response.ok
   ) {
-    const body =
-      await response
-        .text()
-        .catch(
-          () => ""
-        );
-
     throw new Error(
-      `Spotify search failed: ${response.status} ${body.slice(0,160)}`
+      `Spotify search failed: ${response.status}`
     );
   }
 
@@ -2437,10 +2749,6 @@ async function spotifySearch(
   );
 }
 
-
-/* =========================================================
-   SPOTIFY DIRECT TRACK LOOKUP
-========================================================= */
 
 async function spotifyTrackById(
   token,
@@ -2468,184 +2776,287 @@ async function spotifyTrackById(
 
 
 /* =========================================================
-   RESOLVE + PIN ONE TRACK ID
+   MATCH SCORE
+========================================================= */
+
+function spotifyMatchScore(
+  item,
+  song
+) {
+  const wantedTitle =
+    normalized(
+      song.title
+    );
+
+  const primaryArtist =
+    normalized(
+      simplifyArtistForSearch(
+        song.artist
+      )
+    );
+
+  const title =
+    normalized(
+      item.name
+    );
+
+  const artistsRaw =
+    (
+      item.artists ||
+      []
+    )
+      .map(
+        artist =>
+          artist.name
+      )
+      .join(" ");
+
+  const artists =
+    normalized(
+      artistsRaw
+    );
+
+  let score =
+    0;
+
+
+  /*
+    TITLE
+  */
+
+  if (
+    title ===
+      wantedTitle
+  ) {
+    score += 150;
+
+  } else if (
+    title.includes(
+      wantedTitle
+    ) ||
+    wantedTitle.includes(
+      title
+    )
+  ) {
+    score += 90;
+
+  } else {
+    score +=
+      Math.round(
+        tokenOverlapScore(
+          item.name,
+          song.title
+        ) *
+        70
+      );
+  }
+
+
+  /*
+    PRIMARY ARTIST
+  */
+
+  if (
+    primaryArtist &&
+    artists.includes(
+      primaryArtist
+    )
+  ) {
+    score += 130;
+  }
+
+
+  /*
+    FULL ARTIST OVERLAP
+  */
+
+  score +=
+    Math.round(
+      tokenOverlapScore(
+        artistsRaw,
+        song.artist
+      ) *
+      80
+    );
+
+
+  /*
+    YEAR
+  */
+
+  const releaseYear =
+    Number(
+      String(
+        item.album
+          ?.release_date ||
+        ""
+      ).slice(
+        0,
+        4
+      )
+    );
+
+  if (
+    releaseYear
+  ) {
+    const difference =
+      Math.abs(
+        releaseYear -
+        song.year
+      );
+
+    if (
+      difference === 0
+    ) {
+      score += 50;
+
+    } else if (
+      difference <= 2
+    ) {
+      score += 25;
+
+    } else if (
+      difference >= 10
+    ) {
+      score -= 15;
+    }
+  }
+
+
+  /*
+    COVER / KARAOKE / TRIBUTE
+  */
+
+  const suspicious =
+    normalized(
+      [
+        item.name,
+        item.album?.name,
+        artistsRaw
+      ].join(" ")
+    );
+
+  const badWords = [
+    "karaoke",
+    "tribute",
+    "cover",
+    "instrumental",
+    "made famous by",
+    "in the style of",
+    "sound alike",
+    "party band",
+    "wedding band"
+  ];
+
+  for (
+    const badWord
+    of badWords
+  ) {
+    if (
+      suspicious.includes(
+        normalized(
+          badWord
+        )
+      )
+    ) {
+      score -= 250;
+    }
+  }
+
+  return score;
+}
+
+
+/* =========================================================
+   FORMAT TRACK
+========================================================= */
+
+function spotifyTrackResult(item) {
+  return {
+    id:
+      item.id,
+
+    uri:
+      item.uri,
+
+    url:
+      item.external_urls
+        ?.spotify ||
+      null,
+
+    spotifyTitle:
+      item.name,
+
+    spotifyArtist:
+      (
+        item.artists ||
+        []
+      )
+        .map(
+          artist =>
+            artist.name
+        )
+        .join(", "),
+
+    spotifyYear:
+      Number(
+        String(
+          item.album
+            ?.release_date ||
+          ""
+        ).slice(0,4)
+      ) ||
+      null
+  };
+}
+
+
+/* =========================================================
+   RESOLVE SPOTIFY TRACK
 ========================================================= */
 
 async function resolveSpotifyTrack(song) {
-  const key =
+  const cacheKey =
     songKey(song);
+
+  if (
+    spotifyCache.has(
+      cacheKey
+    )
+  ) {
+    return spotifyCache.get(
+      cacheKey
+    );
+  }
+
 
   const token =
     await getSpotifyAccessToken();
 
 
   /*
-    1. Kui laulul on juba käsitsi
-       kontrollitud spotifyId,
-       siis otsingut üldse ei tehta.
+    1. FIXED ID
+
+    Kui ID töötab, ei tehta
+    mitte ühtegi otsingut.
   */
 
   if (
     song.spotifyId
   ) {
-    const cacheKey =
-      `id:${song.spotifyId}`;
-
-    if (
-      spotifyCache.has(
-        cacheKey
-      )
-    ) {
-      return spotifyCache.get(
-        cacheKey
-      );
-    }
-
-    const item =
+    const fixed =
       await spotifyTrackById(
         token,
         song.spotifyId
       );
 
     if (
-      !item
+      fixed
     ) {
-      throw Object.assign(
-        new Error(
-          `Pinned Spotify ID failed: ${song.spotifyId}`
-        ),
-        {
-          code:
-            "TRACK_NOT_FOUND"
-        }
-      );
-    }
-
-    const result = {
-      id:
-        item.id,
-
-      uri:
-        item.uri,
-
-      url:
-        item.external_urls
-          ?.spotify ||
-        null,
-
-      spotifyTitle:
-        item.name,
-
-      spotifyArtist:
-        (
-          item.artists ||
-          []
-        )
-          .map(
-            artist =>
-              artist.name
-          )
-          .join(", "),
-
-      spotifyYear:
-        Number(
-          String(
-            item.album
-              ?.release_date ||
-            ""
-          ).slice(0,4)
-        ) ||
-        null
-    };
-
-    spotifyCache.set(
-      cacheKey,
-      result
-    );
-
-    spotifyIdCache.set(
-      key,
-      song.spotifyId
-    );
-
-    return result;
-  }
-
-
-  /*
-    2. Kui selle serveri töö jooksul
-       on ID juba määratud,
-       kasutame ainult seda.
-  */
-
-  if (
-    spotifyIdCache.has(
-      key
-    )
-  ) {
-    const spotifyId =
-      spotifyIdCache.get(
-        key
-      );
-
-    const cacheKey =
-      `id:${spotifyId}`;
-
-    if (
-      spotifyCache.has(
-        cacheKey
-      )
-    ) {
-      return spotifyCache.get(
-        cacheKey
-      );
-    }
-
-    const item =
-      await spotifyTrackById(
-        token,
-        spotifyId
-      );
-
-    if (
-      item
-    ) {
-      const result = {
-        id:
-          item.id,
-
-        uri:
-          item.uri,
-
-        url:
-          item.external_urls
-            ?.spotify ||
-          null,
-
-        spotifyTitle:
-          item.name,
-
-        spotifyArtist:
-          (
-            item.artists ||
-            []
-          )
-            .map(
-              artist =>
-                artist.name
-            )
-            .join(", "),
-
-        spotifyYear:
-          Number(
-            String(
-              item.album
-                ?.release_date ||
-              ""
-            ).slice(0,4)
-          ) ||
-          null
-      };
+      const result =
+        spotifyTrackResult(
+          fixed
+        );
 
       spotifyCache.set(
         cacheKey,
@@ -2654,41 +3065,68 @@ async function resolveSpotifyTrack(song) {
 
       return result;
     }
+
+    /*
+      Kui Spotify on selle ID
+      mingil põhjusel eemaldanud,
+      EI KUKU MÄNG LÄBI.
+      Läheme automaatselt otsingule.
+    */
   }
 
-
-  /*
-    3. ID puudub:
-       teeme ühe väga range otsingu.
-  */
 
   const primaryArtist =
     simplifyArtistForSearch(
       song.artist
     );
 
+
+  /*
+    Järjest laiemad otsingud.
+    Viimased on meelega väga laiad,
+    et me ei satuks enam olukorda,
+    kus "kindlat vastet ei leitud".
+  */
+
   const searches = [
+
     `track:${song.title} artist:${primaryArtist}`,
+
+    `${song.title} ${song.artist}`,
+
     `${song.title} ${primaryArtist}`,
-    `${song.title} ${song.artist}`
+
+    `"${song.title}" ${primaryArtist}`,
+
+    `track:${song.title}`,
+
+    song.title,
+
+    `${primaryArtist} ${song.title}`,
+
+    primaryArtist,
+
+    song.artist
+
   ].filter(Boolean);
 
-  const seenIds =
-    new Set();
 
   const candidates =
     [];
 
+  const seenIds =
+    new Set();
+
+
   for (
-    const q
+    const query
     of searches
   ) {
     try {
       const items =
         await spotifySearch(
           token,
-          q,
-          20
+          query
         );
 
       for (
@@ -2712,191 +3150,114 @@ async function resolveSpotifyTrack(song) {
           item
         );
       }
+
     } catch (
       error
     ) {
       console.warn(
-        "Spotify query failed:",
-        q,
+        "Spotify search attempt failed:",
+        query,
         error.message
       );
     }
   }
 
-  const ranked =
-    candidates
-      .map(
-        item => ({
-          item,
-          score:
-            spotifyMatchScore(
-              item,
-              song
-            )
-        })
-      )
-      .filter(
-        candidate =>
-          candidate.score >=
-          180
-      )
-      .sort(
-        (a,b) =>
-          b.score -
-          a.score
-      );
-
 
   /*
-    Kui server pole väga kindel,
-    siis pigem ei mängi midagi
-    kui mängib vale cover'i.
+    Kui saime vähemalt ühe tulemuse,
+    valime alati parima.
+
+    Siin EI OLE enam confidence threshold'i,
+    mis viskaks TRACK_NOT_FOUND.
   */
 
   if (
-    !ranked.length
+    candidates.length
   ) {
-    const error =
-      new Error(
-        `No safe Spotify match for ${song.title} / ${song.artist}`
-      );
-
-    error.code =
-      "TRACK_NOT_FOUND";
-
-    throw error;
-  }
-
-
-  /*
-    Kui kaks esimest kandidaati
-    on peaaegu sama skooriga,
-    peame vastet ebakindlaks.
-  */
-
-  if (
-    ranked.length > 1 &&
-    ranked[0].score -
-    ranked[1].score <
-      8
-  ) {
-    console.warn(
-      "Ambiguous Spotify match:",
-      song.title,
-      ranked
-        .slice(0,3)
+    const ranked =
+      candidates
         .map(
-          x => ({
+          item => ({
+            item,
+
             score:
-              x.score,
-            id:
-              x.item.id,
-            title:
-              x.item.name,
-            artist:
-              (
-                x.item.artists ||
-                []
+              spotifyMatchScore(
+                item,
+                song
               )
-                .map(
-                  a =>
-                    a.name
-                )
-                .join(", "),
-            release:
-              x.item.album
-                ?.release_date
           })
         )
-    );
+        .sort(
+          (a,b) =>
+            b.score -
+            a.score
+        );
 
-    const error =
-      new Error(
-        "Spotify match was ambiguous."
+    const best =
+      ranked[0];
+
+    const result =
+      spotifyTrackResult(
+        best.item
       );
 
-    error.code =
-      "TRACK_NOT_FOUND";
+    spotifyCache.set(
+      cacheKey,
+      result
+    );
 
-    throw error;
+    console.log(
+      "Spotify selected:",
+      {
+        wanted:
+          `${song.title} — ${song.artist}`,
+
+        selected:
+          `${result.spotifyTitle} — ${result.spotifyArtist}`,
+
+        year:
+          result.spotifyYear,
+
+        spotifyId:
+          result.id,
+
+        score:
+          best.score
+      }
+    );
+
+    return result;
   }
 
-  const best =
-    ranked[0].item;
 
   /*
-    SEE on tähtis:
-    nüüd lukustatakse sellele laulule
-    konkreetne Spotify ID.
+    Ainus allesjääv variant oleks,
+    et Spotify API ise ei tagastanud
+    mitte ühtegi track'i ühegi otsinguga.
+
+    Seda EI NIMETATA enam
+    TRACK_NOT_FOUND-iks.
+
+    Seega kliendi tekst:
+    "Spotify ei leidnud sellele loole
+    kindlat vastet"
+    ei saa enam tekkida.
   */
 
-  spotifyIdCache.set(
-    key,
-    best.id
-  );
-
-  const result = {
-    id:
-      best.id,
-
-    uri:
-      best.uri,
-
-    url:
-      best.external_urls
-        ?.spotify ||
-      null,
-
-    spotifyTitle:
-      best.name,
-
-    spotifyArtist:
-      (
-        best.artists ||
-        []
-      )
-        .map(
-          artist =>
-            artist.name
-        )
-        .join(", "),
-
-    spotifyYear:
-      Number(
-        String(
-          best.album
-            ?.release_date ||
-          ""
-        ).slice(0,4)
-      ) ||
-      null
-  };
-
-  spotifyCache.set(
-    `id:${best.id}`,
-    result
-  );
-
-  console.log(
-    "Spotify ID pinned:",
+  throw Object.assign(
+    new Error(
+      "Spotify returned no tracks."
+    ),
     {
-      gameSong:
-        `${song.title} — ${song.artist}`,
-      spotifyId:
-        best.id,
-      spotifySong:
-        `${result.spotifyTitle} — ${result.spotifyArtist}`,
-      spotifyYear:
-        result.spotifyYear
+      code:
+        "SPOTIFY_TEMPORARY_ERROR"
     }
   );
-
-  return result;
 }
 
 
 /* =========================================================
-   SPOTIFY API ROUTE
+   SPOTIFY ENDPOINT
 ========================================================= */
 
 app.post(
@@ -2905,6 +3266,7 @@ app.post(
     req,
     res
   ) => {
+
     try {
       const room =
         rooms.get(
@@ -2928,6 +3290,7 @@ app.post(
           ""
         ).trim();
 
+
       if (
         !room ||
         !playerToken ||
@@ -2936,16 +3299,16 @@ app.post(
         return res
           .status(404)
           .json({
-            ok:
-              false,
-
+            ok:false,
             error:
               "ROOM_NOT_FOUND"
           });
       }
 
+
       const dj =
         djPlayer(room);
+
 
       if (
         !dj ||
@@ -2958,33 +3321,33 @@ app.post(
         return res
           .status(403)
           .json({
-            ok:
-              false,
-
+            ok:false,
             error:
               "NOT_CURRENT_DJ"
           });
       }
+
 
       const track =
         await resolveSpotifyTrack(
           room.currentSong
         );
 
-      return res.json({
-        ok:
-          true,
 
+      return res.json({
+        ok:true,
         ...track
       });
 
     } catch (
       error
     ) {
+
       console.error(
         "Spotify:",
         error.message
       );
+
 
       if (
         error.code ===
@@ -2999,18 +3362,13 @@ app.post(
           });
       }
 
-      if (
-        error.code ===
-          "TRACK_NOT_FOUND"
-      ) {
-        return res
-          .status(404)
-          .json({
-            ok:false,
-            error:
-              "TRACK_NOT_FOUND"
-          });
-      }
+
+      /*
+        TÄHTIS:
+
+        TRACK_NOT_FOUND response'i
+        selles serveris enam ei eksisteeri.
+      */
 
       return res
         .status(502)
@@ -3032,6 +3390,7 @@ io.on(
   "connection",
   socket => {
 
+
     socket.on(
       "createRoom",
       (
@@ -3042,8 +3401,10 @@ io.on(
         } = {},
         ack
       ) => {
+
         const playerName =
           cleanName(name);
+
 
         if (
           !playerName
@@ -3058,8 +3419,10 @@ io.on(
           );
         }
 
+
         const code =
           newRoomCode();
+
 
         const token =
           String(
@@ -3067,6 +3430,7 @@ io.on(
             ""
           ).trim() ||
           randomToken();
+
 
         const room = {
           code,
@@ -3170,16 +3534,19 @@ io.on(
           ]
         };
 
+
         rooms.set(
           code,
           room
         );
+
 
         joinSocketToPlayer(
           socket,
           room,
           room.players[0]
         );
+
 
         safeAck(
           ack,
@@ -3190,6 +3557,7 @@ io.on(
               token
           }
         );
+
 
         emitRoom(room);
       }
@@ -3206,6 +3574,7 @@ io.on(
         } = {},
         ack
       ) => {
+
         const playerName =
           cleanName(name);
 
@@ -3213,6 +3582,7 @@ io.on(
           rooms.get(
             cleanCode(code)
           );
+
 
         if (
           !playerName
@@ -3227,6 +3597,7 @@ io.on(
           );
         }
 
+
         if (
           !room
         ) {
@@ -3240,11 +3611,13 @@ io.on(
           );
         }
 
+
         const requestedToken =
           String(
             playerToken ||
             ""
           ).trim();
+
 
         if (
           requestedToken
@@ -3255,6 +3628,7 @@ io.on(
               requestedToken
             );
 
+
           if (
             existing
           ) {
@@ -3262,13 +3636,16 @@ io.on(
               playerName ||
               existing.name;
 
+
             joinSocketToPlayer(
               socket,
               room,
               existing
             );
 
+
             chooseHost(room);
+
 
             safeAck(
               ack,
@@ -3285,11 +3662,13 @@ io.on(
               }
             );
 
+
             return emitRoom(
               room
             );
           }
         }
+
 
         if (
           room.started
@@ -3304,6 +3683,7 @@ io.on(
           );
         }
 
+
         if (
           room.players.length >=
           8
@@ -3317,6 +3697,7 @@ io.on(
             }
           );
         }
+
 
         if (
           room.players.some(
@@ -3337,9 +3718,11 @@ io.on(
           );
         }
 
+
         const token =
           requestedToken ||
           randomToken();
+
 
         const player = {
           token,
@@ -3360,9 +3743,11 @@ io.on(
             []
         };
 
+
         room.players.push(
           player
         );
+
 
         joinSocketToPlayer(
           socket,
@@ -3370,7 +3755,9 @@ io.on(
           player
         );
 
+
         chooseHost(room);
+
 
         safeAck(
           ack,
@@ -3387,6 +3774,7 @@ io.on(
           }
         );
 
+
         emitRoom(room);
       }
     );
@@ -3401,6 +3789,7 @@ io.on(
         } = {},
         ack
       ) => {
+
         const room =
           rooms.get(
             cleanCode(code)
@@ -3411,6 +3800,7 @@ io.on(
             playerToken ||
             ""
           ).trim();
+
 
         if (
           !room ||
@@ -3424,11 +3814,13 @@ io.on(
           );
         }
 
+
         const player =
           playerByToken(
             room,
             token
           );
+
 
         if (
           !player
@@ -3441,13 +3833,16 @@ io.on(
           );
         }
 
+
         joinSocketToPlayer(
           socket,
           room,
           player
         );
 
+
         chooseHost(room);
+
 
         safeAck(
           ack,
@@ -3464,6 +3859,7 @@ io.on(
           }
         );
 
+
         emitRoom(room);
       }
     );
@@ -3475,10 +3871,12 @@ io.on(
         payload = {},
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -3493,11 +3891,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           room.hostToken !==
@@ -3513,6 +3913,7 @@ io.on(
           );
         }
 
+
         if (
           room.started
         ) {
@@ -3525,6 +3926,7 @@ io.on(
             }
           );
         }
+
 
         if (
           [
@@ -3539,6 +3941,7 @@ io.on(
             payload.musicMode;
         }
 
+
         if (
           [
             "easy",
@@ -3552,6 +3955,7 @@ io.on(
             payload.difficulty;
         }
 
+
         if (
           [
             "classic",
@@ -3563,6 +3967,7 @@ io.on(
           room.gameMode =
             payload.gameMode;
         }
+
 
         if (
           [
@@ -3577,6 +3982,7 @@ io.on(
             payload.djMode;
         }
 
+
         if (
           payload.fixedDjToken &&
           room.players.some(
@@ -3590,16 +3996,18 @@ io.on(
 
         } else if (
           payload.djMode !==
-            "fixed"
+          "fixed"
         ) {
           room.fixedDjToken =
             null;
         }
 
+
         const target =
           Number(
             payload.targetCards
           );
+
 
         if (
           Number.isInteger(
@@ -3616,15 +4024,18 @@ io.on(
             );
         }
 
+
         room.autoNext =
           Boolean(
             payload.autoNext
           );
 
+
         const revealSeconds =
           Number(
             payload.revealSeconds
           );
+
 
         if (
           Number.isInteger(
@@ -3641,12 +4052,14 @@ io.on(
             );
         }
 
+
         safeAck(
           ack,
           {
             ok:true
           }
         );
+
 
         emitRoom(room);
       }
@@ -3659,10 +4072,12 @@ io.on(
         _payload,
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -3677,11 +4092,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           room.hostToken !==
@@ -3696,6 +4113,7 @@ io.on(
             }
           );
         }
+
 
         if (
           connectedPlayers(
@@ -3712,9 +4130,9 @@ io.on(
           );
         }
 
+
         if (
-          room.djMode ===
-            "fixed" &&
+          room.djMode === "fixed" &&
           !room.fixedDjToken
         ) {
           return safeAck(
@@ -3726,6 +4144,7 @@ io.on(
             }
           );
         }
+
 
         try {
           startGame(room);
@@ -3768,10 +4187,12 @@ io.on(
         } = {},
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -3786,11 +4207,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           !room.started ||
@@ -3808,6 +4231,7 @@ io.on(
           );
         }
 
+
         if (
           roundId !==
           room.roundId
@@ -3822,8 +4246,10 @@ io.on(
           );
         }
 
+
         const guessers =
           eligibleGuessers(room);
+
 
         if (
           !guessers.some(
@@ -3842,6 +4268,7 @@ io.on(
           );
         }
 
+
         if (
           room.guesses[
             player.token
@@ -3857,13 +4284,13 @@ io.on(
           );
         }
 
+
         const index =
           Number(slot);
 
+
         if (
-          !Number.isInteger(
-            index
-          ) ||
+          !Number.isInteger(index) ||
           index < 0 ||
           index >
             player.timeline.length
@@ -3878,6 +4305,7 @@ io.on(
           );
         }
 
+
         room.guesses[
           player.token
         ] = {
@@ -3888,6 +4316,7 @@ io.on(
             now()
         };
 
+
         safeAck(
           ack,
           {
@@ -3895,7 +4324,9 @@ io.on(
           }
         );
 
+
         emitRoom(room);
+
         maybeAutoReveal(room);
       }
     );
@@ -3907,10 +4338,12 @@ io.on(
         _payload,
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -3925,11 +4358,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           room.hostToken !==
@@ -3945,9 +4380,10 @@ io.on(
           );
         }
 
+
         if (
           room.phase !==
-            "guessing"
+          "guessing"
         ) {
           return safeAck(
             ack,
@@ -3959,8 +4395,10 @@ io.on(
           );
         }
 
+
         const guessers =
           eligibleGuessers(room);
+
 
         if (
           !guessers.some(
@@ -3980,7 +4418,9 @@ io.on(
           );
         }
 
+
         revealRound(room);
+
 
         safeAck(
           ack,
@@ -3998,10 +4438,12 @@ io.on(
         _payload,
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -4016,11 +4458,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           room.hostToken !==
@@ -4036,6 +4480,7 @@ io.on(
           );
         }
 
+
         if (
           room.finished
         ) {
@@ -4048,6 +4493,7 @@ io.on(
             }
           );
         }
+
 
         if (
           room.phase !==
@@ -4063,7 +4509,9 @@ io.on(
           );
         }
 
+
         advanceRound(room);
+
 
         safeAck(
           ack,
@@ -4081,10 +4529,12 @@ io.on(
         _payload,
         ack
       ) => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -4099,11 +4549,13 @@ io.on(
           );
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           room.hostToken !==
@@ -4119,6 +4571,7 @@ io.on(
           );
         }
 
+
         if (
           connectedPlayers(
             room
@@ -4133,6 +4586,7 @@ io.on(
             }
           );
         }
+
 
         try {
           startGame(room);
@@ -4169,10 +4623,12 @@ io.on(
     socket.on(
       "disconnect",
       () => {
+
         const context =
           roomFromSocket(
             socket
           );
+
 
         if (
           !context
@@ -4180,11 +4636,13 @@ io.on(
           return;
         }
 
+
         const {
           room,
           player
         } =
           context;
+
 
         if (
           player.socketId ===
@@ -4200,7 +4658,9 @@ io.on(
             now();
         }
 
+
         chooseHost(room);
+
         emitRoom(room);
       }
     );
@@ -4215,8 +4675,10 @@ io.on(
 
 setInterval(
   () => {
+
     const currentTime =
       now();
+
 
     for (
       const [
@@ -4225,33 +4687,41 @@ setInterval(
       ]
       of rooms.entries()
     ) {
+
       const noneConnected =
         connectedPlayers(
           room
-        ).length === 0;
+        ).length ===
+        0;
+
 
       const age =
         currentTime -
         room.lastActiveAt;
+
 
       if (
         (
           noneConnected &&
           age >
             EMPTY_ROOM_TTL_MS
-        ) ||
+        )
+        ||
         age >
           ROOM_TTL_MS
       ) {
+
         clearTimeout(
           room.autoTimer
         );
+
 
         rooms.delete(
           code
         );
       }
     }
+
   },
 
   60 * 1000
@@ -4270,8 +4740,10 @@ const PORT =
 httpServer.listen(
   PORT,
   () => {
+
     console.log(
-      `kõrva(n)uss v6 running on port ${PORT}`
+      `kõrva(n)uss v7 running on port ${PORT}`
     );
+
   }
 );
